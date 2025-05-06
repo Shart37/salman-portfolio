@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salman Chohan | Photography Portfolio</title>
+  <title>Salman's Portfolio | Real Estate Photography</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-oI2zR8JWJVa5O9WfVJaznKCuFqmpOXwAi7hVu6JoR1S9uU6o+UGboZ4S5cM83l5+lD1Pjyb6hLsJDthQa+fVvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     .lightbox-img {
       transition: transform 0.3s ease;
@@ -40,13 +40,12 @@
     <img id="modal-img" src="" alt="Expanded View">
   </div>
 
-  <!-- Navigation -->
+  <!-- Header -->
   <header class="bg-gray-900 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-white">Salman Chohan</h1>
+      <h1 class="text-2xl font-bold text-white">Salman's Portfolio</h1>
       <nav class="space-x-6">
-        <a href="#real-estate" class="hover:text-blue-400">Real Estate</a>
-        <a href="#weddings" class="hover:text-blue-400">Weddings</a>
+        <a href="#portfolio" class="hover:text-blue-400">Portfolio</a>
         <a href="#about" class="hover:text-blue-400">About</a>
         <a href="#contact" class="hover:text-blue-400">Contact</a>
       </nav>
@@ -55,29 +54,26 @@
 
   <!-- Hero Section -->
   <section class="text-center py-20 bg-gray-800">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4">Capturing Stories Through the Lens</h2>
-    <p class="text-lg text-gray-300 mb-8">Real estate and wedding photography that speaks for itself. - website design in progress</p>
-    <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Get in Touch</a>
+    <h2 class="text-4xl md:text-5xl font-bold mb-4">REAL ESTATE PHOTOGRAPHY PORTFOLIO</h2>
+    <p class="text-lg text-gray-300 mb-8">Capturing properties with precision, style, and storytelling.</p>
+    <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Let's Talk</a>
   </section>
 
-  <!-- Real Estate Section -->
-  <section id="real-estate" class="max-w-6xl mx-auto px-4 py-16">
-    <h3 class="text-3xl font-bold mb-8 text-center">Real Estate Portfolio</h3>
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="max-w-6xl mx-auto px-4 py-16">
+    <h3 class="text-3xl font-bold mb-8 text-center">Featured Work</h3>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <img src="images/DSC09618.jpg" alt="Real estate 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-      <img src="images/CAT09105-HDR-2.jpg" alt="Real estate 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-      <img src="images/CAT01651-Edit-2.jpg" alt="Real estate 3" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-    </div>
-  </section>
-
-  <!-- Weddings Section -->
-  <section id="weddings" class="bg-gray-900 py-16">
-    <div class="max-w-6xl mx-auto px-4">
-      <h3 class="text-3xl font-bold mb-8 text-center">Wedding Portfolio</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <img src="https://source.unsplash.com/800x600/?wedding" alt="Wedding 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-        <img src="https://source.unsplash.com/800x600/?bride" alt="Wedding 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-        <img src="https://source.unsplash.com/800x600/?groom" alt="Wedding 3" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+      <div>
+        <img src="images/DSC09618.jpg" alt="Property 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+        <p class="mt-2 text-center text-gray-400">Modern City Apartment</p>
+      </div>
+      <div>
+        <img src="images/CAT09105-HDR-2.jpg" alt="Property 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+        <p class="mt-2 text-center text-gray-400">Spacious Interior</p>
+      </div>
+      <div>
+        <img src="images/CAT01651-Edit-2.jpg" alt="Property 3" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+        <p class="mt-2 text-center text-gray-400">Family Home</p>
       </div>
     </div>
   </section>
@@ -85,24 +81,24 @@
   <!-- About Section -->
   <section id="about" class="max-w-4xl mx-auto px-4 py-16 text-center">
     <h3 class="text-3xl font-bold mb-6">About Me</h3>
-    <p class="text-lg text-gray-300">I’m Salman, a Manchester-based photographer specializing in real estate and weddings. I focus on clean composition, storytelling, and capturing moments that matter.</p>
+    <p class="text-lg text-gray-300">I’m Salman, a Manchester-based photographer focused on real estate and weddings. My passion lies in capturing clean, elegant visuals that speak for themselves.</p>
   </section>
 
   <!-- Contact Section -->
   <section id="contact" class="bg-blue-600 text-white py-16">
     <div class="max-w-4xl mx-auto px-4 text-center">
       <h3 class="text-3xl font-bold mb-6">Contact</h3>
-      <form class="space-y-4 text-left max-w-md mx-auto">
-        <input type="text" placeholder="Your Name" class="w-full px-4 py-2 rounded bg-blue-500 placeholder-white" required>
-        <input type="email" placeholder="Your Email" class="w-full px-4 py-2 rounded bg-blue-500 placeholder-white" required>
-        <textarea placeholder="Your Message" rows="5" class="w-full px-4 py-2 rounded bg-blue-500 placeholder-white" required></textarea>
-        <button type="submit" class="w-full bg-white text-blue-600 font-bold py-2 rounded hover:bg-gray-100">Send Message</button>
+      <form class="space-y-4 max-w-md mx-auto">
+        <input type="text" placeholder="Name" class="w-full px-4 py-2 rounded text-black" required>
+        <input type="email" placeholder="Email" class="w-full px-4 py-2 rounded text-black" required>
+        <textarea placeholder="Message" rows="4" class="w-full px-4 py-2 rounded text-black" required></textarea>
+        <button type="submit" class="bg-gray-900 hover:bg-black text-white px-6 py-2 rounded">Send</button>
       </form>
-      <div class="flex justify-center gap-6 mt-8">
-        <a href="https://www.instagram.com/" target="_blank" class="text-white text-2xl hover:text-gray-200">
+      <div class="mt-6 flex justify-center space-x-6">
+        <a href="https://instagram.com/yourhandle" target="_blank" class="text-white hover:text-gray-300 text-2xl">
           <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://wa.me/447422508131" target="_blank" class="text-white text-2xl hover:text-gray-200">
+        <a href="https://wa.me/447422508131" target="_blank" class="text-white hover:text-gray-300 text-2xl">
           <i class="fab fa-whatsapp"></i>
         </a>
       </div>
@@ -111,7 +107,7 @@
 
   <!-- Footer -->
   <footer class="bg-gray-950 text-gray-500 text-center py-6">
-    &copy; 2025 Salman Chohan. All rights reserved.
+    &copy; 2025 by Salman's Portfolio. All rights reserved. Crafted with passion by Salman.
   </footer>
 
   <!-- Modal Script -->
