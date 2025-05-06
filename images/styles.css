@@ -1,0 +1,64 @@
+/* Custom Styles for Salman Chohan Portfolio */
+
+/* General body styling */
+body {
+  background-color: #0f172a; /* Dark navy */
+  color: #f8fafc; /* Soft white */
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+
+/* Headings */
+h1, h2, h3 {
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+/* Hero Section */
+section.text-center.bg-gray-800 {
+  background-color: #1e293b;
+}
+
+/* Buttons */
+a.btn-primary,
+a.inline-block.bg-blue-600 {
+  background-color: #1f2937;
+  color: #f1f5f9;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+a.btn-primary:hover,
+a.inline-block.bg-blue-600:hover {
+  background-color: #374151;
+}
+
+/* Footer */
+footer {
+  background-color: #0f172a;
+  color: #94a3b8;
+}
+
+/* Lightbox Hover */
+.lightbox-img:hover {
+  transform: scale(1.03);
+  cursor: zoom-in;
+}
+
+/* Contact Section */
+#contact {
+  background-color: #334155;
+  color: #e2e8f0;
+}
+
+#contact a {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+#contact a:hover {
+  color: #60a5fa;
+}
