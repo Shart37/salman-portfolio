@@ -57,11 +57,11 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="text-center py-20 bg-gray-800">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4" data-aos="fade-up">Capturing Stories Through the Lens site in progress</h2>
-    <p class="text-lg text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="100">Real estate and wedding photography that speaks for itself.</p>
-    <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700" data-aos="fade-up" data-aos-delay="200">Get in Touch</a>
+ <!-- Hero Section -->
+  <section class="text-center py-20 bg-cover bg-center" style="background-image: url('images/your-background-image.jpg');">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Capturing Stories Through the Lens</h2>
+      <p class="text-lg text-gray-300 mb-8">Real estate and wedding photography that speaks for itself.</p>
+      <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Get in Touch</a>
   </section>
 
   <!-- Real Estate Section -->
@@ -102,6 +102,29 @@
       </div>
     </div>
   </section>
+
+  <!-- Portfolio Page -->
+  <section id="portfolio" class="bg-gray-800 py-16">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+          <h3 class="text-3xl font-bold text-white mb-8">Portfolio</h3>
+          <p class="text-lg text-gray-300 mb-12">Explore my latest work</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              <!-- Image 1 -->
+              <div class="portfolio-item">
+                  <img src="images/CAT01651-Edit-2.jpg" alt="Real Estate 1" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer" onclick="openModal(this)">
+              </div>
+              <!-- Image 2 -->
+              <div class="portfolio-item">
+                  <img src="images/CAT09105-HDR-2.jpg" alt="Real Estate 2" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer" onclick="openModal(this)">
+              </div>
+              <!-- Image 3 -->
+              <div class="portfolio-item">
+                  <img src="images/DSC09618.jpg" alt="Real Estate 3" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer" onclick="openModal(this)">
+              </div>
+          </div>
+      </div>
+  </section>
+
 
   <!-- About Section -->
   <section id="about" class="max-w-4xl mx-auto px-4 py-16 text-center">
