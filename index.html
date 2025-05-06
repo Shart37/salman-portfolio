@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Salman Chohan | Photography Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- AOS Library -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
     .lightbox-img {
@@ -51,6 +50,7 @@
       <nav class="space-x-6">
         <a href="#real-estate" class="hover:text-blue-400">Real Estate</a>
         <a href="#weddings" class="hover:text-blue-400">Weddings</a>
+        <a href="#albums" class="hover:text-blue-400">Albums</a>
         <a href="#about" class="hover:text-blue-400">About</a>
         <a href="#contact" class="hover:text-blue-400">Contact</a>
       </nav>
@@ -59,25 +59,25 @@
 
   <!-- Hero Section -->
   <section class="text-center py-20 bg-gray-800">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4">Capturing Stories Through the Lens</h2>
-    <p class="text-lg text-gray-300 mb-8">Real estate and wedding photography that speaks for itself.</p>
-    <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Get in Touch</a>
+    <h2 class="text-4xl md:text-5xl font-bold mb-4" data-aos="fade-up">Capturing Stories Through the Lens</h2>
+    <p class="text-lg text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="100">Real estate and wedding photography that speaks for itself.</p>
+    <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700" data-aos="fade-up" data-aos-delay="200">Get in Touch</a>
   </section>
 
   <!-- Real Estate Section -->
-  <section id="real-estate" class="max-w-6xl mx-auto px-4 py-16">
-    <h3 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Real Estate Portfolio</h3>
+  <section id="real-estate" class="max-w-6xl mx-auto px-4 py-16" data-aos="fade-up">
+    <h3 class="text-3xl font-bold mb-8 text-center">Real Estate Portfolio</h3>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <img src="images/CAT01651-Edit-2.jpg" alt="Real estate 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-      <img src="images/CAT09105-HDR-2.jpg" alt="Real estate 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-      <img src="images/DSC09618.jpg" alt="Real estate 3" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+      <img src="https://source.unsplash.com/800x600/?apartment" alt="Real estate 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+      <img src="https://source.unsplash.com/800x600/?interior" alt="Real estate 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+      <img src="https://source.unsplash.com/800x600/?house" alt="Real estate 3" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
     </div>
   </section>
 
   <!-- Weddings Section -->
-  <section id="weddings" class="bg-gray-900 py-16">
+  <section id="weddings" class="bg-gray-900 py-16" data-aos="fade-up">
     <div class="max-w-6xl mx-auto px-4">
-      <h3 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Wedding Portfolio</h3>
+      <h3 class="text-3xl font-bold mb-8 text-center">Wedding Portfolio</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <img src="https://source.unsplash.com/800x600/?wedding" alt="Wedding 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
         <img src="https://source.unsplash.com/800x600/?bride" alt="Wedding 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
@@ -86,18 +86,18 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section class="bg-gray-800 py-16">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <h3 class="text-3xl font-bold mb-8 text-white" data-aos="fade-up">Client Testimonials</h3>
-      <div class="space-y-12">
-        <div class="bg-gray-900 p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="100">
-          <p class="text-gray-300 italic">"Salman's eye for detail and creativity is unmatched. Our wedding photos were breathtaking!"</p>
-          <p class="mt-4 text-blue-400 font-semibold">— Joe</p>
+  <!-- Albums Section -->
+  <section id="albums" class="py-16 bg-gray-800" data-aos="fade-up">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <h3 class="text-3xl font-bold mb-8 text-white">Album Portfolio</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-gray-900 p-4 rounded-lg shadow-md">
+          <h4 class="text-xl text-white">Real Estate Collection</h4>
+          <a href="album-real-estate.html" class="text-blue-400">View More</a>
         </div>
-        <div class="bg-gray-900 p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="200">
-          <p class="text-gray-300 italic">"Professional, punctual, and the results were stunning. Highly recommended for property shoots."</p>
-          <p class="mt-4 text-blue-400 font-semibold">—Mama</p>
+        <div class="bg-gray-900 p-4 rounded-lg shadow-md">
+          <h4 class="text-xl text-white">Wedding Collection</h4>
+          <a href="album-wedding.html" class="text-blue-400">View More</a>
         </div>
       </div>
     </div>
@@ -113,7 +113,7 @@
   <section id="contact" class="bg-blue-600 text-white py-16">
     <div class="max-w-4xl mx-auto px-4 text-center">
       <h3 class="text-3xl font-bold mb-6">Contact</h3>
-      <p class="mb-4">Email: <a href="mailto:shart12373@hotmail.com" class="underline">shart12373@hotmail.com</a></p>
+      <p class="mb-4">Email: <a href="mailto:salman12373@hotmail.com" class="underline">salman12373@hotmail.com</a></p>
       <p>Phone: +44 7422 508131</p>
     </div>
   </section>
