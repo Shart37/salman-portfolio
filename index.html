@@ -6,17 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Salman Chohan | Photography Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
-    .lightbox-img {
-      transition: transform 0.3s ease;
+    body {
+      background-image: url('images/CAT01651-Edit-2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
-
-    .lightbox-img:hover {
-      transform: scale(1.02);
-      cursor: zoom-in;
-    }
-
     .modal {
       position: fixed;
       top: 0;
@@ -29,106 +25,94 @@
       align-items: center;
       z-index: 1000;
     }
-
     .modal img {
       max-width: 90%;
       max-height: 90%;
+    }
+    .lightbox-img {
+      transition: transform 0.3s ease;
+    }
+    .lightbox-img:hover {
+      transform: scale(1.02);
+      cursor: zoom-in;
     }
   </style>
 </head>
 
 <body class="bg-gray-950 text-gray-100 font-sans">
+
   <!-- Modal -->
   <div id="modal" class="modal" onclick="closeModal()">
     <img id="modal-img" src="" alt="Expanded View">
   </div>
 
   <!-- Navigation -->
-  <header class="bg-gray-900 shadow-md sticky top-0 z-50">
+  <header class="bg-gray-900 bg-opacity-70 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">Salman Chohan</h1>
       <nav class="space-x-6">
         <a href="#real-estate" class="hover:text-blue-400">Real Estate</a>
         <a href="#weddings" class="hover:text-blue-400">Weddings</a>
-        <a href="#albums" class="hover:text-blue-400">Albums</a>
+        <a href="#testimonials" class="hover:text-blue-400">Testimonials</a>
         <a href="#about" class="hover:text-blue-400">About</a>
         <a href="#contact" class="hover:text-blue-400">Contact</a>
       </nav>
     </div>
   </header>
 
- <!-- Hero Section -->
-  <section class="text-center py-20 bg-cover bg-center" style="background-image: url('images/your-background-image.jpg');">
-      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Capturing Stories Through the Lens wesbite in progress</h2>
-      <p class="text-lg text-gray-300 mb-8">Real estate and wedding photography that speaks for itself.</p>
-      <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Get in Touch</a>
+  <!-- Hero Section -->
+  <section class="text-center py-20 bg-gray-800 bg-opacity-50">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Capturing Stories Through the Lens</h2>
+    <p class="text-lg text-gray-300 mb-8">Real estate and wedding photography that speaks for itself.</p>
+    <a href="#contact" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">Get in Touch</a>
   </section>
 
   <!-- Real Estate Section -->
-  <section id="real-estate" class="max-w-6xl mx-auto px-4 py-16" data-aos="fade-up">
-    <h3 class="text-3xl font-bold mb-8 text-center">Real Estate Portfolio</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <img src="images/CAT01651-Edit-2.jpg" alt="Real estate 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-      <img src="images/CAT09105-HDR-2.jpg" alt="Real estate 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-      <img src="https://source.unsplash.com/800x600/?house" alt="Real estate 3" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+  <section id="real-estate" class="max-w-6xl mx-auto px-4 py-16">
+    <h3 class="text-3xl font-bold mb-8 text-center text-white">Real Estate Portfolio</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="album-item">
+        <img src="images/CAT01651-Edit-2.jpg" alt="Real Estate 1" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer lightbox-img" onclick="openModal(this)">
+      </div>
+      <div class="album-item">
+        <img src="images/CAT09105-HDR-2.jpg" alt="Real Estate 2" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer lightbox-img" onclick="openModal(this)">
+      </div>
+      <div class="album-item">
+        <img src="images/DSC09618.jpg" alt="Real Estate 3" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer lightbox-img" onclick="openModal(this)">
+      </div>
     </div>
   </section>
 
   <!-- Weddings Section -->
-  <section id="weddings" class="bg-gray-900 py-16" data-aos="fade-up">
+  <section id="weddings" class="bg-gray-900 py-16">
     <div class="max-w-6xl mx-auto px-4">
-      <h3 class="text-3xl font-bold mb-8 text-center">Wedding Portfolio</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <img src="https://source.unsplash.com/800x600/?wedding" alt="Wedding 1" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-        <img src="https://source.unsplash.com/800x600/?bride" alt="Wedding 2" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
-        <img src="https://source.unsplash.com/800x600/?groom" alt="Wedding 3" class="rounded-lg w-full h-64 object-cover lightbox-img" onclick="openModal(this)">
+      <h3 class="text-3xl font-bold mb-8 text-center text-white">Wedding Portfolio</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <img src="https://source.unsplash.com/800x600/?wedding" alt="Wedding 1" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer lightbox-img" onclick="openModal(this)">
+        <img src="https://source.unsplash.com/800x600/?bride" alt="Wedding 2" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer lightbox-img" onclick="openModal(this)">
+        <img src="https://source.unsplash.com/800x600/?groom" alt="Wedding 3" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer lightbox-img" onclick="openModal(this)">
       </div>
     </div>
   </section>
 
-  <!-- Albums Section -->
-  <section id="albums" class="py-16 bg-gray-800" data-aos="fade-up">
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="bg-gray-900 py-16">
     <div class="max-w-6xl mx-auto px-4 text-center">
-      <h3 class="text-3xl font-bold mb-8 text-white">Album Portfolio</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-gray-900 p-4 rounded-lg shadow-md">
-          <h4 class="text-xl text-white">Real Estate Collection</h4>
-          <a href="album-real-estate.html" class="text-blue-40 hover:text-blue-500">View Full Real Estate Portfolio</a>
+      <h3 class="text-3xl font-bold mb-8 text-white">Testimonials</h3>
+      <div class="space-y-8">
+        <div class="testimonial">
+          <p class="text-lg text-gray-300">"Salman’s attention to detail and passion for photography really shines through in every shot. I couldn’t be happier with the photos he took of my property!" - Joe</p>
         </div>
-        <div class="bg-gray-900 p-4 rounded-lg shadow-md">
-          <h4 class="text-xl text-white">Wedding Collection</h4>
-          <a href="album-wedding.html" class="text-blue-400">View More</a>
+        <div class="testimonial">
+          <p class="text-lg text-gray-300">"Our wedding photos are absolutely stunning! Salman made us feel so comfortable, and the moments he captured are priceless." - Moma</p>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Portfolio Page -->
-  <section id="portfolio" class="bg-gray-800 py-16">
-      <div class="max-w-6xl mx-auto px-4 text-center">
-          <h3 class="text-3xl font-bold text-white mb-8">Portfolio</h3>
-          <p class="text-lg text-gray-300 mb-12">Explore my latest work</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-              <!-- Image 1 -->
-              <div class="portfolio-item">
-                  <img src="images/CAT01651-Edit-2.jpg" alt="Real Estate 1" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer" onclick="openModal(this)">
-              </div>
-              <!-- Image 2 -->
-              <div class="portfolio-item">
-                  <img src="images/CAT09105-HDR-2.jpg" alt="Real Estate 2" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer" onclick="openModal(this)">
-              </div>
-              <!-- Image 3 -->
-              <div class="portfolio-item">
-                  <img src="images/DSC09618.jpg" alt="Real Estate 3" class="rounded-lg shadow-md w-full object-cover h-64 cursor-pointer" onclick="openModal(this)">
-              </div>
-          </div>
-      </div>
-  </section>
-
 
   <!-- About Section -->
   <section id="about" class="max-w-4xl mx-auto px-4 py-16 text-center">
-    <h3 class="text-3xl font-bold mb-6">About Me</h3>
+    <h3 class="text-3xl font-bold mb-6 text-white">About Me</h3>
     <p class="text-lg text-gray-300">I’m Salman, a Manchester-based photographer specializing in real estate and weddings. I focus on clean composition, storytelling, and capturing moments that matter.</p>
   </section>
 
@@ -158,12 +142,6 @@
     function closeModal() {
       document.getElementById('modal').style.display = 'none';
     }
-  </script>
-
-  <!-- AOS Script -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
   </script>
 </body>
 
