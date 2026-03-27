@@ -1,97 +1,119 @@
-body {
+* {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0f;
-  color: #fff;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, Arial;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+body {
+  background: #0e0e10;
+  color: #f2f2f2;
+  scroll-behavior: smooth;
 }
 
-nav {
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 20px 40px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px);
+  background: rgba(10,10,12,0.75);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
 }
 
+.nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  opacity: 0.7;
+}
+
+.nav a:hover { opacity: 1; }
+
+.logo {
+  font-weight: 600;
+  letter-spacing: 3px;
+}
+
+/* HERO */
 .hero {
   height: 100vh;
-  background: url('images/CAT01651-Edit-2.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   position: relative;
 }
 
-.hero::after {
-  content: "";
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-text {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
+  bottom: 60px;
+  left: 60px;
 }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
+.hero-text h1 {
+  font-size: 42px;
 }
 
-.hero h1 {
-  font-size: 48px;
-  margin: 0;
-}
-
-.hero p {
+.hero-text p {
   opacity: 0.8;
+  margin-top: 10px;
 }
 
+/* SECTIONS */
 .section {
-  padding: 80px 40px;
-  max-width: 1100px;
-  margin: auto;
+  padding: 120px 60px;
 }
 
+.section.dark {
+  background: #151518;
+}
+
+h2 {
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+.about-text {
+  max-width: 700px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+/* GRID */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
 }
 
-.card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.card img {
+.grid img {
   width: 100%;
-  height: 300px;
+  height: 320px;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  border-radius: 14px;
+  transition: 0.4s ease;
 }
 
-.card:hover img {
-  transform: scale(1.05);
+.grid img:hover {
+  transform: scale(1.02);
 }
 
-.overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 15px;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+/* SINGLE IMAGE LAYOUT */
+.single img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 16px;
 }
 
 footer {
   text-align: center;
-  padding: 40px;
-  opacity: 0.6;
+  padding: 60px;
+  opacity: 0.5;
 }

@@ -2,362 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sal Captures | Luxury Photography Studio</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:Inter,sans-serif;
-      background:#07080c;
-      color:#fff;
-      overflow-x:hidden;
-    }
-
-    /* subtle luxury grain */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="120" height="120"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8"/%3E%3C/filter%3E%3Crect width="120" height="120" filter="url(%23n)" opacity="0.08"/%3E%3C/svg%3E');
-      opacity:0.25;
-    }
-
-    /* NAV */
-    nav{
-      position:fixed;
-      top:0;
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:18px 40px;
-      background:rgba(10,10,15,0.6);
-      backdrop-filter:blur(14px);
-      z-index:1000;
-      border-bottom:1px solid rgba(255,255,255,0.05);
-    }
-
-    .logo{
-      font-weight:700;
-      letter-spacing:2px;
-      font-size:0.9rem;
-    }
-
-    nav a{
-      color:#fff;
-      text-decoration:none;
-      margin-left:18px;
-      opacity:0.6;
-      font-size:0.85rem;
-      transition:0.3s;
-    }
-    nav a:hover{opacity:1;}
-
-    /* HERO */
-    .hero{
-      height:100vh;
-      background:url('images/hero.jpg') center/cover no-repeat;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      position:relative;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at center, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
-    }
-
-    .hero-content{
-      position:relative;
-      z-index:2;
-      max-width:900px;
-      padding:20px;
-    }
-
-    .hero h1{
-      font-family:"Playfair Display",serif;
-      font-size:4rem;
-      letter-spacing:1px;
-      margin-bottom:10px;
-    }
-
-    .hero p{
-      opacity:0.75;
-      font-weight:300;
-    }
-
-    .hero button{
-      margin-top:25px;
-      padding:12px 26px;
-      border:1px solid rgba(255,255,255,0.4);
-      background:transparent;
-      color:#fff;
-      cursor:pointer;
-      transition:0.3s;
-      letter-spacing:1px;
-    }
-
-    .hero button:hover{
-      background:#fff;
-      color:#000;
-    }
-
-    section{
-      padding:110px 40px;
-    }
-
-    /* SECTION TITLES */
-    h2{
-      font-family:"Playfair Display",serif;
-      font-size:2.4rem;
-      text-align:center;
-      margin-bottom:40px;
-    }
-
-    /* FILTERS */
-    .filters{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:40px;
-    }
-
-    .filters button{
-      padding:8px 14px;
-      border:1px solid rgba(255,255,255,0.15);
-      background:transparent;
-      color:#fff;
-      cursor:pointer;
-      font-size:0.8rem;
-      opacity:0.6;
-      transition:0.3s;
-    }
-
-    .filters button.active,
-    .filters button:hover{
-      opacity:1;
-      background:#fff;
-      color:#000;
-    }
-
-    /* LUXURY GRID (masonry feel) */
-    .grid{
-      column-count:3;
-      column-gap:14px;
-    }
-
-    @media(max-width:900px){
-      .grid{column-count:2;}
-    }
-
-    @media(max-width:600px){
-      .grid{column-count:1;}
-      .hero h1{font-size:2.6rem;}
-    }
-
-    .item{
-      break-inside:avoid;
-      margin-bottom:14px;
-      position:relative;
-      cursor:pointer;
-      opacity:0;
-      transform:translateY(20px);
-      transition:0.6s ease;
-    }
-
-    .item.show{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    .item img{
-      width:100%;
-      display:block;
-      transition:0.4s;
-      filter:contrast(1.05) saturate(0.95);
-    }
-
-    .item:hover img{
-      transform:scale(1.02);
-    }
-
-    .tag{
-      position:absolute;
-      bottom:10px;
-      left:10px;
-      font-size:0.7rem;
-      padding:4px 8px;
-      background:rgba(0,0,0,0.6);
-      letter-spacing:1px;
-    }
-
-    /* ABOUT */
-    .about{
-      max-width:800px;
-      margin:auto;
-      text-align:center;
-      opacity:0.8;
-      line-height:1.8;
-    }
-
-    /* CONTACT */
-    .contact{
-      max-width:600px;
-      margin:auto;
-      text-align:center;
-    }
-
-    input,textarea{
-      width:100%;
-      margin:10px 0;
-      padding:12px;
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.1);
-      color:#fff;
-      outline:none;
-    }
-
-    button.submit{
-      padding:12px 20px;
-      border:none;
-      background:#fff;
-      color:#000;
-      cursor:pointer;
-      margin-top:10px;
-    }
-
-    footer{
-      text-align:center;
-      padding:60px;
-      opacity:0.4;
-      font-size:0.75rem;
-    }
-
-    /* LIGHTBOX */
-    .lightbox{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.92);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:2000;
-    }
-
-    .lightbox img{
-      max-width:92%;
-      max-height:92%;
-    }
-
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salcaptures | Photography</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
+
 <body>
 
-<nav>
-  <div class="logo">SAL CAPTURES</div>
-  <div>
+<header class="nav">
+  <div class="logo">SALCAPTURES</div>
+  <nav>
+    <a href="#home">Home</a>
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
-  </div>
-</nav>
+  </nav>
+</header>
 
-<div class="hero">
-  <div class="hero-content">
-    <h1>Luxury in Every Frame</h1>
-    <p>Real Estate â€¢ Automotive â€¢ Cinematic Photography</p>
-    <button onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">Enter Portfolio</button>
-  </div>
-</div>
-
-<section id="work">
-  <h2>Selected Works</h2>
-
-  <div class="filters">
-    <button class="active" onclick="filter('all',this)">All</button>
-    <button onclick="filter('realestate',this)">Real Estate</button>
-    <button onclick="filter('cars',this)">Cars</button>
-    <button onclick="filter('portrait',this)">Portrait</button>
-  </div>
-
-  <div class="grid">
-    <div class="item realestate"><img src="images/photo1.jpg" onclick="openLightbox(this.src)"><div class="tag">Estate</div></div>
-    <div class="item cars"><img src="images/photo2.jpg" onclick="openLightbox(this.src)"><div class="tag">Auto</div></div>
-    <div class="item portrait"><img src="images/photo3.jpg" onclick="openLightbox(this.src)"><div class="tag">Portrait</div></div>
-    <div class="item realestate"><img src="images/photo4.jpg" onclick="openLightbox(this.src)"><div class="tag">Estate</div></div>
-    <div class="item cars"><img src="images/photo5.jpg" onclick="openLightbox(this.src)"><div class="tag">Auto</div></div>
-    <div class="item portrait"><img src="images/photo6.jpg" onclick="openLightbox(this.src)"><div class="tag">Portrait</div></div>
+<!-- HERO -->
+<section id="home" class="hero">
+  <img src="images/img1.jpg" alt="Hero" />
+  <div class="hero-text">
+    <h1>Manchester-based Photography</h1>
+    <p>Real Estate · Architecture · Weddings · Documentary</p>
   </div>
 </section>
 
-<section id="about">
+<!-- ABOUT -->
+<section id="about" class="section">
   <h2>About</h2>
-  <div class="about">
-    Manchester-based luxury photographer focused on architectural clarity, automotive emotion, and cinematic storytelling. Every frame is designed with intent, depth, and atmosphere.
+  <p class="about-text">
+    Salcaptures is a Manchester-based photography practice focused on space, structure, and light.
+    Each frame is treated as documentation rather than decoration — a quiet study of real environments.
+  </p>
+</section>
+
+<!-- REAL ESTATE -->
+<section id="work" class="section dark">
+  <h2>Real Estate</h2>
+  <div class="grid">
+    <img src="images/img2.jpg">
+    <img src="images/img3.jpg">
+    <img src="images/img4.jpg">
+    <img src="images/img5.jpg">
+    <img src="images/img6.jpg">
   </div>
 </section>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <div class="contact">
-    <input placeholder="Name" />
-    <input placeholder="Email" />
-    <textarea rows="5" placeholder="Tell me about your project..."></textarea>
-    <button class="submit">Send Inquiry</button>
+<!-- ARCHITECTURE / CITY (img7 + img8) -->
+<section class="section">
+  <h2>Architecture & City</h2>
+  <div class="grid">
+    <img src="images/img7.jpg">
+    <img src="images/img8.jpg">
   </div>
 </section>
 
-<footer>
-  Â© 2026 Sal Captures Studio. All imagery crafted with intention.
+<!-- WEDDING (img10) -->
+<section class="section dark">
+  <h2>Wedding</h2>
+  <div class="grid single">
+    <img src="images/img10.jpg">
+  </div>
+</section>
+
+<!-- ADDITIONAL WORK (img9, img11) -->
+<section class="section">
+  <h2>Additional Work</h2>
+  <div class="grid">
+    <img src="images/img9.jpg">
+    <img src="images/img11.jpg">
+  </div>
+</section>
+
+<footer class="section">
+  <p>© Salcaptures — Manchester Photography</p>
 </footer>
-
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img" />
-</div>
-
-<script>
-function openLightbox(src){
-  document.getElementById('lightbox').style.display='flex';
-  document.getElementById('lightbox-img').src=src;
-}
-
-function closeLightbox(){
-  document.getElementById('lightbox').style.display='none';
-}
-
-function filter(type,btn){
-  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-
-  document.querySelectorAll('.item').forEach(el=>{
-    if(type==='all' || el.classList.contains(type)){
-      el.style.display='block';
-    } else {
-      el.style.display='none';
-    }
-  });
-}
-
-// reveal animation
-const items=document.querySelectorAll('.item');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('show');
-    }
-  });
-},{threshold:0.2});
-items.forEach(i=>obs.observe(i));
-</script>
 
 </body>
 </html>
