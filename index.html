@@ -1,60 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Salman Chohan | Photography</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sal Captures | Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Inter, sans-serif;}
+    body{background:#0b0c10;color:#fff;overflow-x:hidden;}
 
+    /* HERO */
+    .hero{
+      height:100vh;
+      background:url('images/hero.jpg') center/cover no-repeat;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      position:relative;
+    }
+    .hero::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.55);
+    }
+    .hero-content{
+      position:relative;
+      z-index:2;
+    }
+    .hero h1{font-size:3.5rem;font-weight:800;letter-spacing:2px;}
+    .hero p{margin-top:10px;font-weight:300;opacity:0.8;}
+    .hero a{
+      margin-top:20px;
+      display:inline-block;
+      padding:12px 24px;
+      border:1px solid #fff;
+      color:#fff;
+      text-decoration:none;
+      transition:0.3s;
+    }
+    .hero a:hover{background:#fff;color:#000;}
+
+    /* NAV */
+    nav{
+      position:fixed;
+      top:0;
+      width:100%;
+      padding:15px 40px;
+      display:flex;
+      justify-content:space-between;
+      z-index:10;
+      background:rgba(0,0,0,0.3);
+      backdrop-filter:blur(10px);
+    }
+    nav span{font-weight:700;}
+    nav a{color:#fff;margin-left:20px;text-decoration:none;font-size:0.9rem;opacity:0.8;}
+    nav a:hover{opacity:1;}
+
+    /* SECTIONS */
+    section{padding:80px 40px;}
+    .title{font-size:2rem;margin-bottom:30px;font-weight:700;}
+
+    /* GRID (Lens style) */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:15px;
+    }
+    .grid img{
+      width:100%;
+      height:300px;
+      object-fit:cover;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .grid img:hover{transform:scale(1.03);}
+
+    /* ABOUT */
+    .about{
+      max-width:800px;
+      margin:auto;
+      text-align:center;
+      opacity:0.9;
+    }
+
+    /* LIGHTBOX */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+    }
+    .lightbox img{
+      max-width:90%;
+      max-height:90%;
+    }
+
+    footer{
+      text-align:center;
+      padding:40px;
+      opacity:0.6;
+      font-size:0.8rem;
+    }
+
+    @media(max-width:600px){
+      .hero h1{font-size:2.2rem;}
+      nav{padding:10px 20px;}
+    }
+  </style>
+</head>
 <body>
 
-<nav>
-  <div><strong>Salman Chohan</strong></div>
-  <div>
-    <a href="#work">Work</a> |
-    <a href="album-real-estate.html">Real Estate</a> |
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="hero-content">
-    <h1>Capturing Space & Light</h1>
-    <p>Real Estate • Weddings • Cinematic Photography</p>
-  </div>
-</header>
-
-<section class="section" id="work">
-  <h2>Featured Work</h2>
-
-  <div class="grid">
-
-    <a href="album-real-estate.html" class="card">
-      <img src="images/CAT01651-Edit-2.jpg">
-      <div class="overlay">Real Estate</div>
-    </a>
-
-    <div class="card">
-      <img src="images/CAT09105-HDR-2.jpg">
-      <div class="overlay">Interiors</div>
+  <!-- NAV -->
+  <nav>
+    <span>Sal Captures</span>
+    <div>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </div>
+  </nav>
 
-    <div class="card">
-      <img src="images/DSC09618.jpg">
-      <div class="overlay">Exterior</div>
+  <!-- HERO (Photon style) -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Sal Captures</h1>
+      <p>Real Estate • Photography • Visual Storytelling</p>
+      <a href="#work">View Portfolio</a>
     </div>
-
   </div>
-</section>
 
-<section class="section" id="contact">
-  <h2>Contact</h2>
-  <p>Email: <strong>shart12373@hotmail.com</strong></p>
-</section>
+  <!-- WORK (Lens grid hybrid) -->
+  <section id="work">
+    <div class="title">Selected Work</div>
+    <div class="grid">
+      <img src="images/photo1.jpg" onclick="openLightbox(this.src)" />
+      <img src="images/photo2.jpg" onclick="openLightbox(this.src)" />
+      <img src="images/photo3.jpg" onclick="openLightbox(this.src)" />
+      <img src="images/photo4.jpg" onclick="openLightbox(this.src)" />
+      <img src="images/photo5.jpg" onclick="openLightbox(this.src)" />
+      <img src="images/photo6.jpg" onclick="openLightbox(this.src)" />
+    </div>
+  </section>
 
-<footer>
-  © 2026 Salman Chohan Photography
-</footer>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="title">About</div>
+    <div class="about">
+      Photographer based in Manchester specialising in real estate, cinematic visuals, and clean architectural storytelling.
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="title">Contact</div>
+    <div class="about">
+      Email: yourname@email.com<br/>
+      Instagram: @yourhandle
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" />
+  </div>
+
+  <footer>
+    © 2026 Sal Captures. All rights reserved.
+  </footer>
+
+  <script>
+    function openLightbox(src){
+      document.getElementById('lightbox').style.display='flex';
+      document.getElementById('lightbox-img').src=src;
+    }
+    function closeLightbox(){
+      document.getElementById('lightbox').style.display='none';
+    }
+  </script>
 
 </body>
 </html>
