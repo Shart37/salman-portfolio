@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sal Captures | Commercial Photography Studio Manchester</title>
+<title>Sal Captures | Agency-Level Commercial Photography Studio Manchester</title>
 
-<meta name="description" content="Sal Captures is a premium Manchester photography studio specialising in real estate, automotive and portrait photography for commercial clients." />
-<meta name="keywords" content="Manchester photographer, real estate photography UK, commercial photography, automotive photography, property photographer Manchester" />
-<meta name="author" content="Sal Captures" />
+<meta name="description" content="Sal Captures is a top-tier Manchester photography studio delivering commercial real estate, automotive and brand photography designed to convert and scale businesses." />
+<meta name="keywords" content="Manchester photographer, commercial photography UK, real estate photographer Manchester, automotive photography, branding photography" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,14 +14,14 @@
 
 <style>
 :root{
-  --bg:#07070c;
+  --bg:#06060a;
   --panel:rgba(255,255,255,0.06);
   --stroke:rgba(255,255,255,0.12);
   --text:#f5f5f7;
   --muted:rgba(255,255,255,0.65);
   --gold:#c8a96a;
   --violet:#7c5cff;
-  --radius:24px;
+  --radius:26px;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -35,6 +34,9 @@ body{
 
 html{scroll-behavior:smooth;}
 
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
 nav{
   position:fixed;
   top:0;
@@ -42,16 +44,17 @@ nav{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px 40px;
-  background:rgba(10,10,18,0.6);
+  padding:18px 42px;
+  background:rgba(10,10,18,0.65);
   backdrop-filter:blur(18px);
   border-bottom:1px solid var(--stroke);
   z-index:1000;
 }
 nav h1{font-family:Playfair Display,serif;font-size:20px;}
-nav a{margin-left:18px;opacity:0.7;font-size:14px;}
+nav a{margin-left:18px;opacity:0.7;font-size:14px;transition:0.3s;}
 nav a:hover{opacity:1;color:var(--gold);}
 
+/* HERO */
 .hero{
   height:100vh;
   display:flex;
@@ -66,33 +69,44 @@ nav a:hover{opacity:1;color:var(--gold);}
 }
 .hero h2{
   font-family:Playfair Display,serif;
-  font-size:60px;
+  font-size:62px;
+  line-height:1.05;
   max-width:900px;
-  line-height:1.1;
 }
-.hero p{margin-top:18px;color:var(--muted);max-width:600px;}
+.hero p{margin-top:18px;color:var(--muted);max-width:650px;}
+
 .btn{
-  margin-top:28px;
+  margin-top:26px;
   padding:14px 30px;
   border-radius:999px;
   background:linear-gradient(135deg,var(--gold),var(--violet));
   color:#0b0b0f;
-  font-weight:700;
+  font-weight:800;
   display:inline-block;
+  transition:0.3s;
+}
+.btn:hover{transform:translateY(-2px);}
+
+/* SECTIONS */
+.section{padding:110px 42px;max-width:1200px;margin:auto;}
+.section h3{
+  font-family:Playfair Display,serif;
+  font-size:36px;
+  margin-bottom:30px;
 }
 
-.section{padding:110px 40px;max-width:1200px;margin:auto;}
-.section h3{font-family:Playfair Display,serif;font-size:34px;margin-bottom:30px;}
-
+/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
 .grid img{
-  width:100%;height:320px;object-fit:cover;
+  width:100%;height:320px;
+  object-fit:cover;
   border-radius:var(--radius);
   border:1px solid var(--stroke);
   transition:0.4s;
 }
 .grid img:hover{transform:scale(1.03);}
 
+/* CARDS */
 .card{
   padding:22px;
   border-radius:var(--radius);
@@ -100,61 +114,91 @@ nav a:hover{opacity:1;color:var(--gold);}
   border:1px solid var(--stroke);
 }
 
-.pricing{
+/* CASE STUDIES */
+.case{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  align-items:center;
+  margin-bottom:30px;
+}
+.case img{width:100%;border-radius:var(--radius);border:1px solid var(--stroke);}
+.case p{color:var(--muted);}
+
+/* PACKAGES */
+.packages{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:18px;
 }
+.package{
+  padding:24px;
+  border-radius:var(--radius);
+  background:var(--panel);
+  border:1px solid var(--stroke);
+  transition:0.3s;
+}
+.package:hover{transform:translateY(-6px);}
+.package h4{font-family:Playfair Display,serif;margin-bottom:10px;}
+.price{font-size:28px;color:var(--gold);margin:10px 0;}
+.package ul{list-style:none;color:var(--muted);font-size:14px;}
+.package ul li{margin-bottom:6px;}
 
-.price-card{
+/* TESTIMONIALS */
+.testimonials{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+.testimonial{
   padding:22px;
   border-radius:var(--radius);
   background:var(--panel);
   border:1px solid var(--stroke);
 }
-.price-card h4{font-family:Playfair Display,serif;margin-bottom:10px;}
-.price{font-size:26px;margin:10px 0;color:var(--gold);}
+.testimonial p{color:var(--muted);font-size:14px;}
+.testimonial h5{margin-top:10px;}
 
-input,select{
-  width:100%;
-  padding:12px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--stroke);
-  color:var(--text);
-  margin-top:10px;
+/* BOOKING */
+.booking form{
+  display:grid;
+  gap:12px;
+  max-width:650px;
 }
-
+input,select,textarea{
+  padding:14px;
+  border-radius:16px;
+  border:1px solid var(--stroke);
+  background:rgba(255,255,255,0.03);
+  color:var(--text);
+}
 button{
-  margin-top:12px;
   padding:14px;
   border-radius:999px;
   border:none;
   background:linear-gradient(135deg,var(--violet),var(--gold));
-  font-weight:700;
+  font-weight:800;
   cursor:pointer;
 }
 
-.booking form{max-width:600px;display:grid;gap:12px;}
+/* CTA FLOAT */
+.cta{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:linear-gradient(135deg,var(--gold),var(--violet));
+  color:#0b0b0f;
+  padding:14px 18px;
+  border-radius:999px;
+  font-weight:800;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
 
 footer{
   text-align:center;
   padding:60px;
   color:var(--muted);
   font-size:13px;
-}
-
-.whatsapp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:#fff;
-  padding:14px 18px;
-  border-radius:999px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
 </style>
@@ -164,19 +208,20 @@ footer{
 <nav>
   <h1>Sal Captures</h1>
   <div>
-    <a href="#portfolio">Work</a>
-    <a href="#pricing">Pricing</a>
+    <a href="#work">Work</a>
+    <a href="#packages">Packages</a>
+    <a href="#cases">Results</a>
     <a href="#booking">Book</a>
   </div>
 </nav>
 
 <section class="hero">
-  <h2>Commercial Photography That Drives Sales</h2>
-  <p>High-end real estate, automotive and brand photography engineered for conversion and premium perception.</p>
-  <a class="btn" href="#booking">Book Commercial Shoot</a>
+  <h2>Agency-Level Photography That Generates Leads</h2>
+  <p>We don’t just take photos — we build visual assets that sell properties, vehicles and brands at scale.</p>
+  <a class="btn" href="#booking">Request Commercial Shoot</a>
 </section>
 
-<section id="portfolio" class="section">
+<section id="work" class="section">
   <h3>Commercial Work</h3>
   <div class="grid">
     <img src="/images/photo1.jpg" />
@@ -186,57 +231,87 @@ footer{
   </div>
 </section>
 
-<section id="pricing" class="section">
-  <h3>Instant Pricing Estimator</h3>
-  <div class="pricing">
+<section id="cases" class="section">
+  <h3>Case Studies</h3>
 
-    <div class="price-card">
-      <h4>Real Estate</h4>
-      <p>Property size (sqm)</p>
-      <input id="size" type="number" placeholder="e.g. 120" />
-      <button onclick="calcPrice()">Calculate</button>
-      <div class="price" id="price">£0</div>
+  <div class="case">
+    <img src="/images/photo1.jpg" />
+    <div>
+      <h4>Luxury Property Listing Boost</h4>
+      <p>High-end real estate shoot improved listing engagement and reduced time on market through cinematic presentation.</p>
     </div>
+  </div>
 
-    <div class="price-card">
-      <h4>Automotive</h4>
-      <p>Premium car shoots from:</p>
+  <div class="case">
+    <img src="/images/photo2.jpg" />
+    <div>
+      <h4>Automotive Brand Content</h4>
+      <p>Studio lighting and dynamic composition used to elevate vehicle perception for premium resale positioning.</p>
+    </div>
+  </div>
+
+</section>
+
+<section id="packages" class="section">
+  <h3>Commercial Packages</h3>
+  <div class="packages">
+
+    <div class="package">
+      <h4>Starter</h4>
       <div class="price">£120</div>
+      <ul>
+        <li>10–15 edited images</li>
+        <li>24–48h delivery</li>
+        <li>Basic retouching</li>
+      </ul>
     </div>
 
-    <div class="price-card">
-      <h4>Portraits</h4>
-      <p>Studio & editorial sessions from:</p>
-      <div class="price">£90</div>
+    <div class="package">
+      <h4>Business</h4>
+      <div class="price">£250</div>
+      <ul>
+        <li>25–35 images</li>
+        <li>Priority delivery</li>
+        <li>Advanced editing</li>
+        <li>Marketing optimisation</li>
+      </ul>
+    </div>
+
+    <div class="package">
+      <h4>Agency</h4>
+      <div class="price">£450+</div>
+      <ul>
+        <li>Full shoot coverage</li>
+        <li>Same-day preview</li>
+        <li>Brand strategy visuals</li>
+        <li>Commercial usage rights</li>
+      </ul>
     </div>
 
   </div>
 </section>
 
 <section id="booking" class="section booking">
-  <h3>Commercial Booking</h3>
+  <h3>Book Agency Shoot</h3>
   <form action="https://formspree.io/f/your-id" method="POST">
-    <input type="text" name="name" placeholder="Full Name" required />
-    <input type="email" name="email" placeholder="Email" required />
-    <input type="text" name="company" placeholder="Company / Agency" />
+    <input name="name" placeholder="Name" required />
+    <input name="email" placeholder="Email" required />
+    <input name="company" placeholder="Company" />
     <select name="service">
       <option>Real Estate</option>
       <option>Automotive</option>
-      <option>Portrait</option>
+      <option>Brand</option>
     </select>
-    <input type="date" name="date" />
-    <button type="submit">Request Commercial Quote</button>
+    <textarea rows="5" placeholder="Project details"></textarea>
+    <button type="submit">Request Proposal</button>
   </form>
 </section>
 
 <footer>
-  © 2026 Sal Captures · Commercial Photography Studio · Manchester
+  © 2026 Sal Captures · Agency-Level Commercial Photography · Manchester
 </footer>
 
-<a class="whatsapp" href="https://wa.me/447000000000">WhatsApp Book</a>
+<a class="cta" href="https://wa.me/447000000000">WhatsApp Lead</a>
 
-<script>
-function calcPrice(){
-  let size=document.getElementById('size').value;
-  let price=100 + (size*0.8);
-  document.getElementById('price').innerText="£"+Math.ro
+</body>
+</html>
