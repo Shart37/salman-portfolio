@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SalCaptures — Photography Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SalCaptures — Photography</title>
     <style>
+        /* ===== WIX EXACT COLORS ===== */
+        /* From your Wix site: color_15 = #333333, color_21 = #EBEDE3, color_26 = #F5EBDC */
+        
         * {
             margin: 0;
             padding: 0;
@@ -13,170 +15,302 @@
         }
 
         body {
-            background: #0a0a0a;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #050505;
+            font-family: 'newcezanne', 'ms gothic', 'ヒラギノ角ゴ pro w3', 'hiragino kaku gothic pro', osaka, sans-serif;
             color: #EBEDE3;
             line-height: 1.5;
             overflow-x: hidden;
         }
 
-        /* ===== SECTION STYLES ===== */
+        /* ===== EXACT WIX TYPOGRAPHY ===== */
+        @font-face {
+            font-family: 'avenida-w01';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://static.parastorage.com/fonts/v2/dc8f9c70-edcd-4e03-b2e5-5fc23398a067/v1/avenida-w01.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'caveat';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://static.parastorage.com/tag-bundler/api/v1/fonts-cache/googlefont/woff2/s/caveat/v10/Wnz6HAc5bAfYB2Q7ZjYYiAzcPA.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'newcezanne';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://static.parastorage.com/fonts/v2/3c3a5ad3-ad7a-4f11-91b8-c86934de3810/v1/newcezanne.latin.woff2') format('woff2');
+        }
+
+        /* ===== SECTION CONTAINERS (matches WIX) ===== */
         .section {
             min-height: 100vh;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 90px 3%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .section-dark {
-            background: #0a0a0a;
+            background: #050505;
         }
 
-        .section-light-alt {
-            background: #1a1a1a;
+        .section-alt {
+            background: #0c0c0c;
         }
 
-        /* ===== TYPOGRAPHY ===== */
-        h1, .logo-text {
-            font-family: 'avenida-w01', 'avenida-w02', fantasy;
-            font-weight: normal;
-            letter-spacing: 0.1em;
-            line-height: 0.8;
-            font-size: clamp(50px, 10vw, 101px);
-            color: #EBEDE3;
-        }
-
-        .script-text {
-            font-family: 'Caveat', cursive;
-            font-weight: bold;
-            font-size: clamp(30px, 5vw, 48px);
-            color: #EBEDE3;
-        }
-
-        .section-title {
-            font-family: 'avenida-w01', 'avenida-w02', fantasy;
-            font-weight: normal;
-            letter-spacing: 0.1em;
-            line-height: 0.8;
-            font-size: clamp(40px, 8vw, 100px);
-            color: #F5EBDC;
-        }
-
-        .body-text {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #EBEDE3;
-        }
-
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO SECTION — MATCHES WIX HERO ===== */
         .hero {
             min-height: 100vh;
             position: relative;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             text-align: center;
-            background: #0a0a0a;
+            background: #050505;
             overflow: hidden;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.4;
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
         .hero h1 {
+            font-family: 'avenida-w01', fantasy;
+            font-weight: normal;
             font-size: clamp(60px, 12vw, 120px);
+            letter-spacing: 0.1em;
+            line-height: 0.8;
+            color: #EBEDE3;
             margin-bottom: 20px;
-            animation: fadeInUp 1.2s ease;
+            animation: fadeInUp 0.8s ease;
         }
 
-        .hero .script-text {
-            font-size: clamp(24px, 4vw, 38px);
+        .hero-sub {
+            font-family: 'caveat', cursive;
+            font-weight: bold;
+            font-size: clamp(24px, 5vw, 48px);
+            color: #EBEDE3;
             opacity: 0.9;
-            animation: fadeInUp 1.2s ease 0.2s both;
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
 
-        .scroll-indicator {
+        /* ===== SCROLL BUTTON (EXACT WIX STYLE) ===== */
+        .scroll-btn {
             position: absolute;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             cursor: pointer;
+            transition: transform 0.3s;
             animation: bounce 2s infinite;
-            z-index: 10;
         }
 
-        .scroll-indicator svg {
-            width: 40px;
-            height: 40px;
+        .scroll-btn svg {
+            width: 50px;
+            height: 50px;
             fill: #EBEDE3;
             transform: rotate(180deg);
         }
 
-        /* ===== GALLERY SECTION (Real Estate) ===== */
-        .gallery-section {
-            background: #1a1a1a;
-            padding: 90px 3%;
+        .scroll-btn:hover {
+            transform: translateX(-50%) translateY(5px);
         }
 
-        .gallery-header {
+        /* ===== GALLERY LAYOUT (MATCHES WIX PRO GALLERY) ===== */
+        .gallery-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'avenida-w01', fantasy;
+            font-weight: normal;
+            font-size: clamp(40px, 8vw, 100px);
+            letter-spacing: 0.1em;
+            line-height: 0.8;
+            color: #F5EBDC;
             text-align: center;
             margin-bottom: 60px;
             position: relative;
         }
 
-        .gallery-header .section-title {
-            background: #1a1a1a;
-            display: inline-block;
-            padding: 0 20px;
-        }
-
-        /* Masonry Gallery */
-        .gallery-masonry {
-            max-width: 1400px;
-            margin: 0 auto;
+        /* Masonry Grid — exact spacing from WIX */
+        .gallery-grid {
             column-count: 3;
-            column-gap: 20px;
+            column-gap: 24px;
         }
 
         .gallery-item {
             break-inside: avoid;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             position: relative;
             cursor: pointer;
             overflow: hidden;
-            border-radius: 0;
+            background: #1a1a1a;
         }
 
         .gallery-item img {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.4s ease, opacity 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.02);
-            opacity: 0.95;
+            transform: scale(1.03);
+            opacity: 0.92;
         }
 
-        /* Lightbox */
+        /* ===== ABOUT SECTION — EXACT WIX LAYOUT ===== */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 90px 5%;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+        }
+
+        .about-content {
+            max-width: 550px;
+        }
+
+        .about-content .section-title {
+            text-align: right;
+            margin-bottom: 30px;
+        }
+
+        .about-text {
+            font-family: 'newcezanne', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #EBEDE3;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        /* Social Icons — exact from WIX */
+        .social-icons {
+            display: flex;
+            gap: 24px;
+            margin-top: 35px;
+            justify-content: flex-end;
+        }
+
+        .social-icons a {
+            display: block;
+            width: 42px;
+            height: 42px;
+            transition: transform 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.08);
+        }
+
+        .social-icons svg {
+            width: 100%;
+            height: 100%;
+            fill: #EBEDE3;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 90px 5%;
+            background: #0c0c0c;
+        }
+
+        .contact-form {
+            max-width: 500px;
+        }
+
+        .contact-form .section-title {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(235, 237, 227, 0.3);
+            color: #EBEDE3;
+            font-family: 'newcezanne', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-bottom-color: #EBEDE3;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: transparent;
+            border: 1px solid #EBEDE3;
+            color: #EBEDE3;
+            padding: 12px 32px;
+            font-family: 'newcezanne', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #EBEDE3;
+            color: #050505;
+        }
+
+        .contact-image img {
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 0 auto;
+            filter: grayscale(20%);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #050505;
+            border-top: 1px solid rgba(235, 237, 227, 0.1);
+            font-family: 'newcezanne', sans-serif;
+            font-size: 12px;
+            color: rgba(235, 237, 227, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== LIGHTBOX ===== */
         .lightbox {
             display: none;
             position: fixed;
@@ -184,7 +318,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(5, 5, 5, 0.96);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -199,158 +333,20 @@
 
         .lightbox-close {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            color: white;
+            top: 25px;
+            right: 35px;
+            font-size: 45px;
+            color: #EBEDE3;
             cursor: pointer;
             font-family: monospace;
-        }
-
-        /* ===== ABOUT SECTION ===== */
-        .about-section {
-            background: #0a0a0a;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .about-image {
-            position: relative;
-            display: flex;
-            justify-content: center;
-        }
-
-        .about-image img {
-            width: 80%;
-            height: auto;
-            border-radius: 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .about-content {
-            max-width: 500px;
-        }
-
-        .about-content .section-title {
-            font-size: clamp(40px, 6vw, 80px);
-            margin-bottom: 20px;
-            text-align: right;
-        }
-
-        .about-content .body-text {
-            margin-bottom: 20px;
-        }
-
-        /* ===== CONTACT SECTION ===== */
-        .contact-section {
-            background: #1a1a1a;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .contact-form-container {
-            max-width: 500px;
-        }
-
-        .contact-form-container .section-title {
-            margin-bottom: 30px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #EBEDE3;
-            color: #EBEDE3;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            border-bottom-color: #B5C289;
-        }
-
-        .contact-form textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .contact-form button {
-            background: transparent;
-            border: 1px solid #EBEDE3;
-            color: #EBEDE3;
-            padding: 12px 30px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .contact-form button:hover {
-            background: #EBEDE3;
-            color: #0a0a0a;
-        }
-
-        .contact-image {
-            display: flex;
-            justify-content: center;
-        }
-
-        .contact-image img {
-            width: 70%;
-            height: auto;
-            filter: grayscale(30%);
-        }
-
-        /* Social Icons */
-        .social-icons {
-            display: flex;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .social-icons a {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s;
-        }
-
-        .social-icons a:hover {
-            transform: scale(1.1);
-        }
-
-        .social-icons img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            text-align: center;
-            padding: 30px;
-            background: #0a0a0a;
-            border-top: 1px solid #1a1a1a;
-            font-size: 12px;
-            color: #666;
+            font-weight: 300;
         }
 
         /* ===== ANIMATIONS ===== */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -360,60 +356,51 @@
 
         @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
+            50% { transform: translateX(-50%) translateY(12px); }
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE (MATCHES WIX BREAKPOINTS) ===== */
         @media (max-width: 1000px) {
-            .gallery-masonry {
+            .gallery-grid {
                 column-count: 2;
+                column-gap: 20px;
+            }
+            .gallery-item {
+                margin-bottom: 20px;
             }
             .about-section, .contact-section {
                 grid-template-columns: 1fr;
+                gap: 50px;
                 text-align: center;
             }
             .about-content .section-title {
                 text-align: center;
             }
-            .about-content, .contact-form-container {
-                margin: 0 auto;
-                text-align: center;
-            }
             .social-icons {
                 justify-content: center;
             }
+            .contact-form {
+                margin: 0 auto;
+            }
+            .contact-form .section-title {
+                text-align: center;
+            }
         }
 
-        @media (max-width: 600px) {
-            .gallery-masonry {
-                column-count: 1;
-            }
+        @media (max-width: 700px) {
             .section {
                 padding: 60px 5%;
             }
-        }
-
-        /* Decorative Vector Elements */
-        .decor-top-left {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, #333 0%, #333 50%, transparent 50%);
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .decor-bottom-right {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(315deg, #333 0%, #333 50%, transparent 50%);
-            opacity: 0.3;
-            pointer-events: none;
+            .gallery-grid {
+                column-count: 1;
+                column-gap: 0;
+            }
+            .gallery-item {
+                margin-bottom: 16px;
+            }
+            .section-title {
+                margin-bottom: 40px;
+            }
         }
     </style>
 </head>
@@ -421,62 +408,59 @@
 
 <!-- HERO SECTION -->
 <section class="hero">
-    <!-- You can add a background image later -->
-    <div class="hero-content">
-        <h1>SalCaptures</h1>
-        <div class="script-text">Real Estate · Wedding · Architecture</div>
-    </div>
-    <div class="scroll-indicator" onclick="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})">
+    <h1>SalCaptures</h1>
+    <div class="hero-sub">Real Estate · Wedding · Architecture</div>
+    <div class="scroll-btn" onclick="document.getElementById('realEstateSection').scrollIntoView({behavior: 'smooth'})">
         <svg viewBox="0 0 200 200">
             <path d="M177.687 128.054L105.35 61.402a7.205 7.205 0 0 0-5.35-1.886 7.198 7.198 0 0 0-5.349 1.886l-72.338 66.652a7.165 7.165 0 0 0-.407 10.138 7.172 7.172 0 0 0 5.283 2.309c1.743 0 3.49-.629 4.872-1.902L100 75.999l67.939 62.598a7.197 7.197 0 0 0 10.155-.406 7.163 7.163 0 0 0-.407-10.137z"/>
         </svg>
     </div>
 </section>
 
-<!-- REAL ESTATE GALLERY SECTION -->
-<section id="gallery" class="gallery-section">
-    <div class="gallery-header">
+<!-- REAL ESTATE GALLERY -->
+<section id="realEstateSection" class="section section-dark">
+    <div class="gallery-wrapper">
         <div class="section-title">Real Estate</div>
+        <div class="gallery-grid" id="realEstateGrid"></div>
     </div>
-    <div class="gallery-masonry" id="realEstateGallery"></div>
 </section>
 
-<!-- WEDDING GALLERY SECTION -->
-<section class="gallery-section section-light-alt">
-    <div class="gallery-header">
+<!-- WEDDING GALLERY -->
+<section class="section section-alt">
+    <div class="gallery-wrapper">
         <div class="section-title">Weddings</div>
+        <div class="gallery-grid" id="weddingGrid"></div>
     </div>
-    <div class="gallery-masonry" id="weddingGallery"></div>
 </section>
 
 <!-- URBAN / ARCHITECTURE GALLERY -->
-<section class="gallery-section">
-    <div class="gallery-header">
+<section class="section section-dark">
+    <div class="gallery-wrapper">
         <div class="section-title">Urban & Architecture</div>
+        <div class="gallery-grid" id="urbanGrid"></div>
     </div>
-    <div class="gallery-masonry" id="urbanGallery"></div>
 </section>
 
 <!-- ABOUT SECTION -->
-<section class="about-section section">
+<section class="about-section section-alt">
     <div class="about-image">
-        <img src="images/img2.jpg" alt="Salman" onerror="this.src='https://placehold.co/600x800/333/EBEDE3?text=Salman'">
+        <img src="images/img2.jpg" alt="Salman Chohan" onerror="this.src='https://placehold.co/600x800/1a1a1a/EBEDE3?text=Salman'">
     </div>
     <div class="about-content">
-        <div class="section-title" style="text-align: right;">About</div>
-        <div class="body-text">
-            <p>Hi, I'm Salman, the person behind SalCaptures. Based in Manchester, I'm passionate about photography that feels real and personal. I combine technical skill with an eye for detail to create images that bring out the best in your special day or your property.</p>
-            <p style="margin-top: 20px;">When I'm not behind the lens, you'll find me exploring the city, brewing coffee, or working on cars. Let's create something unforgettable together.</p>
+        <div class="section-title">About</div>
+        <div class="about-text">
+            <p>Hi, I'm Salman, the person behind SalCaptures. Based in Manchester, I'm passionate about photography that feels real and personal. I combine technical skill with an eye for detail to create images that bring out the best in your special day or your property. My goal? To offer high-quality photography that's affordable and tailored just for you.</p>
+            <p>When I'm not behind the lens, you'll find me exploring the city, brewing coffee, or working on cars. Let's create something unforgettable together.</p>
         </div>
         <div class="social-icons">
-            <a href="https://wa.me/+447422508131" target="_blank">
-                <svg viewBox="0 0 24 24" fill="#EBEDE3" width="40" height="40">
+            <a href="https://wa.me/+447422508131" target="_blank" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24">
                     <path d="M12.032 2.001c-5.52 0-10 4.48-10 10 0 1.76.45 3.42 1.25 4.86L2 21.001l4.24-1.23c1.4.8 3 1.23 4.62 1.23 5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18c-1.44 0-2.86-.38-4.09-1.09l-.29-.17-2.52.73.72-2.51-.19-.3c-.8-1.28-1.21-2.78-1.21-4.29 0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z"/>
                     <path d="M16.08 13.05c-.22-.11-1.31-.65-1.51-.72-.2-.07-.35-.11-.5.11-.15.22-.58.72-.71.87-.13.15-.26.17-.48.06-.22-.11-.93-.34-1.77-1.09-.65-.59-1.09-1.32-1.22-1.54-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.2-.68-1.65-.18-.44-.36-.38-.5-.38-.13 0-.28-.01-.43-.01-.15 0-.39.06-.59.28-.2.22-.76.75-.76 1.83 0 1.08.79 2.12.9 2.27.11.15 1.55 2.37 3.75 3.33.52.22 1.23.48 1.69.58.46.1.88.08 1.21.05.37-.03 1.14-.47 1.3-.92.16-.45.16-.84.11-.92-.05-.08-.19-.13-.41-.24z"/>
                 </svg>
             </a>
-            <a href="https://www.instagram.com/salmanphotography._/" target="_blank">
-                <svg viewBox="0 0 24 24" fill="#EBEDE3" width="40" height="40">
+            <a href="https://www.instagram.com/salmanphotography._/" target="_blank" aria-label="Instagram">
+                <svg viewBox="0 0 24 24">
                     <rect x="2" y="2" width="20" height="20" rx="4" stroke="none"/>
                     <circle cx="12" cy="12" r="4"/>
                     <circle cx="17.5" cy="6.5" r="1.5"/>
@@ -487,40 +471,52 @@
 </section>
 
 <!-- CONTACT SECTION -->
-<section class="contact-section section section-light-alt">
-    <div class="contact-form-container">
-        <div class="section-title" style="text-align: left;">Contact</div>
-        <form class="contact-form" id="contactForm">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Email Address" required>
-            <input type="tel" name="phone" placeholder="Phone Number">
-            <textarea name="message" placeholder="Message" required></textarea>
-            <button type="submit">Submit</button>
+<section class="contact-section">
+    <div class="contact-form">
+        <div class="section-title">Contact</div>
+        <form id="contactForm">
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" name="phone" placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+                <textarea name="message" placeholder="Message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
     <div class="contact-image">
-        <img src="images/IMG_7719-Edit.jpg" alt="Camera" onerror="this.src='https://placehold.co/600x400/333/EBEDE3?text=Photography'">
+        <img src="images/IMG_7719-Edit.jpg" alt="Camera" onerror="this.src='https://placehold.co/600x400/1a1a1a/EBEDE3?text=Photography'">
     </div>
 </section>
 
 <!-- FOOTER -->
-<div class="footer">
-    © Salman — all works shot on various rooftops & streets · Manchester / UK
-</div>
+<footer class="footer">
+    © Salman — all works · Manchester / UK
+</footer>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
     <span class="lightbox-close">&times;</span>
-    <img id="lightbox-img" src="" alt="">
+    <img id="lightboxImg" src="" alt="">
 </div>
 
 <script>
-    // --------------------------------------------------------------
-    // ALL YOUR IMAGES ORGANIZED BY CATEGORY
-    // --------------------------------------------------------------
-    const images = {
+    // ===== IMAGE CATEGORIES (organized as per your request) =====
+    const imagesByCategory = {
         realEstate: [
-            "img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"
+            "img10.jpg",    // MAIN image — first position
+            "img1.jpg",
+            "img3.jpg",
+            "img4.jpg",
+            "img5.jpg",
+            "img8.jpg",
+            "img11.jpg"
         ],
         wedding: [
             "img9.jpg"
@@ -529,7 +525,6 @@
             "view of shoes on roof.jpg",
             "londong roof aj.jpg",
             "sunrise manchester crane.jpg",
-            "IMG_7719-Edit.jpg",
             "UOM.jpg",
             "crane sunrise.jpg",
             "climbing the light tower.jpg",
@@ -542,49 +537,51 @@
             "roof near piccadily.jpg",
             "stewart crane sunrise.jpg",
             "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
-            "img2.jpg", "img6.jpg", "img7.jpg"
+            "img2.jpg",
+            "img6.jpg",
+            "img7.jpg"
         ]
     };
 
-    // Function to render a gallery
+    // Helper: render gallery grid
     function renderGallery(containerId, imageList) {
         const container = document.getElementById(containerId);
         if (!container) return;
+        
         container.innerHTML = '';
-
+        
         imageList.forEach(filename => {
-            const encodedFile = encodeURIComponent(filename);
-            const imgPath = `images/${encodedFile}`;
+            const encoded = encodeURIComponent(filename);
+            const src = `images/${encoded}`;
             
-            const div = document.createElement('div');
-            div.className = 'gallery-item';
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
             
             const img = document.createElement('img');
-            img.src = imgPath;
-            img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '');
+            img.src = src;
+            img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
             img.loading = 'lazy';
             
-            img.addEventListener('click', () => {
-                openLightbox(imgPath);
-            });
+            img.onclick = () => openLightbox(src);
             
-            div.appendChild(img);
-            container.appendChild(div);
+            item.appendChild(img);
+            container.appendChild(item);
         });
     }
 
     // Lightbox functions
     function openLightbox(src) {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        lightboxImg.src = src;
-        lightbox.style.display = 'flex';
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImg');
+        lbImg.src = src;
+        lb.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
-        document.getElementById('lightbox').style.display = 'none';
-        document.getElementById('lightbox-img').src = '';
+        const lb = document.getElementById('lightbox');
+        lb.style.display = 'none';
+        document.getElementById('lightboxImg').src = '';
         document.body.style.overflow = '';
     }
 
@@ -594,24 +591,24 @@
             closeLightbox();
         }
     });
-
+    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && document.getElementById('lightbox').style.display === 'flex') {
             closeLightbox();
         }
     });
 
-    // Handle contact form
+    // Form submission
     document.getElementById('contactForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('Thank you for your message! I will get back to you soon.');
+        alert('Thanks for reaching out! I\'ll get back to you soon.');
         e.target.reset();
     });
 
     // Render all galleries
-    renderGallery('realEstateGallery', images.realEstate);
-    renderGallery('weddingGallery', images.wedding);
-    renderGallery('urbanGallery', images.urban);
+    renderGallery('realEstateGrid', imagesByCategory.realEstate);
+    renderGallery('weddingGrid', imagesByCategory.wedding);
+    renderGallery('urbanGrid', imagesByCategory.urban);
 </script>
 </body>
 </html>
