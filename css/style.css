@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== 2-ROW GRID GALLERY - NO GAPS, AUTO HEIGHT ===== */
+/* ===== 2-COLUMN MASONRY GALLERY - NO GAPS ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
@@ -254,51 +254,56 @@ body {
     width: 100%;
 }
 
-/* Grid layout: 2 rows, auto height per row, flows horizontally */
 .gallery-track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, auto);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     gap: 20px;
     width: max-content;
     padding: 10px 2%;
 }
 
-.gallery-item {
+.gallery-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 280px;
+    flex-shrink: 0;
+}
+
+.gallery-item {
     position: relative;
     cursor: pointer;
     overflow: hidden;
-    background: var(--bg-card);
+    background: transparent;
     border-radius: 6px;
-    transition: transform 0.2s ease;
+    width: 100%;
 }
 
 .gallery-item img {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.3s ease;
-}
-
-.gallery-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0);
-    transition: background 0.2s ease;
-    pointer-events: none;
-}
-
-.gallery-item:hover::after {
-    background: rgba(0, 0, 0, 0.35);
 }
 
 .gallery-item:hover {
     transform: translateY(-3px);
+}
+
+/* Remove the dark overlay - it was showing grey */
+.gallery-item::after {
+    display: none;
+}
+
+/* Responsive column widths */
+@media (max-width: 768px) {
+    .gallery-col { width: 240px; gap: 16px; }
+    .gallery-track { gap: 16px; }
+}
+
+@media (max-width: 550px) {
+    .gallery-col { width: 200px; gap: 12px; }
+    .gallery-track { gap: 12px; }
 }
 
 /* Scroll buttons - FIXED to wrapper */

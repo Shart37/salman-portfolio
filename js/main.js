@@ -1,13 +1,13 @@
-// IMAGE CATEGORIES - YOUR EXACT LIST
+// IMAGE CATEGORIES
 const imagesByCategory = {
     realEstate: ["img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"],
     wedding: ["img9.jpg"],
     urban: [
-        "londong roof aj.jpg", "sunrise manchester crane.jpg",
+        "view of shoes on roof.jpg", "londong roof aj.jpg", "sunrise manchester crane.jpg",
         "UOM.jpg", "crane sunrise.jpg", "climbing the light tower.jpg", "joe on slanted roof.jpg",
         "you know where this is manchester.jpg", "missed my bus manchester.jpg",
         "bikes at sunset enhanced.jpg", "snow tram.jpg", "snow tram 2.jpg", "roof near piccadily.jpg",
-        "stewart crane sunrise.jpg", "view of shoes on roof.jpg", "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
+        "stewart crane sunrise.jpg", "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
         "img2.jpg", "img6.jpg", "img7.jpg"
     ]
 };
@@ -26,27 +26,65 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function createGridGallery(trackId, imageList) {
+// 2-COLUMN MASONRY - images stack vertically in 2 columns, no gaps
+function createMasonryGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // For wedding section with 1 image, add a placeholder to balance? No - leave as is
-    imageList.forEach(filename => {
-        const item = createGalleryItem(filename);
-        track.appendChild(item);
-    });
+    // Create 2 columns
+    const col1 = document.createElement('div');
+    col1.className = 'gallery-col';
+    const col2 = document.createElement('div');
+    col2.className = 'gallery-col';
     
-    // Add scroll buttons to wrapper
-    const container = track.parentElement;
-    const wrapper = container.closest('.gallery-wrapper');
-    if (wrapper) {
-        addScrollButtons(wrapper, container);
-    }
+    // Keep track of total height in each column
+    let col1Height = 0;
+    let col2Height = 0;
+    
+    // We need actual image heights to balance. Load each image first
+    let loadedCount = 0;
+    const tempItems = [];
+    
+    imageList.forEach((filename, index) => {
+        const tempImg = new Image();
+        tempImg.onload = function() {
+            const aspectRatio = tempImg.height / tempImg.width;
+            const scaledHeight = 280 * aspectRatio; // 280px width
+            
+            tempItems.push({ filename, height: scaledHeight, index });
+            loadedCount++;
+            
+            if (loadedCount === imageList.length) {
+                // Sort by original order, then place in shortest column
+                tempItems.sort((a, b) => a.index - b.index);
+                
+                tempItems.forEach(item => {
+                    const galleryItem = createGalleryItem(item.filename);
+                    
+                    if (col1Height <= col2Height) {
+                        col1.appendChild(galleryItem);
+                        col1Height += item.height + 20;
+                    } else {
+                        col2.appendChild(galleryItem);
+                        col2Height += item.height + 20;
+                    }
+                });
+                
+                track.appendChild(col1);
+                track.appendChild(col2);
+                
+                // Add scroll buttons
+                const container = track.parentElement;
+                const wrapper = container.closest('.gallery-wrapper');
+                if (wrapper) addScrollButtons(wrapper, container);
+            }
+        };
+        tempImg.src = `images/${encodeURIComponent(filename)}`;
+    });
 }
 
 function addScrollButtons(wrapper, container) {
-    // Remove existing buttons
     const existingLeft = wrapper.querySelector('.scroll-btn-left');
     const existingRight = wrapper.querySelector('.scroll-btn-right');
     if (existingLeft) existingLeft.remove();
@@ -55,16 +93,12 @@ function addScrollButtons(wrapper, container) {
     const btnLeft = document.createElement('div');
     btnLeft.className = 'scroll-btn-left';
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnLeft.onclick = () => {
-        container.scrollBy({ left: -800, behavior: 'smooth' });
-    };
+    btnLeft.onclick = () => container.scrollBy({ left: -800, behavior: 'smooth' });
     
     const btnRight = document.createElement('div');
     btnRight.className = 'scroll-btn-right';
     btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnRight.onclick = () => {
-        container.scrollBy({ left: 800, behavior: 'smooth' });
-    };
+    btnRight.onclick = () => container.scrollBy({ left: 800, behavior: 'smooth' });
     
     wrapper.appendChild(btnLeft);
     wrapper.appendChild(btnRight);
@@ -171,7 +205,7 @@ document.addEventListener('click', (event) => {
 });
 
 // Create galleries
-createGridGallery('realEstateTrack', imagesByCategory.realEstate);
-createGridGallery('weddingTrack', imagesByCategory.wedding);
-createGridGallery('urbanTrack', imagesByCategory.urban);
+createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+createMasonryGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
