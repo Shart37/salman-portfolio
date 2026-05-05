@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== 2-ROW FULL WIDTH GALLERY ===== */
+/* ===== MASONRY STACKING GALLERY (No gaps, images stack vertically) ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -253,29 +253,31 @@ body {
 
 .gallery-track {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: flex-start;
     gap: 20px;
     min-width: min-content;
     padding: 0 2%;
 }
 
-/* Row wrapper - full width */
-.gallery-row {
+/* Each column stacks images vertically */
+.gallery-column {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
+    width: 320px;
+    flex-shrink: 0;
 }
 
-/* Each image item - responsive percentage width */
+/* Individual image item */
 .gallery-item {
-    flex: 0 0 auto;
-    width: 320px;
     position: relative;
     cursor: pointer;
     overflow: hidden;
     background: var(--bg-card);
     border-radius: 4px;
     transition: transform 0.3s ease;
+    width: 100%;
 }
 
 .gallery-item img {
@@ -285,6 +287,7 @@ body {
     transition: transform 0.5s ease;
 }
 
+/* Dark overlay on hover */
 .gallery-item::after {
     content: '';
     position: absolute;
@@ -576,16 +579,14 @@ body {
     opacity: 0.6;
 }
 
-/* ===== RESPONSIVE - WIDER ON ALL SCREENS ===== */
+/* ===== RESPONSIVE - COLUMN WIDTHS ===== */
 @media (max-width: 1200px) {
-    .gallery-item { width: 300px; }
-    .gallery-row { gap: 18px; }
+    .gallery-column { width: 300px; }
     .gallery-track { gap: 18px; }
 }
 
 @media (max-width: 992px) {
-    .gallery-item { width: 280px; }
-    .gallery-row { gap: 16px; }
+    .gallery-column { width: 280px; }
     .gallery-track { gap: 16px; }
 }
 
@@ -608,8 +609,7 @@ body {
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .gallery-item { width: 260px; }
-    .gallery-row { gap: 14px; }
+    .gallery-column { width: 260px; }
     .gallery-track { gap: 14px; padding: 0 3%; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
@@ -627,8 +627,7 @@ body {
 }
 
 @media (max-width: 550px) {
-    .gallery-item { width: 240px; }
-    .gallery-row { gap: 12px; }
+    .gallery-column { width: 240px; }
     .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }

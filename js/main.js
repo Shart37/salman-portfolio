@@ -26,35 +26,43 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function create2RowGallery(trackId, imageList) {
+function createMasonryGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    const row1 = [];
-    const row2 = [];
+    // Determine number of columns based on screen width
+    let columnCount = 4;
+    if (window.innerWidth <= 992) columnCount = 3;
+    if (window.innerWidth <= 768) columnCount = 2;
+    if (window.innerWidth <= 550) columnCount = 2;
     
-    imageList.forEach((filename, index) => {
-        if (index % 2 === 0) {
-            row1.push(filename);
-        } else {
-            row2.push(filename);
+    // Create columns
+    const columns = [];
+    for (let i = 0; i < columnCount; i++) {
+        const column = document.createElement('div');
+        column.className = 'gallery-column';
+        columns.push(column);
+        track.appendChild(column);
+    }
+    
+    // Distribute images to columns (shortest column gets next image)
+    imageList.forEach(filename => {
+        // Find column with smallest height
+        let shortestColumn = columns[0];
+        let shortestHeight = columns[0].scrollHeight;
+        
+        for (let i = 1; i < columns.length; i++) {
+            const height = columns[i].scrollHeight;
+            if (height < shortestHeight) {
+                shortestHeight = height;
+                shortestColumn = columns[i];
+            }
         }
+        
+        const item = createGalleryItem(filename);
+        shortestColumn.appendChild(item);
     });
-    
-    const row1Div = document.createElement('div');
-    row1Div.className = 'gallery-row';
-    row1.forEach(filename => {
-        row1Div.appendChild(createGalleryItem(filename));
-    });
-    track.appendChild(row1Div);
-    
-    const row2Div = document.createElement('div');
-    row2Div.className = 'gallery-row';
-    row2.forEach(filename => {
-        row2Div.appendChild(createGalleryItem(filename));
-    });
-    track.appendChild(row2Div);
     
     addScrollButtons(track.parentElement);
 }
@@ -112,6 +120,7 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
+// Contact Form
 const form = document.getElementById('contactForm');
 const successDiv = document.getElementById('formSuccess');
 if (form) {
@@ -141,6 +150,7 @@ if (form) {
     });
 }
 
+// Lightbox events
 const lightbox = document.getElementById('lightbox');
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
@@ -151,6 +161,7 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lightbox.style.display === 'flex') closeLightbox();
 });
 
+// Smooth scroll navigation
 document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
@@ -167,12 +178,14 @@ document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     });
 });
 
+// Logo camera icon on scroll
 const logo = document.getElementById('logo');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) logo.classList.add('camera-mode');
     else logo.classList.remove('camera-mode');
 });
 
+// Mobile menu
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
@@ -182,7 +195,20 @@ document.addEventListener('click', (event) => {
     }
 });
 
-create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
-create2RowGallery('weddingTrack', imagesByCategory.wedding);
-create2RowGallery('urbanTrack', imagesByCategory.urban);
+// Initialize masonry galleries
+createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+createMasonryGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
+
+// Optional: Reflow on window resize (to adjust column count)
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+        createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+        createMasonryGallery('urbanTrack', imagesByCategory.urban);
+        setupHorizontalWheelScroll();
+    }, 250);
+});
