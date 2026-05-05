@@ -16,7 +16,7 @@ function createGalleryItem(filename) {
     const encoded = encodeURIComponent(filename);
     const src = `images/${encoded}`;
     const item = document.createElement('div');
-    item.className = 'gallery-item';
+    item.className = 'gallery-single-item';
     const img = document.createElement('img');
     img.src = src;
     img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
@@ -26,30 +26,14 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function createMasonryGallery(trackId, imageList, columnCount = 3) {
+function createGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Adjust column count based on screen width
-    if (window.innerWidth <= 550) columnCount = 2;
-    else if (window.innerWidth <= 768) columnCount = 2;
-    else if (window.innerWidth <= 1024) columnCount = 3;
-    else columnCount = 4;
-    
-    const columns = [];
-    for (let i = 0; i < columnCount; i++) {
-        const column = document.createElement('div');
-        column.className = 'masonry-column';
-        columns.push(column);
-        track.appendChild(column);
-    }
-    
-    // Distribute images evenly across columns
-    imageList.forEach((filename, index) => {
-        const columnIndex = index % columns.length;
+    imageList.forEach(filename => {
         const item = createGalleryItem(filename);
-        columns[columnIndex].appendChild(item);
+        track.appendChild(item);
     });
     
     addScrollButtons(track.parentElement);
@@ -184,8 +168,8 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Initialize galleries (ONCE, not on resize)
-createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
-createMasonryGallery('weddingTrack', imagesByCategory.wedding);
-createMasonryGallery('urbanTrack', imagesByCategory.urban);
+// Initialize galleries
+createGallery('realEstateTrack', imagesByCategory.realEstate);
+createGallery('weddingTrack', imagesByCategory.wedding);
+createGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
