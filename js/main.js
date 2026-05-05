@@ -26,40 +26,46 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function create2RowGallery(trackId, imageList) {
+function createMasonryGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    const row1Images = [];
-    const row2Images = [];
+    // Determine number of rows (columns in masonry)
+    // Desktop: 3 rows, Tablet: 2 rows, Mobile: 2 rows
+    let rowCount = 3;
+    if (window.innerWidth <= 992) rowCount = 2;
+    if (window.innerWidth <= 550) rowCount = 2;
     
-    imageList.forEach((filename, index) => {
-        if (index % 2 === 0) {
-            row1Images.push(filename);
-        } else {
-            row2Images.push(filename);
+    // Create columns (each column = one vertical stack)
+    const columns = [];
+    for (let i = 0; i < rowCount; i++) {
+        const column = document.createElement('div');
+        column.className = 'gallery-column';
+        columns.push(column);
+        track.appendChild(column);
+    }
+    
+    // Distribute images to the SHORTEST column (by total height)
+    imageList.forEach(filename => {
+        let shortestColumn = columns[0];
+        let shortestHeight = columns[0].scrollHeight;
+        
+        for (let i = 1; i < columns.length; i++) {
+            const height = columns[i].scrollHeight;
+            if (height < shortestHeight) {
+                shortestHeight = height;
+                shortestColumn = columns[i];
+            }
         }
+        
+        const item = createGalleryItem(filename);
+        shortestColumn.appendChild(item);
     });
     
-    const row1 = document.createElement('div');
-    row1.className = 'gallery-row';
-    row1Images.forEach(filename => {
-        row1.appendChild(createGalleryItem(filename));
-    });
-    track.appendChild(row1);
-    
-    const row2 = document.createElement('div');
-    row2.className = 'gallery-row';
-    row2Images.forEach(filename => {
-        row2.appendChild(createGalleryItem(filename));
-    });
-    track.appendChild(row2);
-    
-    // Find the wrapper (parent of the scrolling container)
+    // Add scroll buttons to wrapper (non-scrolling parent)
     const container = track.parentElement;
     const wrapper = container.closest('.gallery-wrapper');
-    
     if (wrapper) {
         addScrollButtons(wrapper, container);
     }
@@ -95,7 +101,7 @@ function setupHorizontalWheelScroll() {
     containers.forEach(container => {
         container.addEventListener('wheel', function(e) {
             e.preventDefault();
-            container.scrollLeft += e.deltaY * 3;
+            container.scrollLeft += e.deltaY * 2;
         }, { passive: false });
     });
 }
@@ -191,7 +197,19 @@ document.addEventListener('click', (event) => {
 });
 
 // Create galleries
-create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
-create2RowGallery('weddingTrack', imagesByCategory.wedding);
-create2RowGallery('urbanTrack', imagesByCategory.urban);
+createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+createMasonryGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
+
+// Reflow on window resize
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+        createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+        createMasonryGallery('urbanTrack', imagesByCategory.urban);
+        setupHorizontalWheelScroll();
+    }, 250);
+});

@@ -157,7 +157,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ===== HERO - TALLER ===== */
+/* ===== HERO ===== */
 .hero {
     height: 46vh;
     min-height: 320px;
@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== GALLERY WITH FIXED BUTTONS (non-scrolling wrapper) ===== */
+/* ===== MASONRY GALLERY - 2-3 ROWS, NO CROPPING, NO GAPS ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
@@ -248,7 +248,7 @@ body {
 
 .gallery-container {
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     width: 100%;
@@ -256,28 +256,29 @@ body {
 
 .gallery-track {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
     width: max-content;
     padding: 10px 2%;
 }
 
-.gallery-row {
+.gallery-column {
     display: flex;
-    flex-direction: row;
-    gap: 24px;
+    flex-direction: column;
+    gap: 20px;
+    width: 280px;
+    flex-shrink: 0;
 }
 
-/* Images keep original size - no cropping */
 .gallery-item {
-    width: 300px;
-    flex-shrink: 0;
     position: relative;
     cursor: pointer;
     overflow: hidden;
     background: var(--bg-card);
     border-radius: 6px;
     transition: transform 0.2s ease;
+    width: 100%;
 }
 
 .gallery-item img {
@@ -307,13 +308,13 @@ body {
     transform: translateY(-3px);
 }
 
-/* BUTTONS attached to wrapper - NEVER MOVE */
+/* Scroll buttons - FIXED to wrapper */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
     display: flex;
@@ -324,7 +325,6 @@ body {
     transition: all 0.2s;
     backdrop-filter: blur(4px);
     opacity: 0.9;
-    pointer-events: auto;
 }
 
 .scroll-btn-left:hover, .scroll-btn-right:hover {
@@ -367,7 +367,7 @@ body {
     border-radius: 3px;
 }
 
-/* ===== ABOUT ===== */
+/* ===== ABOUT SECTION ===== */
 .about-section {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -445,7 +445,7 @@ body {
     color: var(--text-primary);
 }
 
-/* ===== CONTACT ===== */
+/* ===== CONTACT SECTION ===== */
 .contact-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -578,6 +578,15 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+    .gallery-column { width: 260px; }
+}
+
+@media (max-width: 992px) {
+    .gallery-column { width: 240px; }
+    .gallery-track { gap: 16px; }
+}
+
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu-toggle { display: block; }
@@ -597,8 +606,7 @@ body {
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .gallery-item { width: 240px; }
-    .gallery-row { gap: 16px; }
+    .gallery-column { width: 220px; gap: 16px; }
     .gallery-track { gap: 16px; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
@@ -608,8 +616,7 @@ body {
 }
 
 @media (max-width: 550px) {
-    .gallery-item { width: 200px; }
-    .gallery-row { gap: 12px; }
+    .gallery-column { width: 200px; gap: 12px; }
     .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
