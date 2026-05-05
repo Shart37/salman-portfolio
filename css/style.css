@@ -157,7 +157,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ===== HERO - INCREASED HEIGHT BY 33% (was 35vh, now ~46.5vh) ===== */
+/* ===== HERO - INCREASED HEIGHT (was 35vh, now ~46vh) ===== */
 .hero {
     height: 46vh;
     min-height: 320px;
@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== GALLERY (generic 2-row horizontal scroll) ===== */
+/* ===== 2-ROW HORIZONTAL SCROLL GALLERY (WORKING) ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -310,7 +310,7 @@ body {
     transform: scale(1.01);
 }
 
-/* ===== FIXED SCROLL BUTTONS (do not move with scroll) ===== */
+/* Scroll buttons - fixed in place */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
@@ -368,18 +368,6 @@ body {
 .gallery-container::-webkit-scrollbar-thumb {
     background: var(--text-secondary);
     border-radius: 3px;
-}
-
-/* ===== REAL ESTATE CUSTOM: 2 IMAGES PER ROW (so rows are "2 images tall") ===== */
-#realEstateSection .gallery-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    width: max-content;
-}
-
-#realEstateSection .gallery-item {
-    width: 300px;
 }
 
 /* ===== ABOUT SECTION ===== */
@@ -460,7 +448,7 @@ body {
     color: var(--text-primary);
 }
 
-/* ===== CONTACT SECTION - image same size as about image ===== */
+/* ===== CONTACT SECTION - image now same size as about image ===== */
 .contact-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -617,11 +605,6 @@ body {
     .gallery-row { gap: 15px; }
     .gallery-track { gap: 15px; }
     
-    /* Real Estate on mobile still 2 columns */
-    #realEstateSection .gallery-item {
-        width: 220px;
-    }
-    
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
     .contact-form { margin: 0 auto; }
@@ -633,7 +616,6 @@ body {
 
 @media (max-width: 550px) {
     .gallery-item { width: 200px; }
-    #realEstateSection .gallery-item { width: 180px; }
     .gallery-row { gap: 12px; }
     .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }

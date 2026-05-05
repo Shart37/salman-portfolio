@@ -26,7 +26,6 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// Normal 2-row gallery (for Wedding and Urban)
 function create2RowGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
@@ -56,33 +55,6 @@ function create2RowGallery(trackId, imageList) {
         row2.appendChild(createGalleryItem(filename));
     });
     track.appendChild(row2);
-    
-    addScrollButtons(track.parentElement);
-}
-
-// Real Estate gallery: each row contains exactly 2 images (so rows are "2 images tall")
-function createRealEstateGallery(trackId, imageList) {
-    const track = document.getElementById(trackId);
-    if (!track) return;
-    track.innerHTML = '';
-    
-    // Group images into pairs
-    for (let i = 0; i < imageList.length; i += 2) {
-        const row = document.createElement('div');
-        row.className = 'gallery-row';
-        
-        // First image
-        const item1 = createGalleryItem(imageList[i]);
-        row.appendChild(item1);
-        
-        // Second image (if exists)
-        if (i + 1 < imageList.length) {
-            const item2 = createGalleryItem(imageList[i + 1]);
-            row.appendChild(item2);
-        }
-        
-        track.appendChild(row);
-    }
     
     addScrollButtons(track.parentElement);
 }
@@ -212,7 +184,7 @@ document.addEventListener('click', (event) => {
 });
 
 // Create galleries
-createRealEstateGallery('realEstateTrack', imagesByCategory.realEstate);
+create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
 create2RowGallery('weddingTrack', imagesByCategory.wedding);
 create2RowGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
