@@ -610,7 +610,7 @@ body {
         text-align: center;
     }
     .about-image {
-        width: 220px;
+        width: 220px; 
         margin: 0 auto;
     }
     .about-content .section-title { text-align: center; }
