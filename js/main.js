@@ -48,6 +48,7 @@ function createMasonryGallery(trackId, imageList, columnCount = 3) {
     
     // Distribute images to columns (shortest column gets next image)
     imageList.forEach(filename => {
+        // Find column with smallest height
         let shortestColumn = columns[0];
         let shortestHeight = columns[0].scrollHeight;
         
@@ -79,7 +80,6 @@ function addScrollButtons(container) {
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
     btnLeft.onclick = () => {
         container.scrollBy({ left: -350, behavior: 'smooth' });
-        // Visual feedback
         btnLeft.style.transform = 'translateY(-50%) scale(0.95)';
         setTimeout(() => {
             btnLeft.style.transform = 'translateY(-50%) scale(1)';
@@ -117,18 +117,16 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
-// Enable horizontal scroll with mouse wheel (FIX #2)
-function enableHorizontalWheelScroll() {
+// ===== FIXED: Horizontal scroll with mouse wheel =====
+function setupHorizontalWheelScroll() {
     const containers = document.querySelectorAll('.gallery-container');
     
     containers.forEach(container => {
-        container.addEventListener('wheel', (e) => {
-            // Scroll horizontally when wheel is used over the gallery
-            if (container.contains(e.target)) {
-                e.preventDefault();
-                const scrollAmount = e.deltaY || e.deltaX;
-                container.scrollLeft += scrollAmount;
-            }
+        container.addEventListener('wheel', function(e) {
+            // Prevent default vertical scroll
+            e.preventDefault();
+            // Scroll horizontally instead
+            container.scrollLeft += e.deltaY;
         }, { passive: false });
     });
 }
@@ -158,10 +156,10 @@ if (form) {
                     successDiv.style.display = 'none';
                 }, 4000);
             } else {
-                alert("Message could not be sent. Please email me directly.");
+                alert("Message could not be sent.");
             }
         } catch (error) {
-            alert("Network error. Please check your connection.");
+            alert("Network error.");
         }
     });
 }
@@ -180,8 +178,8 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Smooth scroll for desktop navigation
-document.querySelectorAll('.nav-links a').forEach(anchor => {
+// Smooth scroll for navigation
+document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
         if (href === '#') {
@@ -197,7 +195,7 @@ document.querySelectorAll('.nav-links a').forEach(anchor => {
     });
 });
 
-// Logo changes to camera icon when scrolling
+// Logo camera icon on scroll
 const logo = document.getElementById('logo');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
@@ -207,38 +205,21 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Mobile Menu Logic
+// Mobile Menu
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
-const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
 menuToggle.addEventListener('click', () => {
     mobileMenu.classList.toggle('active');
 });
 
-mobileLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        mobileMenu.classList.remove('active');
-        const href = link.getAttribute('href');
-        if (href === '#') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (href && href !== '#') {
-            const target = document.querySelector(href);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    });
-});
-
-// Close mobile menu when clicking outside
 document.addEventListener('click', (event) => {
     if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
         mobileMenu.classList.remove('active');
     }
 });
 
-// Initialize galleries with masonry layout
+// Initialize galleries
 function initGalleries() {
     const columnCount = window.innerWidth <= 768 ? 2 : 3;
     
@@ -247,31 +228,16 @@ function initGalleries() {
     createMasonryGallery('urbanTrack', imagesByCategory.urban, columnCount);
 }
 
-// Run on load
+// Run everything
 initGalleries();
+setupHorizontalWheelScroll();
 
-// Enable horizontal wheel scroll (FIX #2)
-enableHorizontalWheelScroll();
-
-// Re-initialize on window resize
+// Re-run on window resize
 let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
         initGalleries();
-        enableHorizontalWheelScroll(); // Re-attach wheel events
+        setupHorizontalWheelScroll();
     }, 250);
-});
-
-// Prevent scroll sticking on touch devices (FIX #1)
-const allGalleries = document.querySelectorAll('.gallery-container');
-allGalleries.forEach(gallery => {
-    gallery.addEventListener('touchend', () => {
-        setTimeout(() => {
-            gallery.style.scrollBehavior = 'auto';
-            setTimeout(() => {
-                gallery.style.scrollBehavior = 'smooth';
-            }, 50);
-        }, 10);
-    });
 });
