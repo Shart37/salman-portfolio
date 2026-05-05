@@ -31,7 +31,6 @@ function create2RowGallery(trackId, imageList) {
     if (!track) return;
     track.innerHTML = '';
     
-    // Split images into 2 rows
     const row1 = [];
     const row2 = [];
     
@@ -43,7 +42,6 @@ function create2RowGallery(trackId, imageList) {
         }
     });
     
-    // Create Row 1
     const row1Div = document.createElement('div');
     row1Div.className = 'gallery-row';
     row1.forEach(filename => {
@@ -51,7 +49,6 @@ function create2RowGallery(trackId, imageList) {
     });
     track.appendChild(row1Div);
     
-    // Create Row 2
     const row2Div = document.createElement('div');
     row2Div.className = 'gallery-row';
     row2.forEach(filename => {
@@ -90,7 +87,6 @@ function addScrollButtons(container) {
     container.appendChild(btnRight);
 }
 
-// Horizontal scroll with mouse wheel
 function setupHorizontalWheelScroll() {
     const containers = document.querySelectorAll('.gallery-container');
     containers.forEach(container => {
@@ -116,7 +112,6 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
-// Contact Form
 const form = document.getElementById('contactForm');
 const successDiv = document.getElementById('formSuccess');
 if (form) {
@@ -146,7 +141,6 @@ if (form) {
     });
 }
 
-// Lightbox events
 const lightbox = document.getElementById('lightbox');
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
@@ -157,7 +151,6 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lightbox.style.display === 'flex') closeLightbox();
 });
 
-// Smooth scroll navigation
 document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
@@ -174,14 +167,12 @@ document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     });
 });
 
-// Logo camera icon on scroll
 const logo = document.getElementById('logo');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) logo.classList.add('camera-mode');
     else logo.classList.remove('camera-mode');
 });
 
-// Mobile menu
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
@@ -191,7 +182,6 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Initialize galleries
 create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
 create2RowGallery('weddingTrack', imagesByCategory.wedding);
 create2RowGallery('urbanTrack', imagesByCategory.urban);
