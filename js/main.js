@@ -3,11 +3,11 @@ const imagesByCategory = {
     realEstate: ["img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"],
     wedding: ["img9.jpg"],
     urban: [
-        "view of shoes on roof.jpg", "londong roof aj.jpg", "sunrise manchester crane.jpg",
+        "londong roof aj.jpg", "sunrise manchester crane.jpg",
         "UOM.jpg", "crane sunrise.jpg", "climbing the light tower.jpg", "joe on slanted roof.jpg",
         "you know where this is manchester.jpg", "missed my bus manchester.jpg",
         "bikes at sunset enhanced.jpg", "snow tram.jpg", "snow tram 2.jpg", "roof near piccadily.jpg",
-        "stewart crane sunrise.jpg", "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
+        "stewart crane sunrise.jpg", "view of shoes on roof.jpg", "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
         "img2.jpg", "img6.jpg", "img7.jpg"
     ]
 };
