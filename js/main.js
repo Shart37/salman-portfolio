@@ -26,12 +26,12 @@ function createGalleryItem(filename) {
     return item;
 }
 
+// Normal 2-row gallery (for Wedding and Urban)
 function create2RowGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Split into 2 rows
     const row1Images = [];
     const row2Images = [];
     
@@ -43,7 +43,6 @@ function create2RowGallery(trackId, imageList) {
         }
     });
     
-    // Create row 1
     const row1 = document.createElement('div');
     row1.className = 'gallery-row';
     row1Images.forEach(filename => {
@@ -51,7 +50,6 @@ function create2RowGallery(trackId, imageList) {
     });
     track.appendChild(row1);
     
-    // Create row 2
     const row2 = document.createElement('div');
     row2.className = 'gallery-row';
     row2Images.forEach(filename => {
@@ -59,13 +57,37 @@ function create2RowGallery(trackId, imageList) {
     });
     track.appendChild(row2);
     
-    // Add scroll buttons
-    const container = track.parentElement;
-    addScrollButtons(container);
+    addScrollButtons(track.parentElement);
+}
+
+// Real Estate gallery: each row contains exactly 2 images (so rows are "2 images tall")
+function createRealEstateGallery(trackId, imageList) {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    track.innerHTML = '';
+    
+    // Group images into pairs
+    for (let i = 0; i < imageList.length; i += 2) {
+        const row = document.createElement('div');
+        row.className = 'gallery-row';
+        
+        // First image
+        const item1 = createGalleryItem(imageList[i]);
+        row.appendChild(item1);
+        
+        // Second image (if exists)
+        if (i + 1 < imageList.length) {
+            const item2 = createGalleryItem(imageList[i + 1]);
+            row.appendChild(item2);
+        }
+        
+        track.appendChild(row);
+    }
+    
+    addScrollButtons(track.parentElement);
 }
 
 function addScrollButtons(container) {
-    // Remove existing buttons
     const existingLeft = container.querySelector('.scroll-btn-left');
     const existingRight = container.querySelector('.scroll-btn-right');
     if (existingLeft) existingLeft.remove();
@@ -189,8 +211,8 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Create galleries (ONLY ONCE - no resize regeneration)
-create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
+// Create galleries
+createRealEstateGallery('realEstateTrack', imagesByCategory.realEstate);
 create2RowGallery('weddingTrack', imagesByCategory.wedding);
 create2RowGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
