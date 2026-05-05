@@ -266,8 +266,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    width: 280px;
-    flex-shrink: 0;
+    width: calc(33.333% - 11px);  /* 3 columns with gap accounted */
+    min-width: 200px;              /* Prevents getting too narrow */
+    max-width: 350px;              /* Prevents getting too wide */
+    flex: 1;
     height: 100%;
     overflow-y: auto;
 }
@@ -616,7 +618,12 @@ body {
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .masonry-column { width: 220px; gap: 12px; }
+    .masonry-column {
+        width: calc(50% - 8px);
+        min-width: 160px;
+        max-width: 280px;
+    }
+    
     .gallery-track { gap: 12px; padding: 0 4%; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
@@ -630,7 +637,13 @@ body {
 }
 
 @media (max-width: 550px) {
-    .masonry-column { width: 180px; gap: 10px; }
+    
+    .masonry-column {
+        width: 100%;
+        min-width: auto;
+        max-width: none;
+    }
+
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
     .scroll-btn-left, .scroll-btn-right {
