@@ -26,53 +26,55 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// 2-COLUMN MASONRY - images stack vertically in 2 columns, no gaps
-function createMasonryGallery(trackId, imageList) {
+// 2-ROW BALANCED GALLERY - groups images into pairs that balance top/bottom row heights
+function createBalanced2RowGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Create 2 columns
-    const col1 = document.createElement('div');
-    col1.className = 'gallery-col';
-    const col2 = document.createElement('div');
-    col2.className = 'gallery-col';
+    // Create 2 rows
+    const topRow = document.createElement('div');
+    topRow.className = 'gallery-row';
+    const bottomRow = document.createElement('div');
+    bottomRow.className = 'gallery-row';
     
-    // Keep track of total height in each column
-    let col1Height = 0;
-    let col2Height = 0;
-    
-    // We need actual image heights to balance. Load each image first
+    // We need image heights to balance them
+    const imageHeights = [];
     let loadedCount = 0;
-    const tempItems = [];
+    
+    if (imageList.length === 0) return;
     
     imageList.forEach((filename, index) => {
         const tempImg = new Image();
         tempImg.onload = function() {
             const aspectRatio = tempImg.height / tempImg.width;
-            const scaledHeight = 280 * aspectRatio; // 280px width
-            
-            tempItems.push({ filename, height: scaledHeight, index });
+            const scaledHeight = 260 * aspectRatio; // 260px width
+            imageHeights.push({ filename, height: scaledHeight, index });
             loadedCount++;
             
             if (loadedCount === imageList.length) {
-                // Sort by original order, then place in shortest column
-                tempItems.sort((a, b) => a.index - b.index);
+                // Sort by original order
+                imageHeights.sort((a, b) => a.index - b.index);
                 
-                tempItems.forEach(item => {
+                // Balance heights between top and bottom rows
+                let topHeight = 0;
+                let bottomHeight = 0;
+                
+                imageHeights.forEach(item => {
                     const galleryItem = createGalleryItem(item.filename);
                     
-                    if (col1Height <= col2Height) {
-                        col1.appendChild(galleryItem);
-                        col1Height += item.height + 20;
+                    // Add to the shorter row
+                    if (topHeight <= bottomHeight) {
+                        topRow.appendChild(galleryItem);
+                        topHeight += item.height;
                     } else {
-                        col2.appendChild(galleryItem);
-                        col2Height += item.height + 20;
+                        bottomRow.appendChild(galleryItem);
+                        bottomHeight += item.height;
                     }
                 });
                 
-                track.appendChild(col1);
-                track.appendChild(col2);
+                track.appendChild(topRow);
+                track.appendChild(bottomRow);
                 
                 // Add scroll buttons
                 const container = track.parentElement;
@@ -93,12 +95,16 @@ function addScrollButtons(wrapper, container) {
     const btnLeft = document.createElement('div');
     btnLeft.className = 'scroll-btn-left';
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnLeft.onclick = () => container.scrollBy({ left: -800, behavior: 'smooth' });
+    btnLeft.onclick = () => {
+        container.scrollBy({ left: -800, behavior: 'smooth' });
+    };
     
     const btnRight = document.createElement('div');
     btnRight.className = 'scroll-btn-right';
     btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnRight.onclick = () => container.scrollBy({ left: 800, behavior: 'smooth' });
+    btnRight.onclick = () => {
+        container.scrollBy({ left: 800, behavior: 'smooth' });
+    };
     
     wrapper.appendChild(btnLeft);
     wrapper.appendChild(btnRight);
@@ -205,7 +211,7 @@ document.addEventListener('click', (event) => {
 });
 
 // Create galleries
-createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
-createMasonryGallery('weddingTrack', imagesByCategory.wedding);
-createMasonryGallery('urbanTrack', imagesByCategory.urban);
+createBalanced2RowGallery('realEstateTrack', imagesByCategory.realEstate);
+createBalanced2RowGallery('weddingTrack', imagesByCategory.wedding);
+createBalanced2RowGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
