@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== 2-ROW BALANCED GALLERY - NO GAPS ===== */
+/* ===== PAIRED SLOT GALLERY - 2 IMAGES PER SLOT ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
@@ -256,26 +256,32 @@ body {
 
 .gallery-track {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
     width: max-content;
     padding: 10px 2%;
-}
-
-.gallery-row {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
     align-items: flex-start;
 }
 
-.gallery-item {
+/* Each slot can contain 1 or 2 images stacked vertically */
+.gallery-slot {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 260px;
     flex-shrink: 0;
+}
+
+.gallery-slot.single {
+    justify-content: center;
+}
+
+.gallery-item {
     position: relative;
     cursor: pointer;
     background: transparent;
     border-radius: 6px;
+    width: 100%;
 }
 
 .gallery-item img {
@@ -289,19 +295,31 @@ body {
     transform: translateY(-3px);
 }
 
+
+.gallery-container::-webkit-scrollbar {
+    height: 5px;
+}
+
+.gallery-container::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 3px;
+}
+
+.gallery-container::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+    border-radius: 3px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    .gallery-item { width: 220px; }
-    .gallery-row { gap: 16px; }
+    .gallery-slot { width: 220px; gap: 16px; }
     .gallery-track { gap: 16px; }
 }
 
 @media (max-width: 550px) {
-    .gallery-item { width: 180px; }
-    .gallery-row { gap: 12px; }
+    .gallery-slot { width: 180px; gap: 12px; }
     .gallery-track { gap: 12px; }
 }
-
 /* Scroll buttons - FIXED to wrapper */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
@@ -345,20 +363,6 @@ body {
 
 .scroll-btn-right {
     right: 15px;
-}
-
-.gallery-container::-webkit-scrollbar {
-    height: 5px;
-}
-
-.gallery-container::-webkit-scrollbar-track {
-    background: #1a1a1a;
-    border-radius: 3px;
-}
-
-.gallery-container::-webkit-scrollbar-thumb {
-    background: var(--text-secondary);
-    border-radius: 3px;
 }
 
 /* ===== ABOUT SECTION ===== */

@@ -12,6 +12,25 @@ const imagesByCategory = {
     ]
 };
 
+// Store image dimensions after loading
+const imageDimensions = new Map();
+
+function loadImageDimensions(filename, callback) {
+    if (imageDimensions.has(filename)) {
+        callback(imageDimensions.get(filename));
+        return;
+    }
+    const img = new Image();
+    img.onload = function() {
+        const aspectRatio = img.height / img.width;
+        const scaledHeight = 260 * aspectRatio;
+        const dims = { width: 260, height: scaledHeight, aspectRatio };
+        imageDimensions.set(filename, dims);
+        callback(dims);
+    };
+    img.src = `images/${encodeURIComponent(filename)}`;
+}
+
 function createGalleryItem(filename) {
     const encoded = encodeURIComponent(filename);
     const src = `images/${encoded}`;
@@ -26,63 +45,64 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// 2-ROW BALANCED GALLERY - groups images into pairs that balance top/bottom row heights
-function createBalanced2RowGallery(trackId, imageList) {
+function createPairedGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Create 2 rows
-    const topRow = document.createElement('div');
-    topRow.className = 'gallery-row';
-    const bottomRow = document.createElement('div');
-    bottomRow.className = 'gallery-row';
-    
-    // We need image heights to balance them
-    const imageHeights = [];
-    let loadedCount = 0;
-    
     if (imageList.length === 0) return;
     
-    imageList.forEach((filename, index) => {
-        const tempImg = new Image();
-        tempImg.onload = function() {
-            const aspectRatio = tempImg.height / tempImg.width;
-            const scaledHeight = 260 * aspectRatio; // 260px width
-            imageHeights.push({ filename, height: scaledHeight, index });
+    // Load all dimensions first
+    let loadedCount = 0;
+    const dimensions = [];
+    
+    imageList.forEach((filename, idx) => {
+        loadImageDimensions(filename, (dims) => {
+            dimensions.push({ filename, height: dims.height, index: idx });
             loadedCount++;
             
             if (loadedCount === imageList.length) {
                 // Sort by original order
-                imageHeights.sort((a, b) => a.index - b.index);
+                dimensions.sort((a, b) => a.index - b.index);
                 
-                // Balance heights between top and bottom rows
-                let topHeight = 0;
-                let bottomHeight = 0;
+                // Create paired slots: try to pair a tall image with a short image
+                const slots = [];
+                let i = 0;
                 
-                imageHeights.forEach(item => {
-                    const galleryItem = createGalleryItem(item.filename);
+                while (i < dimensions.length) {
+                    const current = dimensions[i];
+                    const next = dimensions[i + 1];
                     
-                    // Add to the shorter row
-                    if (topHeight <= bottomHeight) {
-                        topRow.appendChild(galleryItem);
-                        topHeight += item.height;
+                    // If there's a next image and pairing makes sense (tall + short)
+                    if (next && current.height + next.height < 600) {
+                        // Create a stacked pair
+                        const slot = document.createElement('div');
+                        slot.className = 'gallery-slot';
+                        
+                        const topItem = createGalleryItem(current.filename);
+                        const bottomItem = createGalleryItem(next.filename);
+                        
+                        slot.appendChild(topItem);
+                        slot.appendChild(bottomItem);
+                        track.appendChild(slot);
+                        i += 2;
                     } else {
-                        bottomRow.appendChild(galleryItem);
-                        bottomHeight += item.height;
+                        // Single image slot
+                        const slot = document.createElement('div');
+                        slot.className = 'gallery-slot single';
+                        const item = createGalleryItem(current.filename);
+                        slot.appendChild(item);
+                        track.appendChild(slot);
+                        i++;
                     }
-                });
-                
-                track.appendChild(topRow);
-                track.appendChild(bottomRow);
+                }
                 
                 // Add scroll buttons
                 const container = track.parentElement;
                 const wrapper = container.closest('.gallery-wrapper');
                 if (wrapper) addScrollButtons(wrapper, container);
             }
-        };
-        tempImg.src = `images/${encodeURIComponent(filename)}`;
+        });
     });
 }
 
@@ -211,7 +231,7 @@ document.addEventListener('click', (event) => {
 });
 
 // Create galleries
-createBalanced2RowGallery('realEstateTrack', imagesByCategory.realEstate);
-createBalanced2RowGallery('weddingTrack', imagesByCategory.wedding);
-createBalanced2RowGallery('urbanTrack', imagesByCategory.urban);
+createPairedGallery('realEstateTrack', imagesByCategory.realEstate);
+createPairedGallery('weddingTrack', imagesByCategory.wedding);
+createPairedGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
