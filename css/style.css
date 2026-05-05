@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== MASONRY STACKING GALLERY (No gaps, images stack vertically) ===== */
+/* ===== FIXED MASONRY - NARROWER COLUMNS, HEIGHT LIMITED ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -249,27 +249,44 @@ body {
     padding: 10px 0 20px 0;
     -webkit-overflow-scrolling: touch;
     width: 100%;
+    max-height: 600px;
 }
 
 .gallery-track {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 20px;
+    gap: 16px;
     min-width: min-content;
     padding: 0 2%;
 }
 
-/* Each column stacks images vertically */
+/* NARROWER COLUMNS - allows more columns horizontally */
 .gallery-column {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    width: 320px;
+    gap: 16px;
+    width: 220px;
     flex-shrink: 0;
+    max-height: 550px;
+    overflow-y: auto;
 }
 
-/* Individual image item */
+/* Custom scrollbar for columns */
+.gallery-column::-webkit-scrollbar {
+    width: 3px;
+}
+
+.gallery-column::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 2px;
+}
+
+.gallery-column::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+    border-radius: 2px;
+}
+
 .gallery-item {
     position: relative;
     cursor: pointer;
@@ -283,11 +300,12 @@ body {
 .gallery-item img {
     width: 100%;
     height: auto;
+    max-height: 280px;
+    object-fit: cover;
     display: block;
     transition: transform 0.5s ease;
 }
 
-/* Dark overlay on hover */
 .gallery-item::after {
     content: '';
     position: absolute;
@@ -321,8 +339,8 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
     display: flex;
@@ -346,23 +364,23 @@ body {
 }
 
 .scroll-btn-left svg, .scroll-btn-right svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     stroke: var(--text-primary);
-    stroke-width: 2.5;
+    stroke-width: 2;
     fill: none;
 }
 
 .scroll-btn-left {
-    left: 10px;
+    left: 5px;
 }
 
 .scroll-btn-right {
-    right: 10px;
+    right: 5px;
 }
 
 .gallery-container::-webkit-scrollbar {
-    height: 6px;
+    height: 5px;
 }
 
 .gallery-container::-webkit-scrollbar-track {
@@ -579,15 +597,16 @@ body {
     opacity: 0.6;
 }
 
-/* ===== RESPONSIVE - COLUMN WIDTHS ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
-    .gallery-column { width: 300px; }
-    .gallery-track { gap: 18px; }
+    .gallery-column { width: 210px; }
+    .gallery-item img { max-height: 260px; }
 }
 
 @media (max-width: 992px) {
-    .gallery-column { width: 280px; }
-    .gallery-track { gap: 16px; }
+    .gallery-column { width: 200px; }
+    .gallery-item img { max-height: 250px; }
+    .gallery-track { gap: 14px; }
 }
 
 @media (max-width: 768px) {
@@ -609,34 +628,29 @@ body {
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .gallery-column { width: 260px; }
-    .gallery-track { gap: 14px; padding: 0 3%; }
+    .gallery-column { width: 190px; gap: 12px; }
+    .gallery-item img { max-height: 230px; }
+    .gallery-track { gap: 12px; padding: 0 3%; }
+    .gallery-container { max-height: 500px; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
     .contact-form { margin: 0 auto; }
     
     .scroll-btn-left, .scroll-btn-right {
-        width: 40px;
-        height: 40px;
-    }
-    .scroll-btn-left svg, .scroll-btn-right svg {
-        width: 20px;
-        height: 20px;
+        width: 38px;
+        height: 38px;
     }
 }
 
 @media (max-width: 550px) {
-    .gallery-column { width: 240px; }
-    .gallery-track { gap: 12px; }
+    .gallery-column { width: 180px; }
+    .gallery-item img { max-height: 210px; }
+    .gallery-track { gap: 10px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
     .scroll-btn-left, .scroll-btn-right {
-        width: 36px;
-        height: 36px;
-    }
-    .scroll-btn-left svg, .scroll-btn-right svg {
-        width: 18px;
-        height: 18px;
+        width: 34px;
+        height: 34px;
     }
 }

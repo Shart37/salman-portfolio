@@ -31,11 +31,13 @@ function createMasonryGallery(trackId, imageList) {
     if (!track) return;
     track.innerHTML = '';
     
-    // Determine number of columns based on screen width
-    let columnCount = 4;
-    if (window.innerWidth <= 992) columnCount = 3;
-    if (window.innerWidth <= 768) columnCount = 2;
-    if (window.innerWidth <= 550) columnCount = 2;
+    // MORE COLUMNS for better horizontal spread
+    let columnCount = 8;  // ← More columns = more horizontal scrolling
+    if (window.innerWidth <= 1400) columnCount = 7;
+    if (window.innerWidth <= 1200) columnCount = 6;
+    if (window.innerWidth <= 992) columnCount = 5;
+    if (window.innerWidth <= 768) columnCount = 4;
+    if (window.innerWidth <= 550) columnCount = 3;
     
     // Create columns
     const columns = [];
@@ -48,7 +50,6 @@ function createMasonryGallery(trackId, imageList) {
     
     // Distribute images to columns (shortest column gets next image)
     imageList.forEach(filename => {
-        // Find column with smallest height
         let shortestColumn = columns[0];
         let shortestHeight = columns[0].scrollHeight;
         
@@ -77,7 +78,7 @@ function addScrollButtons(container) {
     btnLeft.className = 'scroll-btn-left';
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
     btnLeft.onclick = () => {
-        container.scrollBy({ left: -350, behavior: 'smooth' });
+        container.scrollBy({ left: -500, behavior: 'smooth' });
         btnLeft.style.transform = 'translateY(-50%) scale(0.95)';
         setTimeout(() => { btnLeft.style.transform = 'translateY(-50%) scale(1)'; }, 150);
     };
@@ -86,7 +87,7 @@ function addScrollButtons(container) {
     btnRight.className = 'scroll-btn-right';
     btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
     btnRight.onclick = () => {
-        container.scrollBy({ left: 350, behavior: 'smooth' });
+        container.scrollBy({ left: 500, behavior: 'smooth' });
         btnRight.style.transform = 'translateY(-50%) scale(0.95)';
         setTimeout(() => { btnRight.style.transform = 'translateY(-50%) scale(1)'; }, 150);
     };
@@ -100,7 +101,7 @@ function setupHorizontalWheelScroll() {
     containers.forEach(container => {
         container.addEventListener('wheel', function(e) {
             e.preventDefault();
-            container.scrollLeft += e.deltaY;
+            container.scrollLeft += e.deltaY * 1.5;
         }, { passive: false });
     });
 }
@@ -201,7 +202,7 @@ createMasonryGallery('weddingTrack', imagesByCategory.wedding);
 createMasonryGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
 
-// Optional: Reflow on window resize (to adjust column count)
+// Reflow on window resize
 let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
