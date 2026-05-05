@@ -1,4 +1,3 @@
-// ===== IMAGE CATEGORIES =====
 const imagesByCategory = {
     realEstate: ["img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"],
     wedding: ["img9.jpg"],
@@ -12,7 +11,6 @@ const imagesByCategory = {
     ]
 };
 
-// Create a single gallery item
 function createGalleryItem(filename) {
     const encoded = encodeURIComponent(filename);
     const src = `images/${encoded}`;
@@ -27,50 +25,45 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// Create MASONRY horizontal gallery (distributes images evenly across columns)
-function createMasonryGallery(trackId, imageList, columnCount = 3) {
+function createEmptyPlaceholder() {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'gallery-item';
+    placeholder.style.visibility = 'hidden';
+    placeholder.style.opacity = '0';
+    placeholder.style.pointerEvents = 'none';
+    placeholder.style.background = 'transparent';
+    return placeholder;
+}
+
+function createHorizontalGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Adjust column count for mobile
-    if (window.innerWidth <= 768) columnCount = 2;
-    if (window.innerWidth <= 550) columnCount = 2;
+    const row1 = [];
+    const row2 = [];
     
-    // Create columns
-    const columns = [];
-    for (let i = 0; i < columnCount; i++) {
-        const column = document.createElement('div');
-        column.className = 'masonry-column';
-        columns.push(column);
-        track.appendChild(column);
-    }
-    
-    // Distribute images to columns (shortest column gets next image)
-    imageList.forEach(filename => {
-        // Find column with smallest height
-        let shortestColumn = columns[0];
-        let shortestHeight = columns[0].scrollHeight;
-        
-        for (let i = 1; i < columns.length; i++) {
-            const height = columns[i].scrollHeight;
-            if (height < shortestHeight) {
-                shortestHeight = height;
-                shortestColumn = columns[i];
-            }
-        }
-        
-        const item = createGalleryItem(filename);
-        shortestColumn.appendChild(item);
+    imageList.forEach((filename, index) => {
+        if (index % 2 === 0) row1.push(filename);
+        else row2.push(filename);
     });
     
-    // Add scroll buttons
+    const maxLength = Math.max(row1.length, row2.length);
+    while (row1.length < maxLength) row1.push(null);
+    while (row2.length < maxLength) row2.push(null);
+    
+    for (let i = 0; i < maxLength; i++) {
+        if (row1[i]) track.appendChild(createGalleryItem(row1[i]));
+        else track.appendChild(createEmptyPlaceholder());
+        
+        if (row2[i]) track.appendChild(createGalleryItem(row2[i]));
+        else track.appendChild(createEmptyPlaceholder());
+    }
+    
     addScrollButtons(track.parentElement);
 }
 
-// Add scroll buttons to gallery container
 function addScrollButtons(container) {
-    // Remove existing buttons to avoid duplicates
     const existingLeft = container.querySelector('.scroll-btn-left');
     const existingRight = container.querySelector('.scroll-btn-right');
     if (existingLeft) existingLeft.remove();
@@ -79,30 +72,17 @@ function addScrollButtons(container) {
     const btnLeft = document.createElement('div');
     btnLeft.className = 'scroll-btn-left';
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnLeft.onclick = () => {
-        container.scrollBy({ left: -350, behavior: 'smooth' });
-        btnLeft.style.transform = 'translateY(-50%) scale(0.95)';
-        setTimeout(() => {
-            btnLeft.style.transform = 'translateY(-50%) scale(1)';
-        }, 150);
-    };
+    btnLeft.onclick = () => container.scrollBy({ left: -350, behavior: 'smooth' });
     
     const btnRight = document.createElement('div');
     btnRight.className = 'scroll-btn-right';
     btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnRight.onclick = () => {
-        container.scrollBy({ left: 350, behavior: 'smooth' });
-        btnRight.style.transform = 'translateY(-50%) scale(0.95)';
-        setTimeout(() => {
-            btnRight.style.transform = 'translateY(-50%) scale(1)';
-        }, 150);
-    };
+    btnRight.onclick = () => container.scrollBy({ left: 350, behavior: 'smooth' });
     
     container.appendChild(btnLeft);
     container.appendChild(btnRight);
 }
 
-// Lightbox System
 function openLightbox(src) {
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
@@ -118,22 +98,18 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
-// Contact Form Handler
 const form = document.getElementById('contactForm');
 const successDiv = document.getElementById('formSuccess');
-
 if (form) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(form);
-        
         try {
             const response = await fetch(form.action, {
                 method: 'POST',
                 body: formData,
                 headers: { 'Accept': 'application/json' }
             });
-            
             if (response.ok) {
                 form.style.display = 'none';
                 successDiv.style.display = 'block';
@@ -143,15 +119,14 @@ if (form) {
                     successDiv.style.display = 'none';
                 }, 4000);
             } else {
-                alert("Message could not be sent. Please email me directly.");
+                alert("Message could not be sent.");
             }
         } catch (error) {
-            alert("Network error. Please check your connection.");
+            alert("Network error.");
         }
     });
 }
 
-// Lightbox Events
 const lightbox = document.getElementById('lightbox');
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
@@ -160,13 +135,10 @@ lightbox.addEventListener('click', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.style.display === 'flex') {
-        closeLightbox();
-    }
+    if (e.key === 'Escape' && lightbox.style.display === 'flex') closeLightbox();
 });
 
-// Smooth scroll for desktop navigation
-document.querySelectorAll('.nav-links a').forEach(anchor => {
+document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
         if (href === '#') {
@@ -182,78 +154,21 @@ document.querySelectorAll('.nav-links a').forEach(anchor => {
     });
 });
 
-// Logo changes to camera icon when scrolling
 const logo = document.getElementById('logo');
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        logo.classList.add('camera-mode');
-    } else {
-        logo.classList.remove('camera-mode');
-    }
+    if (window.scrollY > 50) logo.classList.add('camera-mode');
+    else logo.classList.remove('camera-mode');
 });
 
-// Mobile Menu Logic
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
-const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-
-menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-});
-
-mobileLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        mobileMenu.classList.remove('active');
-        const href = link.getAttribute('href');
-        if (href === '#') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (href && href !== '#') {
-            const target = document.querySelector(href);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    });
-});
-
-// Close mobile menu when clicking outside
+menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
 document.addEventListener('click', (event) => {
     if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
         mobileMenu.classList.remove('active');
     }
 });
 
-// Initialize galleries with masonry layout
-function initGalleries() {
-    // Desktop: 3 columns, Mobile: 2 columns
-    const columnCount = window.innerWidth <= 768 ? 2 : 3;
-    
-    createMasonryGallery('realEstateTrack', imagesByCategory.realEstate, columnCount);
-    createMasonryGallery('weddingTrack', imagesByCategory.wedding, columnCount);
-    createMasonryGallery('urbanTrack', imagesByCategory.urban, columnCount);
-}
-
-// Run on load
-initGalleries();
-
-// Re-initialize on window resize (to adjust column count)
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        initGalleries();
-    }, 250);
-});
-
-// Prevent scroll sticking on touch devices
-const allGalleries = document.querySelectorAll('.gallery-container');
-allGalleries.forEach(gallery => {
-    gallery.addEventListener('touchend', () => {
-        setTimeout(() => {
-            gallery.style.scrollBehavior = 'auto';
-            setTimeout(() => {
-                gallery.style.scrollBehavior = 'smooth';
-            }, 50);
-        }, 10);
-    });
-});
+createHorizontalGallery('realEstateTrack', imagesByCategory.realEstate);
+createHorizontalGallery('weddingTrack', imagesByCategory.wedding);
+createHorizontalGallery('urbanTrack', imagesByCategory.urban);

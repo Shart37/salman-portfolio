@@ -237,7 +237,6 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== MASONRY HORIZONTAL SCROLL GALLERY (No gaps) ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -248,21 +247,12 @@ body {
 }
 
 .gallery-track {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 16px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    gap: 20px;
     min-width: max-content;
     padding: 0 5%;
-}
-
-/* Masonry column - each column stacks images vertically */
-.masonry-column {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 280px;
-    flex-shrink: 0;
 }
 
 .gallery-item {
@@ -272,7 +262,7 @@ body {
     background: var(--bg-card);
     border-radius: 4px;
     transition: transform 0.3s ease;
-    width: 100%;
+    width: 280px;
 }
 
 .gallery-item img {
@@ -282,7 +272,6 @@ body {
     transition: transform 0.5s ease;
 }
 
-/* Dark overlay on hover/press */
 .gallery-item::after {
     content: '';
     position: absolute;
@@ -311,7 +300,6 @@ body {
     transform: scale(1.02);
 }
 
-/* Scroll Buttons */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
@@ -336,10 +324,6 @@ body {
     transform: translateY(-50%) scale(1.05);
 }
 
-.scroll-btn-left:active, .scroll-btn-right:active {
-    transform: translateY(-50%) scale(0.95);
-}
-
 .scroll-btn-left svg, .scroll-btn-right svg {
     width: 22px;
     height: 22px;
@@ -356,7 +340,6 @@ body {
     right: 5px;
 }
 
-/* Scrollbar styling */
 .gallery-container::-webkit-scrollbar {
     height: 6px;
 }
@@ -369,45 +352,6 @@ body {
 .gallery-container::-webkit-scrollbar-thumb {
     background: var(--text-secondary);
     border-radius: 3px;
-}
-
-.gallery-container::-webkit-scrollbar-thumb:hover {
-    background: var(--text-primary);
-}
-
-/* Responsive - fewer columns on mobile */
-@media (max-width: 768px) {
-    .masonry-column {
-        width: 220px;
-        gap: 12px;
-    }
-    .gallery-track {
-        gap: 12px;
-        padding: 0 4%;
-    }
-    .scroll-btn-left, .scroll-btn-right {
-        width: 38px;
-        height: 38px;
-    }
-    .scroll-btn-left svg, .scroll-btn-right svg {
-        width: 18px;
-        height: 18px;
-    }
-}
-
-@media (max-width: 550px) {
-    .masonry-column {
-        width: 180px;
-        gap: 10px;
-    }
-    .gallery-track {
-        gap: 10px;
-        padding: 0 3%;
-    }
-    .scroll-btn-left, .scroll-btn-right {
-        width: 34px;
-        height: 34px;
-    }
 }
 
 .about-section {
