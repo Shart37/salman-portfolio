@@ -1,4 +1,4 @@
-// IMAGE CATEGORIES
+// IMAGE CATEGORIES - YOUR EXACT LIST
 const imagesByCategory = {
     realEstate: ["img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"],
     wedding: ["img9.jpg"],
@@ -26,44 +26,18 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function createMasonryGallery(trackId, imageList) {
+function createGridGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Determine number of rows (columns in masonry)
-    // Desktop: 3 rows, Tablet: 2 rows, Mobile: 2 rows
-    let rowCount = 3;
-    if (window.innerWidth <= 992) rowCount = 2;
-    if (window.innerWidth <= 550) rowCount = 2;
-    
-    // Create columns (each column = one vertical stack)
-    const columns = [];
-    for (let i = 0; i < rowCount; i++) {
-        const column = document.createElement('div');
-        column.className = 'gallery-column';
-        columns.push(column);
-        track.appendChild(column);
-    }
-    
-    // Distribute images to the SHORTEST column (by total height)
+    // For wedding section with 1 image, add a placeholder to balance? No - leave as is
     imageList.forEach(filename => {
-        let shortestColumn = columns[0];
-        let shortestHeight = columns[0].scrollHeight;
-        
-        for (let i = 1; i < columns.length; i++) {
-            const height = columns[i].scrollHeight;
-            if (height < shortestHeight) {
-                shortestHeight = height;
-                shortestColumn = columns[i];
-            }
-        }
-        
         const item = createGalleryItem(filename);
-        shortestColumn.appendChild(item);
+        track.appendChild(item);
     });
     
-    // Add scroll buttons to wrapper (non-scrolling parent)
+    // Add scroll buttons to wrapper
     const container = track.parentElement;
     const wrapper = container.closest('.gallery-wrapper');
     if (wrapper) {
@@ -197,19 +171,7 @@ document.addEventListener('click', (event) => {
 });
 
 // Create galleries
-createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
-createMasonryGallery('weddingTrack', imagesByCategory.wedding);
-createMasonryGallery('urbanTrack', imagesByCategory.urban);
+createGridGallery('realEstateTrack', imagesByCategory.realEstate);
+createGridGallery('weddingTrack', imagesByCategory.wedding);
+createGridGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
-
-// Reflow on window resize
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
-        createMasonryGallery('weddingTrack', imagesByCategory.wedding);
-        createMasonryGallery('urbanTrack', imagesByCategory.urban);
-        setupHorizontalWheelScroll();
-    }, 250);
-});

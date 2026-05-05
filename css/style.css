@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== MASONRY GALLERY - 2-3 ROWS, NO CROPPING, NO GAPS ===== */
+/* ===== 2-ROW GRID GALLERY - NO GAPS, AUTO HEIGHT ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
@@ -254,31 +254,24 @@ body {
     width: 100%;
 }
 
+/* Grid layout: 2 rows, auto height per row, flows horizontally */
 .gallery-track {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
     gap: 20px;
     width: max-content;
     padding: 10px 2%;
 }
 
-.gallery-column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 280px;
-    flex-shrink: 0;
-}
-
 .gallery-item {
+    width: 280px;
     position: relative;
     cursor: pointer;
     overflow: hidden;
     background: var(--bg-card);
     border-radius: 6px;
     transition: transform 0.2s ease;
-    width: 100%;
 }
 
 .gallery-item img {
@@ -579,11 +572,11 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
-    .gallery-column { width: 260px; }
+    .gallery-item { width: 260px; }
 }
 
 @media (max-width: 992px) {
-    .gallery-column { width: 240px; }
+    .gallery-item { width: 240px; }
     .gallery-track { gap: 16px; }
 }
 
@@ -606,7 +599,7 @@ body {
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .gallery-column { width: 220px; gap: 16px; }
+    .gallery-item { width: 220px; }
     .gallery-track { gap: 16px; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
@@ -616,7 +609,7 @@ body {
 }
 
 @media (max-width: 550px) {
-    .gallery-column { width: 200px; gap: 12px; }
+    .gallery-item { width: 200px; }
     .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
