@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== GALLERY - SIMPLIFIED FIXED LAYOUT ===== */
+/* ===== 2-ROW SIMPLE GALLERY ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -252,14 +252,21 @@ body {
 
 .gallery-track {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
     min-width: min-content;
     padding: 0 5%;
 }
 
-/* Each image stands alone - no columns */
-.gallery-single-item {
+/* Row wrapper */
+.gallery-row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+/* Each image item */
+.gallery-item {
     width: 280px;
     flex-shrink: 0;
     position: relative;
@@ -270,14 +277,14 @@ body {
     transition: transform 0.3s ease;
 }
 
-.gallery-single-item img {
+.gallery-item img {
     width: 100%;
     height: auto;
     display: block;
     transition: transform 0.5s ease;
 }
 
-.gallery-single-item::after {
+.gallery-item::after {
     content: '';
     position: absolute;
     top: 0;
@@ -289,19 +296,19 @@ body {
     pointer-events: none;
 }
 
-.gallery-single-item:hover::after {
+.gallery-item:hover::after {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.gallery-single-item:active::after {
+.gallery-item:active::after {
     background: rgba(0, 0, 0, 0.6);
 }
 
-.gallery-single-item:hover {
+.gallery-item:hover {
     transform: translateY(-4px);
 }
 
-.gallery-single-item:hover img {
+.gallery-item:hover img {
     transform: scale(1.02);
 }
 
@@ -588,7 +595,8 @@ body {
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .gallery-single-item { width: 240px; }
+    .gallery-item { width: 240px; }
+    .gallery-row { gap: 15px; }
     .gallery-track { gap: 15px; padding: 0 4%; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
@@ -602,7 +610,8 @@ body {
 }
 
 @media (max-width: 550px) {
-    .gallery-single-item { width: 200px; }
+    .gallery-item { width: 200px; }
+    .gallery-row { gap: 12px; }
     .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }

@@ -16,7 +16,7 @@ function createGalleryItem(filename) {
     const encoded = encodeURIComponent(filename);
     const src = `images/${encoded}`;
     const item = document.createElement('div');
-    item.className = 'gallery-single-item';
+    item.className = 'gallery-item';
     const img = document.createElement('img');
     img.src = src;
     img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
@@ -26,15 +26,38 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function createGallery(trackId, imageList) {
+function create2RowGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    imageList.forEach(filename => {
-        const item = createGalleryItem(filename);
-        track.appendChild(item);
+    // Split images into 2 rows
+    const row1 = [];
+    const row2 = [];
+    
+    imageList.forEach((filename, index) => {
+        if (index % 2 === 0) {
+            row1.push(filename);
+        } else {
+            row2.push(filename);
+        }
     });
+    
+    // Create Row 1
+    const row1Div = document.createElement('div');
+    row1Div.className = 'gallery-row';
+    row1.forEach(filename => {
+        row1Div.appendChild(createGalleryItem(filename));
+    });
+    track.appendChild(row1Div);
+    
+    // Create Row 2
+    const row2Div = document.createElement('div');
+    row2Div.className = 'gallery-row';
+    row2.forEach(filename => {
+        row2Div.appendChild(createGalleryItem(filename));
+    });
+    track.appendChild(row2Div);
     
     addScrollButtons(track.parentElement);
 }
@@ -169,7 +192,7 @@ document.addEventListener('click', (event) => {
 });
 
 // Initialize galleries
-createGallery('realEstateTrack', imagesByCategory.realEstate);
-createGallery('weddingTrack', imagesByCategory.wedding);
-createGallery('urbanTrack', imagesByCategory.urban);
+create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
+create2RowGallery('weddingTrack', imagesByCategory.wedding);
+create2RowGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
