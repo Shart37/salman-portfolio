@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Salman Portfolio - Photography</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salman Ahmed — Photography Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -12,231 +12,336 @@
         }
 
         body {
-            background-color: #050505;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #eaeaea;
-            line-height: 1.5;
+            background: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            color: #111;
+            line-height: 1.4;
         }
 
-        /* Header / Hero Section */
-        .hero {
-            padding: 3rem 1.5rem 2rem;
+        /* Header */
+        .header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 1rem;
             text-align: center;
-            border-bottom: 1px solid #1f1f1f;
+            border-bottom: 1px solid #eee;
         }
 
-        .hero h1 {
+        .header h1 {
             font-size: 2.8rem;
+            font-weight: 450;
             letter-spacing: -0.02em;
-            font-weight: 500;
-            background: linear-gradient(135deg, #ffffff, #a0a0a0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: #111;
             margin-bottom: 0.5rem;
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: #aaa;
-            max-width: 600px;
-            margin: 0 auto;
+        .header p {
+            font-size: 0.95rem;
+            color: #666;
+            letter-spacing: 0.3px;
         }
 
-        /* Gallery Grid */
+        /* Category Navigation */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #eee;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .cat-btn {
+            background: none;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 450;
+            letter-spacing: 0.5px;
+            color: #888;
+            cursor: pointer;
+            padding: 0.4rem 0;
+            transition: color 0.2s;
+            text-transform: uppercase;
+        }
+
+        .cat-btn:hover {
+            color: #111;
+        }
+
+        .cat-btn.active {
+            color: #111;
+            border-bottom: 2px solid #111;
+        }
+
+        /* Gallery Grid — Masonry style like Wix */
         .gallery {
             max-width: 1400px;
-            margin: 3rem auto;
+            margin: 2rem auto;
             padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.8rem;
+            column-count: 3;
+            column-gap: 1.2rem;
         }
 
-        /* Photo Card */
-        .photo-card {
-            background: #0c0c0c;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1.2rem;
+            position: relative;
+            cursor: pointer;
+            transition: opacity 0.2s;
         }
 
-        .photo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
-
-        .photo-card img {
+        .gallery-item img {
             width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
+            height: auto;
             display: block;
-            transition: filter 0.3s ease;
-            background-color: #1a1a1a; /* fallback while loading */
+            transition: all 0.25s ease;
         }
 
-        .photo-card:hover img {
-            filter: brightness(1.03) contrast(1.02);
+        /* Hover effect — like Wix portfolio */
+        .gallery-item:hover img {
+            opacity: 0.92;
         }
 
-        /* Optional caption (you can hide or keep) */
-        .caption {
-            padding: 0.75rem 1rem;
-            font-size: 0.8rem;
-            color: #888;
-            text-align: center;
-            border-top: 1px solid #1e1e1e;
-            background: #090909;
-            white-space: nowrap;
-            overflow-x: auto;
+        /* Optional overlay on hover */
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0);
+            transition: background 0.2s;
+            pointer-events: none;
+        }
+
+        .gallery-item:hover::after {
+            background: rgba(0,0,0,0.03);
+        }
+
+        /* Lightbox Modal (click to enlarge) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 300;
+            cursor: pointer;
+            font-family: monospace;
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            padding: 2.5rem 1rem;
-            border-top: 1px solid #1f1f1f;
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            color: #666;
+            padding: 3rem 2rem;
+            border-top: 1px solid #eee;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: #aaa;
+            letter-spacing: 0.3px;
         }
 
-        /* Lazy loading subtle effect */
-        img {
-            opacity: 0;
-            transition: opacity 0.4s ease;
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .gallery { column-count: 2; }
         }
-
-        img.loaded {
-            opacity: 1;
-        }
-
-        /* responsive */
-        @media (max-width: 700px) {
-            .hero h1 { font-size: 2rem; }
-            .gallery { gap: 1rem; padding: 0 1rem; }
-            .photo-card { border-radius: 16px; }
+        @media (max-width: 600px) {
+            .gallery { column-count: 1; padding: 0 1rem; }
+            .header h1 { font-size: 2rem; }
+            .categories { gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="hero">
-    <h1>Salman’s Portfolio</h1>
-    <p>Urban geometry · Light & shadow · Manchester & beyond</p>
+<div class="header">
+    <h1>Salman Ahmed</h1>
+    <p>Photography — Architecture · Real Estate · Documentary</p>
 </div>
 
-<div class="gallery" id="galleryContainer">
-    <!-- JavaScript will inject images here -->
-    <div style="text-align: center; grid-column: 1/-1; padding: 60px 20px; color: #666;">Loading photography ...</div>
+<div class="categories">
+    <button class="cat-btn active" data-cat="all">All Work</button>
+    <button class="cat-btn" data-cat="realestate">Real Estate</button>
+    <button class="cat-btn" data-cat="architecture">Architecture</button>
+    <button class="cat-btn" data-cat="wedding">Wedding</button>
+    <button class="cat-btn" data-cat="urban">Urban / Rooftops</button>
 </div>
+
+<div class="gallery" id="gallery"></div>
 
 <div class="footer">
-    © Salman — all works · shot on various rooftops & streets
+    © Salman Ahmed — Manchester / UK
+</div>
+
+<div class="modal" id="lightbox">
+    <span class="modal-close">&times;</span>
+    <img id="lightbox-img" src="" alt="">
 </div>
 
 <script>
     // --------------------------------------------------------------
-    // LIST OF YOUR IMAGES (exactly as named in your /images folder)
+    // ORGANIZED IMAGES BY CATEGORY
     // --------------------------------------------------------------
-    const imageFiles = [
-        "view of shoes on roof.jpg",
-        "londong roof aj.jpg",
-        "sunrise manchester crane.jpg",
-        "IMG_7719-Edit.jpg",
-        "UOM.jpg",
-        "crane sunrise.jpg",
-        "climbing the light tower.jpg",
-        "joe on slanted roof.jpg",
-        "you know where this is manchester.jpg",
-        "missed my bus manchester.jpg",
-        "bikes at sunset enhanced.jpg",
-        "snow tram.jpg",
-        "snow tram 2.jpg",
-        "roof near piccadily.jpg",
-        "stewart crane sunrise.jpg",
-        "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
-        "img1.jpg",
-        "img2.jpg",
-        "img3.jpg",
-        "img4.jpg",
-        "img5.jpg",
-        "img6.jpg",
-        "img7.jpg",
-        "img8.jpg",
-        "img9.jpg",
-        "img10.jpg",
-        "img11.jpg"
+    const imagesData = [
+        // REAL ESTATE (img1,3,4,5,8,10,11 + Image10 is main featured)
+        { file: "img10.jpg", cat: "realestate", featured: true, alt: "Modern interior" },
+        { file: "img1.jpg", cat: "realestate", alt: "Property view 1" },
+        { file: "img3.jpg", cat: "realestate", alt: "Property view 2" },
+        { file: "img4.jpg", cat: "realestate", alt: "Living space" },
+        { file: "img5.jpg", cat: "realestate", alt: "Kitchen detail" },
+        { file: "img8.jpg", cat: "realestate", alt: "Bedroom view" },
+        { file: "img11.jpg", cat: "realestate", alt: "Exterior shot" },
+        
+        // ARCHITECTURE (img2, img6, img7, plus others that fit)
+        { file: "img2.jpg", cat: "architecture", alt: "Building facade" },
+        { file: "img6.jpg", cat: "architecture", alt: "Structural detail" },
+        { file: "img7.jpg", cat: "architecture", alt: "Geometric lines" },
+        { file: "UOM.jpg", cat: "architecture", alt: "University building" },
+        { file: "climbing the light tower.jpg", cat: "architecture", alt: "Light tower climb" },
+        
+        // WEDDING (img9)
+        { file: "img9.jpg", cat: "wedding", alt: "Wedding ceremony" },
+        
+        // URBAN / ROOFTOPS (the rest of your photos)
+        { file: "view of shoes on roof.jpg", cat: "urban", alt: "Shoes on rooftop" },
+        { file: "londong roof aj.jpg", cat: "urban", alt: "London rooftop" },
+        { file: "sunrise manchester crane.jpg", cat: "urban", alt: "Sunrise Manchester" },
+        { file: "IMG_7719-Edit.jpg", cat: "urban", alt: "City view" },
+        { file: "crane sunrise.jpg", cat: "urban", alt: "Crane at dawn" },
+        { file: "joe on slanted roof.jpg", cat: "urban", alt: "Joe on roof" },
+        { file: "you know where this is manchester.jpg", cat: "urban", alt: "Manchester landmark" },
+        { file: "missed my bus manchester.jpg", cat: "urban", alt: "Street scene" },
+        { file: "bikes at sunset enhanced.jpg", cat: "urban", alt: "Bikes sunset" },
+        { file: "snow tram.jpg", cat: "urban", alt: "Tram in snow" },
+        { file: "snow tram 2.jpg", cat: "urban", alt: "Snow tram 2" },
+        { file: "roof near piccadily.jpg", cat: "urban", alt: "Piccadilly roof" },
+        { file: "stewart crane sunrise.jpg", cat: "urban", alt: "Stewart crane" },
+        { file: "car driveshaft skoda fabia mk 2 1.4 tdi.jpg", cat: "urban", alt: "Car detail" }
     ];
 
-    // Helper: clean caption from filename (remove extension, replace dashes/underscores)
-    function makeCaption(filename) {
-        let name = filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
-        name = name.replace(/[-_]/g, ' ');
-        // capitalize first letter of each word gently
-        return name.charAt(0).toUpperCase() + name.slice(1);
-    }
+    // Put img10.jpg at the FRONT of real estate (main image)
+    const realEstateItems = imagesData.filter(i => i.cat === "realestate");
+    const otherItems = imagesData.filter(i => i.cat !== "realestate");
+    
+    // Sort real estate so img10 comes first
+    realEstateItems.sort((a,b) => {
+        if (a.file === "img10.jpg") return -1;
+        if (b.file === "img10.jpg") return 1;
+        return 0;
+    });
+    
+    const finalImageList = [...realEstateItems, ...otherItems];
 
-    // Function to build the gallery
-    function buildGallery() {
-        const container = document.getElementById('galleryContainer');
-        if (!container) return;
-
-        // clear loading text
-        container.innerHTML = '';
-
-        for (let file of imageFiles) {
-            // Important: encode the URI component to handle spaces correctly
-            const encodedFile = encodeURIComponent(file);
-            const imagePath = `images/${encodedFile}`;
-            
-            // Create card structure
-            const card = document.createElement('div');
-            card.className = 'photo-card';
-            
-            const img = document.createElement('img');
-            img.src = imagePath;
-            img.alt = makeCaption(file);
-            img.loading = 'lazy';   // lazy loading for performance
-            
-            // Add loaded class when image loads
-            img.onload = function() {
-                img.classList.add('loaded');
-            };
-            // if image already cached, manually call
-            if (img.complete) {
-                img.classList.add('loaded');
-            }
-            
-            const captionDiv = document.createElement('div');
-            captionDiv.className = 'caption';
-            captionDiv.textContent = makeCaption(file);
-            
-            card.appendChild(img);
-            card.appendChild(captionDiv);
-            container.appendChild(card);
+    // Function to render gallery based on selected category
+    function renderGallery(category) {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+        
+        let filtered = finalImageList;
+        if (category !== 'all') {
+            filtered = finalImageList.filter(item => item.cat === category);
         }
         
-        // Optional: if any image fails to load, show a small fallback
-        const allImgs = document.querySelectorAll('#galleryContainer img');
-        allImgs.forEach(img => {
-            img.onerror = function() {
-                this.style.opacity = '0.5';
-                this.style.filter = 'grayscale(0.6)';
-                this.alt = '⚠️ Image missing: ' + this.alt;
-                // optionally set a placeholder background
-                this.style.backgroundColor = '#1a1a1a';
-            };
+        if (filtered.length === 0) {
+            gallery.innerHTML = '<div style="text-align:center; padding: 60px; color:#999;">No images in this category yet.</div>';
+            return;
+        }
+        
+        filtered.forEach(item => {
+            const encodedFile = encodeURIComponent(item.file);
+            const imgPath = `images/${encodedFile}`;
+            
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            
+            const img = document.createElement('img');
+            img.src = imgPath;
+            img.alt = item.alt || item.file;
+            img.loading = 'lazy';
+            
+            // Add click to open lightbox
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openLightbox(imgPath, img.alt);
+            });
+            
+            div.appendChild(img);
+            gallery.appendChild(div);
         });
     }
-
-    // Run when DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', buildGallery);
-    } else {
-        buildGallery();
+    
+    // Lightbox functions
+    const modal = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    
+    function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
     }
+    
+    function closeLightbox() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        lightboxImg.src = '';
+    }
+    
+    // Event listeners
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.classList.contains('modal-close')) {
+            closeLightbox();
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            closeLightbox();
+        }
+    });
+    
+    // Category buttons
+    const buttons = document.querySelectorAll('.cat-btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cat = btn.getAttribute('data-cat');
+            renderGallery(cat);
+            
+            // Smooth scroll to top of gallery
+            document.querySelector('.gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+    
+    // Initial render (All)
+    renderGallery('all');
 </script>
 </body>
 </html>
