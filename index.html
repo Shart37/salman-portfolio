@@ -1,98 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Salcaptures | Photography</title>
-  <link rel="stylesheet" href="styles.css"/>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Salman Portfolio - Photography</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            background-color: #050505;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #eaeaea;
+            line-height: 1.5;
+        }
+
+        /* Header / Hero Section */
+        .hero {
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid #1f1f1f;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            letter-spacing: -0.02em;
+            font-weight: 500;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Gallery Grid */
+        .gallery {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+
+        /* Photo Card */
+        .photo-card {
+            background: #0c0c0c;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .photo-card img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            display: block;
+            transition: filter 0.3s ease;
+            background-color: #1a1a1a; /* fallback while loading */
+        }
+
+        .photo-card:hover img {
+            filter: brightness(1.03) contrast(1.02);
+        }
+
+        /* Optional caption (you can hide or keep) */
+        .caption {
+            padding: 0.75rem 1rem;
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            border-top: 1px solid #1e1e1e;
+            background: #090909;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            border-top: 1px solid #1f1f1f;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Lazy loading subtle effect */
+        img {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        img.loaded {
+            opacity: 1;
+        }
+
+        /* responsive */
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 2rem; }
+            .gallery { gap: 1rem; padding: 0 1rem; }
+            .photo-card { border-radius: 16px; }
+        }
+    </style>
+</head>
 <body>
 
-<header class="nav">
-  <div class="logo">SALCAPTURES</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+<div class="hero">
+    <h1>Salman’s Portfolio</h1>
+    <p>Urban geometry · Light & shadow · Manchester & beyond</p>
+</div>
 
-<!-- HERO -->
-<section id="home" class="hero">
-  <img src="images/img1.jpg" alt="Hero" />
-  <div class="hero-text">
-    <h1>Manchester-based Photography</h1>
-    <p>Real Estate · Architecture · Weddings · Documentary</p>
-  </div>
-</section>
+<div class="gallery" id="galleryContainer">
+    <!-- JavaScript will inject images here -->
+    <div style="text-align: center; grid-column: 1/-1; padding: 60px 20px; color: #666;">Loading photography ...</div>
+</div>
 
-<!-- ABOUT -->
-<section id="about" class="section">
-  <h2>About</h2>
-  <p class="about-text">
-    Epic photography is done here
-  </p>
-</section>
+<div class="footer">
+    © Salman — all works · shot on various rooftops & streets
+</div>
 
-<!-- REAL ESTATE -->
-<section id="work" class="section dark">
-  <h2>Real Estate</h2>
-  <div class="grid">
-    <img src="images/img3.jpg">
-    <img src="images/img4.jpg">
-    <img src="images/img5.jpg">
-    <img src="images/img8.jpg">
-    <img src="images/img10.jpg">
-    <img src="images/img11.jpg">
-  </div>
-</section>
+<script>
+    // --------------------------------------------------------------
+    // LIST OF YOUR IMAGES (exactly as named in your /images folder)
+    // --------------------------------------------------------------
+    const imageFiles = [
+        "view of shoes on roof.jpg",
+        "londong roof aj.jpg",
+        "sunrise manchester crane.jpg",
+        "IMG_7719-Edit.jpg",
+        "UOM.jpg",
+        "crane sunrise.jpg",
+        "climbing the light tower.jpg",
+        "joe on slanted roof.jpg",
+        "you know where this is manchester.jpg",
+        "missed my bus manchester.jpg",
+        "bikes at sunset enhanced.jpg",
+        "snow tram.jpg",
+        "snow tram 2.jpg",
+        "roof near piccadily.jpg",
+        "stewart crane sunrise.jpg",
+        "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
+        "img1.jpg",
+        "img2.jpg",
+        "img3.jpg",
+        "img4.jpg",
+        "img5.jpg",
+        "img6.jpg",
+        "img7.jpg",
+        "img8.jpg",
+        "img9.jpg",
+        "img10.jpg",
+        "img11.jpg"
+    ];
 
-<!-- ARCHITECTURE / CITY (img7 + img8) -->
-<section class="section">
-  <h2>Architecture & City</h2>
-  <div class="grid">
-    <img src="images/img2.jpg">
-    <img src="images/img7.jpg">
-    <img src="images/img6.jpg">
-  </div>
-</section>
+    // Helper: clean caption from filename (remove extension, replace dashes/underscores)
+    function makeCaption(filename) {
+        let name = filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+        name = name.replace(/[-_]/g, ' ');
+        // capitalize first letter of each word gently
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
 
-<!-- WEDDING (img10) -->
-<section class="section dark">
-  <h2>Wedding</h2>
-  <div class="grid single">
-    <img src="images/img9.jpg">
-  </div>
-</section>
+    // Function to build the gallery
+    function buildGallery() {
+        const container = document.getElementById('galleryContainer');
+        if (!container) return;
 
-<!-- ADDITIONAL WORK (img9, img11) -->
-<section class="section">
-  <h2>Additional Work</h2>
-  <div class="grid">
-    <img src="images/view of shoes on roof.jpg">
-    <img src="images/londong roof aj.jpg">
-    <img src="images/sunrise manchester crane.jpg">
-    <img src="images/IMG_7719-Edit.jpg">
-    <img src="images/UOM.jpg">
-    <img src="images/crane sunrise.jpg">
-    <img src="images/climbing the light tower.jpg">
-    <img src="images/joe on slanted roof.jpg">
-    <img src="images/you know where this is manchester.jpg">
-    <img src="images/missed my bus manchester.jpg">
-    <img src="images/bikes at sunset enhanced.jpg">
-    <img src="images/snow tram.jpg">
-    <img src="images/snow tram 2.jpg">
-    <img src="images/roof near piccadily.jpg">
-    <img src="images/stewart crane sunrise.jpg">
-    <img src="images/car driveshaft skoda fabia mk 2 1.4 tdi.jpg">
-  </div>
-</section>
+        // clear loading text
+        container.innerHTML = '';
 
-<footer class="section">
-  <p>© Salcaptures  — Manchester Photography</p>
-</footer>
+        for (let file of imageFiles) {
+            // Important: encode the URI component to handle spaces correctly
+            const encodedFile = encodeURIComponent(file);
+            const imagePath = `images/${encodedFile}`;
+            
+            // Create card structure
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            
+            const img = document.createElement('img');
+            img.src = imagePath;
+            img.alt = makeCaption(file);
+            img.loading = 'lazy';   // lazy loading for performance
+            
+            // Add loaded class when image loads
+            img.onload = function() {
+                img.classList.add('loaded');
+            };
+            // if image already cached, manually call
+            if (img.complete) {
+                img.classList.add('loaded');
+            }
+            
+            const captionDiv = document.createElement('div');
+            captionDiv.className = 'caption';
+            captionDiv.textContent = makeCaption(file);
+            
+            card.appendChild(img);
+            card.appendChild(captionDiv);
+            container.appendChild(card);
+        }
+        
+        // Optional: if any image fails to load, show a small fallback
+        const allImgs = document.querySelectorAll('#galleryContainer img');
+        allImgs.forEach(img => {
+            img.onerror = function() {
+                this.style.opacity = '0.5';
+                this.style.filter = 'grayscale(0.6)';
+                this.alt = '⚠️ Image missing: ' + this.alt;
+                // optionally set a placeholder background
+                this.style.backgroundColor = '#1a1a1a';
+            };
+        });
+    }
 
+    // Run when DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', buildGallery);
+    } else {
+        buildGallery();
+    }
+</script>
 </body>
 </html>
