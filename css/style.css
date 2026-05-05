@@ -157,7 +157,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ===== HERO - INCREASED HEIGHT (was 35vh, now ~46vh) ===== */
+/* ===== HERO - TALLER (was 35vh, now 46vh) ===== */
 .hero {
     height: 46vh;
     min-height: 320px;
@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== 2-ROW HORIZONTAL SCROLL GALLERY (WORKING) ===== */
+/* ===== 2-ROW HORIZONTAL SCROLL GALLERY (FIXED HEIGHT, SMOOTH FIT) ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -275,13 +275,16 @@ body {
     transition: transform 0.2s ease;
 }
 
+/* Fixed image height – exactly 2 photos tall */
 .gallery-item img {
     width: 100%;
-    height: auto;
+    height: 280px;
+    object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
 }
 
+/* Dark overlay */
 .gallery-item::after {
     content: '';
     position: absolute;
@@ -310,7 +313,7 @@ body {
     transform: scale(1.01);
 }
 
-/* Scroll buttons - fixed in place */
+/* Fixed scroll buttons */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
@@ -448,7 +451,7 @@ body {
     color: var(--text-primary);
 }
 
-/* ===== CONTACT SECTION - image now same size as about image ===== */
+/* ===== CONTACT SECTION (image same size as about) ===== */
 .contact-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -513,7 +516,6 @@ body {
     color: var(--bg-black);
 }
 
-/* Contact image now matches about image dimensions */
 .contact-image {
     width: 260px;
     max-width: 100%;
@@ -581,7 +583,7 @@ body {
     opacity: 0.6;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE (mobile image heights) ===== */
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu-toggle { display: block; }
@@ -602,20 +604,19 @@ body {
     
     .section { padding: 50px 4%; }
     .gallery-item { width: 240px; }
+    .gallery-item img { height: 220px; }
     .gallery-row { gap: 15px; }
     .gallery-track { gap: 15px; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
     .contact-form { margin: 0 auto; }
-    .contact-image {
-        width: 220px;
-        margin: 0 auto;
-    }
+    .contact-image { width: 220px; margin: 0 auto; }
 }
 
 @media (max-width: 550px) {
     .gallery-item { width: 200px; }
+    .gallery-item img { height: 180px; }
     .gallery-row { gap: 12px; }
     .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
