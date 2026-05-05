@@ -157,7 +157,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ===== HERO - TALLER (was 35vh, now 46vh) ===== */
+/* ===== HERO - TALLER ===== */
 .hero {
     height: 46vh;
     min-height: 320px;
@@ -240,9 +240,13 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== 2-ROW HORIZONTAL SCROLL GALLERY (FIXED HEIGHT, SMOOTH FIT) ===== */
-.gallery-container {
+/* ===== GALLERY WITH FIXED WRAPPER (Buttons stay put!) ===== */
+.gallery-wrapper {
     position: relative;
+    width: 100%;
+}
+
+.gallery-container {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
@@ -264,8 +268,9 @@ body {
     gap: 20px;
 }
 
+/* Image items - all same height, object-fit cover */
 .gallery-item {
-    width: 300px;
+    width: 280px;
     flex-shrink: 0;
     position: relative;
     cursor: pointer;
@@ -275,10 +280,9 @@ body {
     transition: transform 0.2s ease;
 }
 
-/* Fixed image height – exactly 2 photos tall */
 .gallery-item img {
     width: 100%;
-    height: 280px;
+    height: 260px;
     object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
@@ -309,32 +313,27 @@ body {
     transform: translateY(-3px);
 }
 
-.gallery-item:hover img {
-    transform: scale(1.01);
-}
-
-/* Fixed scroll buttons */
+/* BUTTONS: Fixed to wrapper, never move */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
-    background: rgba(0, 0, 0, 0.75);
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
+    z-index: 20;
     transition: all 0.2s;
     backdrop-filter: blur(4px);
-    opacity: 0.85;
-    pointer-events: auto;
+    opacity: 0.9;
 }
 
 .scroll-btn-left:hover, .scroll-btn-right:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.3);
     opacity: 1;
     transform: translateY(-50%) scale(1.08);
 }
@@ -344,21 +343,22 @@ body {
 }
 
 .scroll-btn-left svg, .scroll-btn-right svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     stroke: var(--text-primary);
-    stroke-width: 2;
+    stroke-width: 2.5;
     fill: none;
 }
 
 .scroll-btn-left {
-    left: 10px;
+    left: 15px;
 }
 
 .scroll-btn-right {
-    right: 10px;
+    right: 15px;
 }
 
+/* Scrollbar styling */
 .gallery-container::-webkit-scrollbar {
     height: 5px;
 }
@@ -451,7 +451,7 @@ body {
     color: var(--text-primary);
 }
 
-/* ===== CONTACT SECTION (image same size as about) ===== */
+/* ===== CONTACT SECTION ===== */
 .contact-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -583,7 +583,7 @@ body {
     opacity: 0.6;
 }
 
-/* ===== RESPONSIVE (mobile image heights) ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu-toggle { display: block; }
@@ -606,7 +606,6 @@ body {
     .gallery-item { width: 240px; }
     .gallery-item img { height: 220px; }
     .gallery-row { gap: 15px; }
-    .gallery-track { gap: 15px; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
@@ -618,7 +617,6 @@ body {
     .gallery-item { width: 200px; }
     .gallery-item img { height: 180px; }
     .gallery-row { gap: 12px; }
-    .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
     .contact-image { width: 180px; }
