@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salman Ahmed — Photography Portfolio</title>
+    <title>SalCaptures — Photography Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,269 +13,547 @@
         }
 
         body {
-            background: white;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            color: #111;
-            line-height: 1.4;
+            background: #0a0a0a;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #EBEDE3;
+            line-height: 1.5;
+            overflow-x: hidden;
         }
 
-        /* Header */
-        .header {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
-
-        .header h1 {
-            font-size: 2.8rem;
-            font-weight: 450;
-            letter-spacing: -0.02em;
-            color: #111;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            font-size: 0.95rem;
-            color: #666;
-            letter-spacing: 0.3px;
-        }
-
-        /* Category Navigation */
-        .categories {
+        /* ===== SECTION STYLES ===== */
+        .section {
+            min-height: 100vh;
+            position: relative;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid #eee;
-            background: white;
-            position: sticky;
+            padding: 90px 3%;
+        }
+
+        .section-dark {
+            background: #0a0a0a;
+        }
+
+        .section-light-alt {
+            background: #1a1a1a;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, .logo-text {
+            font-family: 'avenida-w01', 'avenida-w02', fantasy;
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 0.8;
+            font-size: clamp(50px, 10vw, 101px);
+            color: #EBEDE3;
+        }
+
+        .script-text {
+            font-family: 'Caveat', cursive;
+            font-weight: bold;
+            font-size: clamp(30px, 5vw, 48px);
+            color: #EBEDE3;
+        }
+
+        .section-title {
+            font-family: 'avenida-w01', 'avenida-w02', fantasy;
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 0.8;
+            font-size: clamp(40px, 8vw, 100px);
+            color: #F5EBDC;
+        }
+
+        .body-text {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #EBEDE3;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: 0;
         }
 
-        .cat-btn {
-            background: none;
-            border: none;
-            font-size: 0.85rem;
-            font-weight: 450;
-            letter-spacing: 0.5px;
-            color: #888;
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(60px, 12vw, 120px);
+            margin-bottom: 20px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero .script-text {
+            font-size: clamp(24px, 4vw, 38px);
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease 0.2s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             cursor: pointer;
-            padding: 0.4rem 0;
-            transition: color 0.2s;
-            text-transform: uppercase;
+            animation: bounce 2s infinite;
+            z-index: 10;
         }
 
-        .cat-btn:hover {
-            color: #111;
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            fill: #EBEDE3;
+            transform: rotate(180deg);
         }
 
-        .cat-btn.active {
-            color: #111;
-            border-bottom: 2px solid #111;
+        /* ===== GALLERY SECTION (Real Estate) ===== */
+        .gallery-section {
+            background: #1a1a1a;
+            padding: 90px 3%;
         }
 
-        /* Gallery Grid — Masonry style like Wix */
-        .gallery {
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .gallery-header .section-title {
+            background: #1a1a1a;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        /* Masonry Gallery */
+        .gallery-masonry {
             max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin: 0 auto;
             column-count: 3;
-            column-gap: 1.2rem;
+            column-gap: 20px;
         }
 
         .gallery-item {
             break-inside: avoid;
-            margin-bottom: 1.2rem;
+            margin-bottom: 20px;
             position: relative;
             cursor: pointer;
-            transition: opacity 0.2s;
+            overflow: hidden;
+            border-radius: 0;
         }
 
         .gallery-item img {
             width: 100%;
             height: auto;
             display: block;
-            transition: all 0.25s ease;
+            transition: transform 0.4s ease, opacity 0.3s ease;
         }
 
-        /* Hover effect — like Wix portfolio */
         .gallery-item:hover img {
-            opacity: 0.92;
+            transform: scale(1.02);
+            opacity: 0.95;
         }
 
-        /* Optional overlay on hover */
-        .gallery-item::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0);
-            transition: background 0.2s;
-            pointer-events: none;
-        }
-
-        .gallery-item:hover::after {
-            background: rgba(0,0,0,0.03);
-        }
-
-        /* Lightbox Modal (click to enlarge) */
-        .modal {
+        /* Lightbox */
+        .lightbox {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.92);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
             justify-content: center;
             align-items: center;
             cursor: pointer;
         }
 
-        .modal img {
+        .lightbox img {
             max-width: 90%;
             max-height: 90%;
             object-fit: contain;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
-        .modal-close {
+        .lightbox-close {
             position: absolute;
-            top: 25px;
-            right: 35px;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
             color: white;
-            font-size: 2.5rem;
-            font-weight: 300;
             cursor: pointer;
             font-family: monospace;
         }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            border-top: 1px solid #eee;
-            margin-top: 1rem;
-            font-size: 0.75rem;
-            color: #aaa;
-            letter-spacing: 0.3px;
+        /* ===== ABOUT SECTION ===== */
+        .about-section {
+            background: #0a0a0a;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
         }
 
-        /* Responsive */
-        @media (max-width: 1000px) {
-            .gallery { column-count: 2; }
+        .about-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
         }
+
+        .about-image img {
+            width: 80%;
+            height: auto;
+            border-radius: 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .about-content {
+            max-width: 500px;
+        }
+
+        .about-content .section-title {
+            font-size: clamp(40px, 6vw, 80px);
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .about-content .body-text {
+            margin-bottom: 20px;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            background: #1a1a1a;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .contact-form-container {
+            max-width: 500px;
+        }
+
+        .contact-form-container .section-title {
+            margin-bottom: 30px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #EBEDE3;
+            color: #EBEDE3;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-bottom-color: #B5C289;
+        }
+
+        .contact-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            background: transparent;
+            border: 1px solid #EBEDE3;
+            color: #EBEDE3;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .contact-form button:hover {
+            background: #EBEDE3;
+            color: #0a0a0a;
+        }
+
+        .contact-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-image img {
+            width: 70%;
+            height: auto;
+            filter: grayscale(30%);
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icons img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #0a0a0a;
+            border-top: 1px solid #1a1a1a;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1000px) {
+            .gallery-masonry {
+                column-count: 2;
+            }
+            .about-section, .contact-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .about-content .section-title {
+                text-align: center;
+            }
+            .about-content, .contact-form-container {
+                margin: 0 auto;
+                text-align: center;
+            }
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
         @media (max-width: 600px) {
-            .gallery { column-count: 1; padding: 0 1rem; }
-            .header h1 { font-size: 2rem; }
-            .categories { gap: 1rem; }
+            .gallery-masonry {
+                column-count: 1;
+            }
+            .section {
+                padding: 60px 5%;
+            }
+        }
+
+        /* Decorative Vector Elements */
+        .decor-top-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #333 0%, #333 50%, transparent 50%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .decor-bottom-right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(315deg, #333 0%, #333 50%, transparent 50%);
+            opacity: 0.3;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>Salcaptures</h1>
-    <p>Photography — Real Estate · Architecture · Documentary</p>
-</div>
+<!-- HERO SECTION -->
+<section class="hero">
+    <!-- You can add a background image later -->
+    <div class="hero-content">
+        <h1>SalCaptures</h1>
+        <div class="script-text">Real Estate · Wedding · Architecture</div>
+    </div>
+    <div class="scroll-indicator" onclick="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})">
+        <svg viewBox="0 0 200 200">
+            <path d="M177.687 128.054L105.35 61.402a7.205 7.205 0 0 0-5.35-1.886 7.198 7.198 0 0 0-5.349 1.886l-72.338 66.652a7.165 7.165 0 0 0-.407 10.138 7.172 7.172 0 0 0 5.283 2.309c1.743 0 3.49-.629 4.872-1.902L100 75.999l67.939 62.598a7.197 7.197 0 0 0 10.155-.406 7.163 7.163 0 0 0-.407-10.137z"/>
+        </svg>
+    </div>
+</section>
 
-<div class="categories">
-    <button class="cat-btn active" data-cat="all">All Work</button>
-    <button class="cat-btn" data-cat="realestate">Real Estate</button>
-    <button class="cat-btn" data-cat="architecture">Architecture</button>
-    <button class="cat-btn" data-cat="wedding">Wedding</button>
-    <button class="cat-btn" data-cat="urban">Other</button>
-</div>
+<!-- REAL ESTATE GALLERY SECTION -->
+<section id="gallery" class="gallery-section">
+    <div class="gallery-header">
+        <div class="section-title">Real Estate</div>
+    </div>
+    <div class="gallery-masonry" id="realEstateGallery"></div>
+</section>
 
-<div class="gallery" id="gallery"></div>
+<!-- WEDDING GALLERY SECTION -->
+<section class="gallery-section section-light-alt">
+    <div class="gallery-header">
+        <div class="section-title">Weddings</div>
+    </div>
+    <div class="gallery-masonry" id="weddingGallery"></div>
+</section>
 
+<!-- URBAN / ARCHITECTURE GALLERY -->
+<section class="gallery-section">
+    <div class="gallery-header">
+        <div class="section-title">Urban & Architecture</div>
+    </div>
+    <div class="gallery-masonry" id="urbanGallery"></div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about-section section">
+    <div class="about-image">
+        <img src="images/img2.jpg" alt="Salman" onerror="this.src='https://placehold.co/600x800/333/EBEDE3?text=Salman'">
+    </div>
+    <div class="about-content">
+        <div class="section-title" style="text-align: right;">About</div>
+        <div class="body-text">
+            <p>Hi, I'm Salman, the person behind SalCaptures. Based in Manchester, I'm passionate about photography that feels real and personal. I combine technical skill with an eye for detail to create images that bring out the best in your special day or your property.</p>
+            <p style="margin-top: 20px;">When I'm not behind the lens, you'll find me exploring the city, brewing coffee, or working on cars. Let's create something unforgettable together.</p>
+        </div>
+        <div class="social-icons">
+            <a href="https://wa.me/+447422508131" target="_blank">
+                <svg viewBox="0 0 24 24" fill="#EBEDE3" width="40" height="40">
+                    <path d="M12.032 2.001c-5.52 0-10 4.48-10 10 0 1.76.45 3.42 1.25 4.86L2 21.001l4.24-1.23c1.4.8 3 1.23 4.62 1.23 5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18c-1.44 0-2.86-.38-4.09-1.09l-.29-.17-2.52.73.72-2.51-.19-.3c-.8-1.28-1.21-2.78-1.21-4.29 0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z"/>
+                    <path d="M16.08 13.05c-.22-.11-1.31-.65-1.51-.72-.2-.07-.35-.11-.5.11-.15.22-.58.72-.71.87-.13.15-.26.17-.48.06-.22-.11-.93-.34-1.77-1.09-.65-.59-1.09-1.32-1.22-1.54-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.2-.68-1.65-.18-.44-.36-.38-.5-.38-.13 0-.28-.01-.43-.01-.15 0-.39.06-.59.28-.2.22-.76.75-.76 1.83 0 1.08.79 2.12.9 2.27.11.15 1.55 2.37 3.75 3.33.52.22 1.23.48 1.69.58.46.1.88.08 1.21.05.37-.03 1.14-.47 1.3-.92.16-.45.16-.84.11-.92-.05-.08-.19-.13-.41-.24z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/salmanphotography._/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="#EBEDE3" width="40" height="40">
+                    <rect x="2" y="2" width="20" height="20" rx="4" stroke="none"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1.5"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section section section-light-alt">
+    <div class="contact-form-container">
+        <div class="section-title" style="text-align: left;">Contact</div>
+        <form class="contact-form" id="contactForm">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="tel" name="phone" placeholder="Phone Number">
+            <textarea name="message" placeholder="Message" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="contact-image">
+        <img src="images/IMG_7719-Edit.jpg" alt="Camera" onerror="this.src='https://placehold.co/600x400/333/EBEDE3?text=Photography'">
+    </div>
+</section>
+
+<!-- FOOTER -->
 <div class="footer">
-    © Salman Chohan — Manchester / UK
+    © Salman — all works shot on various rooftops & streets · Manchester / UK
 </div>
 
-<div class="modal" id="lightbox">
-    <span class="modal-close">&times;</span>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close">&times;</span>
     <img id="lightbox-img" src="" alt="">
 </div>
 
 <script>
     // --------------------------------------------------------------
-    // ORGANIZED IMAGES BY CATEGORY
+    // ALL YOUR IMAGES ORGANIZED BY CATEGORY
     // --------------------------------------------------------------
-    const imagesData = [
-        // REAL ESTATE (img1,3,4,5,8,10,11 + Image10 is main featured)
-        { file: "img10.jpg", cat: "realestate", featured: true, alt: "Modern interior" },
-        { file: "img1.jpg", cat: "realestate", alt: "Property view 1" },
-        { file: "img3.jpg", cat: "realestate", alt: "Property view 2" },
-        { file: "img4.jpg", cat: "realestate", alt: "Living space" },
-        { file: "img5.jpg", cat: "realestate", alt: "Kitchen detail" },
-        { file: "img8.jpg", cat: "realestate", alt: "Bedroom view" },
-        { file: "img11.jpg", cat: "realestate", alt: "Exterior shot" },
-        
-        // ARCHITECTURE (img2, img6, img7, plus others that fit)
-        { file: "img2.jpg", cat: "architecture", alt: "Building facade" },
-        { file: "img6.jpg", cat: "architecture", alt: "Structural detail" },
-        { file: "img7.jpg", cat: "architecture", alt: "Geometric lines" },
-        { file: "UOM.jpg", cat: "architecture", alt: "University building" },
-        { file: "climbing the light tower.jpg", cat: "architecture", alt: "Light tower climb" },
-        
-        // WEDDING (img9)
-        { file: "img9.jpg", cat: "wedding", alt: "Wedding ceremony" },
-        
-        // URBAN / ROOFTOPS (the rest of your photos)
-        { file: "view of shoes on roof.jpg", cat: "urban", alt: "Shoes on rooftop" },
-        { file: "londong roof aj.jpg", cat: "urban", alt: "London rooftop" },
-        { file: "sunrise manchester crane.jpg", cat: "urban", alt: "Sunrise Manchester" },
-        { file: "IMG_7719-Edit.jpg", cat: "urban", alt: "City view" },
-        { file: "crane sunrise.jpg", cat: "urban", alt: "Crane at dawn" },
-        { file: "joe on slanted roof.jpg", cat: "urban", alt: "Joe on roof" },
-        { file: "you know where this is manchester.jpg", cat: "urban", alt: "Manchester landmark" },
-        { file: "missed my bus manchester.jpg", cat: "urban", alt: "Street scene" },
-        { file: "bikes at sunset enhanced.jpg", cat: "urban", alt: "Bikes sunset" },
-        { file: "snow tram.jpg", cat: "urban", alt: "Tram in snow" },
-        { file: "snow tram 2.jpg", cat: "urban", alt: "Snow tram 2" },
-        { file: "roof near piccadily.jpg", cat: "urban", alt: "Piccadilly roof" },
-        { file: "stewart crane sunrise.jpg", cat: "urban", alt: "Stewart crane" },
-        { file: "car driveshaft skoda fabia mk 2 1.4 tdi.jpg", cat: "urban", alt: "Car detail" }
-    ];
+    const images = {
+        realEstate: [
+            "img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"
+        ],
+        wedding: [
+            "img9.jpg"
+        ],
+        urban: [
+            "view of shoes on roof.jpg",
+            "londong roof aj.jpg",
+            "sunrise manchester crane.jpg",
+            "IMG_7719-Edit.jpg",
+            "UOM.jpg",
+            "crane sunrise.jpg",
+            "climbing the light tower.jpg",
+            "joe on slanted roof.jpg",
+            "you know where this is manchester.jpg",
+            "missed my bus manchester.jpg",
+            "bikes at sunset enhanced.jpg",
+            "snow tram.jpg",
+            "snow tram 2.jpg",
+            "roof near piccadily.jpg",
+            "stewart crane sunrise.jpg",
+            "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
+            "img2.jpg", "img6.jpg", "img7.jpg"
+        ]
+    };
 
-    // Put img10.jpg at the FRONT of real estate (main image)
-    const realEstateItems = imagesData.filter(i => i.cat === "realestate");
-    const otherItems = imagesData.filter(i => i.cat !== "realestate");
-    
-    // Sort real estate so img10 comes first
-    realEstateItems.sort((a,b) => {
-        if (a.file === "img10.jpg") return -1;
-        if (b.file === "img10.jpg") return 1;
-        return 0;
-    });
-    
-    const finalImageList = [...realEstateItems, ...otherItems];
+    // Function to render a gallery
+    function renderGallery(containerId, imageList) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
 
-    // Function to render gallery based on selected category
-    function renderGallery(category) {
-        const gallery = document.getElementById('gallery');
-        gallery.innerHTML = '';
-        
-        let filtered = finalImageList;
-        if (category !== 'all') {
-            filtered = finalImageList.filter(item => item.cat === category);
-        }
-        
-        if (filtered.length === 0) {
-            gallery.innerHTML = '<div style="text-align:center; padding: 60px; color:#999;">No images in this category yet.</div>';
-            return;
-        }
-        
-        filtered.forEach(item => {
-            const encodedFile = encodeURIComponent(item.file);
+        imageList.forEach(filename => {
+            const encodedFile = encodeURIComponent(filename);
             const imgPath = `images/${encodedFile}`;
             
             const div = document.createElement('div');
@@ -282,66 +561,57 @@
             
             const img = document.createElement('img');
             img.src = imgPath;
-            img.alt = item.alt || item.file;
+            img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '');
             img.loading = 'lazy';
             
-            // Add click to open lightbox
-            img.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openLightbox(imgPath, img.alt);
+            img.addEventListener('click', () => {
+                openLightbox(imgPath);
             });
             
             div.appendChild(img);
-            gallery.appendChild(div);
+            container.appendChild(div);
         });
     }
-    
+
     // Lightbox functions
-    const modal = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    
-    function openLightbox(src, alt) {
+    function openLightbox(src) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
         lightboxImg.src = src;
-        lightboxImg.alt = alt;
-        modal.style.display = 'flex';
+        lightbox.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
-    
+
     function closeLightbox() {
-        modal.style.display = 'none';
+        document.getElementById('lightbox').style.display = 'none';
+        document.getElementById('lightbox-img').src = '';
         document.body.style.overflow = '';
-        lightboxImg.src = '';
     }
-    
+
     // Event listeners
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal || e.target.classList.contains('modal-close')) {
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
             closeLightbox();
         }
     });
-    
+
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.style.display === 'flex') {
+        if (e.key === 'Escape' && document.getElementById('lightbox').style.display === 'flex') {
             closeLightbox();
         }
     });
-    
-    // Category buttons
-    const buttons = document.querySelectorAll('.cat-btn');
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const cat = btn.getAttribute('data-cat');
-            renderGallery(cat);
-            
-            // Smooth scroll to top of gallery
-            document.querySelector('.gallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
+
+    // Handle contact form
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your message! I will get back to you soon.');
+        e.target.reset();
     });
-    
-    // Initial render (All)
-    renderGallery('all');
+
+    // Render all galleries
+    renderGallery('realEstateGallery', images.realEstate);
+    renderGallery('weddingGallery', images.wedding);
+    renderGallery('urbanGallery', images.urban);
 </script>
 </body>
 </html>
