@@ -12,7 +12,35 @@ const imagesByCategory = {
     ]
 };
 
-// Create horizontal gallery with scroll buttons
+// Create a single gallery item
+function createGalleryItem(filename) {
+    const encoded = encodeURIComponent(filename);
+    const src = `images/${encoded}`;
+    
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
+    img.loading = 'lazy';
+    img.onclick = () => openLightbox(src);
+    
+    item.appendChild(img);
+    return item;
+}
+
+// Create empty placeholder to maintain grid spacing
+function createEmptyPlaceholder() {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'gallery-item';
+    placeholder.style.visibility = 'hidden';
+    placeholder.style.opacity = '0';
+    placeholder.style.pointerEvents = 'none';
+    placeholder.style.background = 'transparent';
+    return placeholder;
+}
+
 // Create 2-ROW horizontal gallery with scroll buttons
 function createHorizontalGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
@@ -59,35 +87,7 @@ function createHorizontalGallery(trackId, imageList) {
     addScrollButtons(container);
 }
 
-// Helper: Create a gallery item
-function createGalleryItem(filename) {
-    const encoded = encodeURIComponent(filename);
-    const src = `images/${encoded}`;
-    
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
-    img.loading = 'lazy';
-    img.onclick = () => openLightbox(src);
-    
-    item.appendChild(img);
-    return item;
-}
-
-// Helper: Create empty placeholder to maintain grid spacing
-function createEmptyPlaceholder() {
-    const placeholder = document.createElement('div');
-    placeholder.className = 'gallery-item';
-    placeholder.style.visibility = 'hidden';
-    placeholder.style.opacity = '0';
-    placeholder.style.pointerEvents = 'none';
-    placeholder.style.background = 'transparent';
-    return placeholder;
-}
-
+// Add scroll buttons to gallery container
 function addScrollButtons(container) {
     // Remove existing buttons to avoid duplicates
     const existingLeft = container.querySelector('.scroll-btn-left');
@@ -100,7 +100,7 @@ function addScrollButtons(container) {
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
     btnLeft.onclick = () => {
         container.scrollBy({ left: -350, behavior: 'smooth' });
-        // Slight haptic feedback on click
+        // Haptic feedback on click
         btnLeft.style.transform = 'translateY(-50%) scale(0.95)';
         setTimeout(() => {
             btnLeft.style.transform = 'translateY(-50%) scale(1)';
@@ -185,7 +185,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Smooth scroll desktop
+// Smooth scroll for desktop navigation
 document.querySelectorAll('.nav-links a').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
@@ -236,14 +236,14 @@ mobileLinks.forEach(link => {
     });
 });
 
-// Close menu when clicking outside
+// Close mobile menu when clicking outside
 document.addEventListener('click', (event) => {
     if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
         mobileMenu.classList.remove('active');
     }
 });
 
-// Initialize Galleries
+// Initialize all galleries
 createHorizontalGallery('realEstateTrack', imagesByCategory.realEstate);
 createHorizontalGallery('weddingTrack', imagesByCategory.wedding);
 createHorizontalGallery('urbanTrack', imagesByCategory.urban);
