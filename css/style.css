@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== GALLERY WITH FIXED WRAPPER (Buttons stay put!) ===== */
+/* ===== GALLERY WITH FIXED BUTTONS (non-scrolling wrapper) ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
@@ -257,7 +257,7 @@ body {
 .gallery-track {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     width: max-content;
     padding: 10px 2%;
 }
@@ -265,12 +265,12 @@ body {
 .gallery-row {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 24px;
 }
 
-/* Image items - all same height, object-fit cover */
+/* Images keep original size - no cropping */
 .gallery-item {
-    width: 280px;
+    width: 300px;
     flex-shrink: 0;
     position: relative;
     cursor: pointer;
@@ -282,13 +282,11 @@ body {
 
 .gallery-item img {
     width: 100%;
-    height: 260px;
-    object-fit: cover;
+    height: auto;
     display: block;
     transition: transform 0.3s ease;
 }
 
-/* Dark overlay */
 .gallery-item::after {
     content: '';
     position: absolute;
@@ -305,21 +303,17 @@ body {
     background: rgba(0, 0, 0, 0.35);
 }
 
-.gallery-item:active::after {
-    background: rgba(0, 0, 0, 0.6);
-}
-
 .gallery-item:hover {
     transform: translateY(-3px);
 }
 
-/* BUTTONS: Fixed to wrapper, never move */
+/* BUTTONS attached to wrapper - NEVER MOVE */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
     display: flex;
@@ -330,6 +324,7 @@ body {
     transition: all 0.2s;
     backdrop-filter: blur(4px);
     opacity: 0.9;
+    pointer-events: auto;
 }
 
 .scroll-btn-left:hover, .scroll-btn-right:hover {
@@ -358,7 +353,6 @@ body {
     right: 15px;
 }
 
-/* Scrollbar styling */
 .gallery-container::-webkit-scrollbar {
     height: 5px;
 }
@@ -373,7 +367,7 @@ body {
     border-radius: 3px;
 }
 
-/* ===== ABOUT SECTION ===== */
+/* ===== ABOUT ===== */
 .about-section {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -451,7 +445,7 @@ body {
     color: var(--text-primary);
 }
 
-/* ===== CONTACT SECTION ===== */
+/* ===== CONTACT ===== */
 .contact-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -604,8 +598,8 @@ body {
     
     .section { padding: 50px 4%; }
     .gallery-item { width: 240px; }
-    .gallery-item img { height: 220px; }
-    .gallery-row { gap: 15px; }
+    .gallery-row { gap: 16px; }
+    .gallery-track { gap: 16px; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
@@ -615,8 +609,8 @@ body {
 
 @media (max-width: 550px) {
     .gallery-item { width: 200px; }
-    .gallery-item img { height: 180px; }
     .gallery-row { gap: 12px; }
+    .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
     .contact-image { width: 180px; }

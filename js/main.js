@@ -56,10 +56,12 @@ function create2RowGallery(trackId, imageList) {
     });
     track.appendChild(row2);
     
-    // Add buttons to the wrapper (not the scrolling container)
-    const wrapper = track.closest('.gallery-wrapper');
+    // Find the wrapper (parent of the scrolling container)
+    const container = track.parentElement;
+    const wrapper = container.closest('.gallery-wrapper');
+    
     if (wrapper) {
-        addScrollButtons(wrapper, wrapper.querySelector('.gallery-container'));
+        addScrollButtons(wrapper, container);
     }
 }
 
@@ -93,7 +95,7 @@ function setupHorizontalWheelScroll() {
     containers.forEach(container => {
         container.addEventListener('wheel', function(e) {
             e.preventDefault();
-            container.scrollLeft += e.deltaY * 2;
+            container.scrollLeft += e.deltaY * 3;
         }, { passive: false });
     });
 }
