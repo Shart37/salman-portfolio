@@ -246,6 +246,7 @@ body {
     padding: 10px 0 20px 0;
     -webkit-overflow-scrolling: touch;
     cursor: default;
+    max-height: 500px;
 }
 
 .gallery-track {
@@ -255,6 +256,7 @@ body {
     gap: 16px;
     min-width: max-content;
     padding: 0 5%;
+    max-height: 97%;
 }
 
 .masonry-column {
@@ -263,6 +265,8 @@ body {
     gap: 16px;
     width: 280px;
     flex-shrink: 0;
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 .gallery-item {
