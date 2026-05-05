@@ -31,8 +31,11 @@ function createMasonryGallery(trackId, imageList, columnCount = 3) {
     if (!track) return;
     track.innerHTML = '';
     
-    if (window.innerWidth <= 768) columnCount = 2;
+    // Adjust column count based on screen width
     if (window.innerWidth <= 550) columnCount = 2;
+    else if (window.innerWidth <= 768) columnCount = 2;
+    else if (window.innerWidth <= 1024) columnCount = 3;
+    else columnCount = 4;
     
     const columns = [];
     for (let i = 0; i < columnCount; i++) {
@@ -42,27 +45,12 @@ function createMasonryGallery(trackId, imageList, columnCount = 3) {
         track.appendChild(column);
     }
     
-    // Special handling for wedding section (only 1 image)
-    if (imageList.length === 1) {
-        const item = createGalleryItem(imageList[0]);
-        columns[0].appendChild(item);
-    } else {
-        imageList.forEach(filename => {
-            let shortestColumn = columns[0];
-            let shortestHeight = columns[0].scrollHeight;
-            
-            for (let i = 1; i < columns.length; i++) {
-                const height = columns[i].scrollHeight;
-                if (height < shortestHeight) {
-                    shortestHeight = height;
-                    shortestColumn = columns[i];
-                }
-            }
-            
-            const item = createGalleryItem(filename);
-            shortestColumn.appendChild(item);
-        });
-    }
+    // Distribute images evenly across columns
+    imageList.forEach((filename, index) => {
+        const columnIndex = index % columns.length;
+        const item = createGalleryItem(filename);
+        columns[columnIndex].appendChild(item);
+    });
     
     addScrollButtons(track.parentElement);
 }
@@ -196,22 +184,8 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Initialize galleries
-function initGalleries() {
-    const columnCount = window.innerWidth <= 768 ? 2 : 3;
-    createMasonryGallery('realEstateTrack', imagesByCategory.realEstate, columnCount);
-    createMasonryGallery('weddingTrack', imagesByCategory.wedding, columnCount);
-    createMasonryGallery('urbanTrack', imagesByCategory.urban, columnCount);
-}
-
-initGalleries();
+// Initialize galleries (ONCE, not on resize)
+createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+createMasonryGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
-
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        initGalleries();
-        setupHorizontalWheelScroll();
-    }, 250);
-});

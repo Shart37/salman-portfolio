@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== GALLERY - FIXED HEIGHT 500px, DYNAMIC WIDTH ===== */
+/* ===== GALLERY - FIXED ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -256,18 +256,18 @@ body {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 16px;
-    min-width: max-content;
+    gap: 20px;
+    min-width: min-content;
     padding: 0 5%;
     height: 100%;
 }
 
-/* FIXED: Dynamic column widths - no more fixed pixel widths */
+/* FIXED: Column width working properly */
 .masonry-column {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    width: 260px;
+    gap: 20px;
+    width: 280px;
     flex-shrink: 0;
     height: 100%;
     overflow-y: auto;
@@ -598,6 +598,16 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .masonry-column {
+        width: 260px;
+        gap: 18px;
+    }
+    .gallery-track {
+        gap: 18px;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu-toggle { display: block; }
@@ -610,7 +620,7 @@ body {
         text-align: center;
     }
     .about-image {
-        width: 220px; 
+        width: 220px;
         margin: 0 auto;
     }
     .about-content .section-title { text-align: center; }
@@ -618,10 +628,10 @@ body {
     
     .section { padding: 50px 4%; }
     .masonry-column { 
-        width: 220px;
-        gap: 12px; 
+        width: 240px;
+        gap: 15px; 
     }
-    .gallery-track { gap: 12px; padding: 0 4%; }
+    .gallery-track { gap: 15px; padding: 0 4%; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
@@ -635,9 +645,10 @@ body {
 
 @media (max-width: 550px) {
     .masonry-column { 
-        width: 180px;
-        gap: 10px; 
+        width: 200px;
+        gap: 12px; 
     }
+    .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
     .scroll-btn-left, .scroll-btn-right {
