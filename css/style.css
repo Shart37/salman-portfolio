@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== GALLERY - FIXED HEIGHT 500px, DYNAMIC WIDTH ===== */
+/* ===== GALLERY - FIXED HEIGHT 100px, DYNAMIC WIDTH ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
@@ -249,7 +249,7 @@ body {
     padding: 10px 0 20px 0;
     -webkit-overflow-scrolling: touch;
     cursor: default;
-    height: 500px;
+    height: 100px;
 }
 
 .gallery-track {
