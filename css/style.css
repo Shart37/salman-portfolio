@@ -41,6 +41,7 @@ body {
     overflow-x: hidden;
 }
 
+/* ===== NAVIGATION ===== */
 .navbar {
     position: fixed;
     top: 0;
@@ -156,6 +157,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* ===== HERO ===== */
 .hero {
     height: 35vh;
     min-height: 280px;
@@ -214,6 +216,7 @@ body {
     text-transform: uppercase;
 }
 
+/* ===== SECTIONS ===== */
 .section {
     padding: 70px 5% 60px;
 }
@@ -237,22 +240,51 @@ body {
     text-transform: uppercase;
 }
 
+/* ===== GALLERY - FIXED HEIGHT 500px, DYNAMIC WIDTH ===== */
 .gallery-container {
     position: relative;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     scroll-behavior: smooth;
     padding: 10px 0 20px 0;
     -webkit-overflow-scrolling: touch;
+    cursor: default;
+    height: 500px;
 }
 
 .gallery-track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, auto);
-    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
     min-width: max-content;
     padding: 0 5%;
+    height: 100%;
+}
+
+.masonry-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 280px;
+    flex-shrink: 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for columns */
+.masonry-column::-webkit-scrollbar {
+    width: 4px;
+}
+
+.masonry-column::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 2px;
+}
+
+.masonry-column::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+    border-radius: 2px;
 }
 
 .gallery-item {
@@ -262,7 +294,7 @@ body {
     background: var(--bg-card);
     border-radius: 4px;
     transition: transform 0.3s ease;
-    width: 280px;
+    width: 100%;
 }
 
 .gallery-item img {
@@ -300,6 +332,7 @@ body {
     transform: scale(1.02);
 }
 
+/* Scroll buttons */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
@@ -316,12 +349,17 @@ body {
     transition: all 0.3s;
     backdrop-filter: blur(4px);
     opacity: 0.8;
+    pointer-events: auto;
 }
 
 .scroll-btn-left:hover, .scroll-btn-right:hover {
     background: rgba(255, 255, 255, 0.25);
     opacity: 1;
     transform: translateY(-50%) scale(1.05);
+}
+
+.scroll-btn-left:active, .scroll-btn-right:active {
+    transform: translateY(-50%) scale(0.95);
 }
 
 .scroll-btn-left svg, .scroll-btn-right svg {
@@ -354,6 +392,7 @@ body {
     border-radius: 3px;
 }
 
+/* ===== ABOUT ===== */
 .about-section {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -431,6 +470,7 @@ body {
     color: var(--text-primary);
 }
 
+/* ===== CONTACT ===== */
 .contact-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -511,6 +551,7 @@ body {
     border-radius: 4px;
 }
 
+/* ===== FOOTER ===== */
 .footer {
     text-align: center;
     padding: 35px 20px;
@@ -523,6 +564,7 @@ body {
     text-transform: uppercase;
 }
 
+/* ===== LIGHTBOX ===== */
 .lightbox {
     display: none;
     position: fixed;
@@ -554,6 +596,7 @@ body {
     opacity: 0.6;
 }
 
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu-toggle { display: block; }
@@ -573,8 +616,8 @@ body {
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .gallery-item { width: 240px; }
-    .gallery-track { gap: 15px; padding: 0 4%; }
+    .masonry-column { width: 220px; gap: 12px; }
+    .gallery-track { gap: 12px; padding: 0 4%; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
@@ -587,7 +630,11 @@ body {
 }
 
 @media (max-width: 550px) {
-    .gallery-item { width: 200px; }
+    .masonry-column { width: 180px; gap: 10px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
+    .scroll-btn-left, .scroll-btn-right {
+        width: 34px;
+        height: 34px;
+    }
 }

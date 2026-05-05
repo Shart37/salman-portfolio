@@ -1,3 +1,4 @@
+// IMAGE CATEGORIES
 const imagesByCategory = {
     realEstate: ["img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"],
     wedding: ["img9.jpg"],
@@ -25,39 +26,42 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function createEmptyPlaceholder() {
-    const placeholder = document.createElement('div');
-    placeholder.className = 'gallery-item';
-    placeholder.style.visibility = 'hidden';
-    placeholder.style.opacity = '0';
-    placeholder.style.pointerEvents = 'none';
-    placeholder.style.background = 'transparent';
-    return placeholder;
-}
-
-function createHorizontalGallery(trackId, imageList) {
+function createMasonryGallery(trackId, imageList, columnCount = 3) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    const row1 = [];
-    const row2 = [];
+    if (window.innerWidth <= 768) columnCount = 2;
+    if (window.innerWidth <= 550) columnCount = 2;
     
-    imageList.forEach((filename, index) => {
-        if (index % 2 === 0) row1.push(filename);
-        else row2.push(filename);
-    });
+    const columns = [];
+    for (let i = 0; i < columnCount; i++) {
+        const column = document.createElement('div');
+        column.className = 'masonry-column';
+        columns.push(column);
+        track.appendChild(column);
+    }
     
-    const maxLength = Math.max(row1.length, row2.length);
-    while (row1.length < maxLength) row1.push(null);
-    while (row2.length < maxLength) row2.push(null);
-    
-    for (let i = 0; i < maxLength; i++) {
-        if (row1[i]) track.appendChild(createGalleryItem(row1[i]));
-        else track.appendChild(createEmptyPlaceholder());
-        
-        if (row2[i]) track.appendChild(createGalleryItem(row2[i]));
-        else track.appendChild(createEmptyPlaceholder());
+    // Special handling for wedding section (only 1 image)
+    if (imageList.length === 1) {
+        const item = createGalleryItem(imageList[0]);
+        columns[0].appendChild(item);
+    } else {
+        imageList.forEach(filename => {
+            let shortestColumn = columns[0];
+            let shortestHeight = columns[0].scrollHeight;
+            
+            for (let i = 1; i < columns.length; i++) {
+                const height = columns[i].scrollHeight;
+                if (height < shortestHeight) {
+                    shortestHeight = height;
+                    shortestColumn = columns[i];
+                }
+            }
+            
+            const item = createGalleryItem(filename);
+            shortestColumn.appendChild(item);
+        });
     }
     
     addScrollButtons(track.parentElement);
@@ -72,15 +76,34 @@ function addScrollButtons(container) {
     const btnLeft = document.createElement('div');
     btnLeft.className = 'scroll-btn-left';
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnLeft.onclick = () => container.scrollBy({ left: -350, behavior: 'smooth' });
+    btnLeft.onclick = () => {
+        container.scrollBy({ left: -350, behavior: 'smooth' });
+        btnLeft.style.transform = 'translateY(-50%) scale(0.95)';
+        setTimeout(() => { btnLeft.style.transform = 'translateY(-50%) scale(1)'; }, 150);
+    };
     
     const btnRight = document.createElement('div');
     btnRight.className = 'scroll-btn-right';
     btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnRight.onclick = () => container.scrollBy({ left: 350, behavior: 'smooth' });
+    btnRight.onclick = () => {
+        container.scrollBy({ left: 350, behavior: 'smooth' });
+        btnRight.style.transform = 'translateY(-50%) scale(0.95)';
+        setTimeout(() => { btnRight.style.transform = 'translateY(-50%) scale(1)'; }, 150);
+    };
     
     container.appendChild(btnLeft);
     container.appendChild(btnRight);
+}
+
+// Horizontal scroll with mouse wheel
+function setupHorizontalWheelScroll() {
+    const containers = document.querySelectorAll('.gallery-container');
+    containers.forEach(container => {
+        container.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            container.scrollLeft += e.deltaY;
+        }, { passive: false });
+    });
 }
 
 function openLightbox(src) {
@@ -98,6 +121,7 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
+// Contact Form
 const form = document.getElementById('contactForm');
 const successDiv = document.getElementById('formSuccess');
 if (form) {
@@ -127,17 +151,18 @@ if (form) {
     });
 }
 
+// Lightbox events
 const lightbox = document.getElementById('lightbox');
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
         closeLightbox();
     }
 });
-
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lightbox.style.display === 'flex') closeLightbox();
 });
 
+// Smooth scroll navigation
 document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
@@ -154,12 +179,14 @@ document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(anchor => {
     });
 });
 
+// Logo camera icon on scroll
 const logo = document.getElementById('logo');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) logo.classList.add('camera-mode');
     else logo.classList.remove('camera-mode');
 });
 
+// Mobile menu
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
@@ -169,6 +196,22 @@ document.addEventListener('click', (event) => {
     }
 });
 
-createHorizontalGallery('realEstateTrack', imagesByCategory.realEstate);
-createHorizontalGallery('weddingTrack', imagesByCategory.wedding);
-createHorizontalGallery('urbanTrack', imagesByCategory.urban);
+// Initialize galleries
+function initGalleries() {
+    const columnCount = window.innerWidth <= 768 ? 2 : 3;
+    createMasonryGallery('realEstateTrack', imagesByCategory.realEstate, columnCount);
+    createMasonryGallery('weddingTrack', imagesByCategory.wedding, columnCount);
+    createMasonryGallery('urbanTrack', imagesByCategory.urban, columnCount);
+}
+
+initGalleries();
+setupHorizontalWheelScroll();
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        initGalleries();
+        setupHorizontalWheelScroll();
+    }, 250);
+});
