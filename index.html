@@ -51,7 +51,7 @@
             overflow-x: hidden;
         }
 
-        /* ===== FIXED NAVIGATION BAR ===== */
+        /* ===== FIXED NAVIGATION BAR (Centered Links) ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -68,24 +68,15 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            position: relative;
         }
 
-        .logo {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-weight: bold;
-            font-size: 1.3rem;
-            letter-spacing: 0.1em;
-            color: var(--text-primary);
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        /* Desktop Navigation */
+        /* Desktop Navigation - Centered with fade-in */
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 48px;
         }
 
         .nav-links a {
@@ -96,13 +87,25 @@
             text-decoration: none;
             text-transform: uppercase;
             transition: color 0.3s;
+            animation: fadeInNav 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .nav-links a:nth-child(1) { animation-delay: 0.1s; }
+        .nav-links a:nth-child(2) { animation-delay: 0.2s; }
+        .nav-links a:nth-child(3) { animation-delay: 0.3s; }
+        .nav-links a:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInNav {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .nav-links a:hover {
             color: var(--text-primary);
         }
 
-        /* Mobile Navigation (Hidden by default on desktop) */
+        /* Mobile Navigation - Logo hidden, only hamburger on right */
         .mobile-menu-toggle {
             display: none;
             background: transparent;
@@ -110,6 +113,10 @@
             cursor: pointer;
             padding: 8px;
             z-index: 101;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .mobile-menu-toggle svg {
@@ -120,6 +127,11 @@
             fill: none;
         }
 
+        .logo {
+            display: none; /* Hidden on mobile, visible on desktop if needed but we removed it */
+        }
+
+        /* Mobile Menu Panel */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -167,7 +179,7 @@
             display: none;
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO SECTION (Brighter) ===== */
         .hero {
             height: 35vh;
             min-height: 280px;
@@ -181,6 +193,17 @@
             margin-top: 70px;
         }
 
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+            z-index: 0;
+        }
+
         .hero-bg {
             position: absolute;
             top: 0;
@@ -188,7 +211,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.12;
+            opacity: 0.35;
             z-index: 0;
         }
 
@@ -212,7 +235,7 @@
             font-weight: 200;
             font-size: clamp(10px, 2.2vw, 14px);
             letter-spacing: 0.3em;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             text-transform: uppercase;
         }
 
@@ -221,7 +244,6 @@
             padding: 70px 5% 60px;
         }
 
-        /* Swapped Backgrounds: Grey for Real Estate & Urban, Black for Weddings */
         .bg-grey {
             background: var(--bg-dark-grey);
         }
@@ -241,26 +263,37 @@
             text-transform: uppercase;
         }
 
-        /* ===== 2x2 GRID GALLERY ===== */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 28px;
-            max-width: 1300px;
-            margin: 0 auto;
+        /* ===== HORIZONTAL SCROLL GALLERY (2 rows visible) ===== */
+        .gallery-container {
+            position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            scroll-behavior: smooth;
+            cursor: grab;
+            padding: 10px 0 20px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gallery-container:active {
+            cursor: grabbing;
+        }
+
+        .gallery-track {
+            display: inline-flex;
+            gap: 20px;
+            padding: 0 5%;
         }
 
         .gallery-item {
             position: relative;
             cursor: pointer;
+            flex-shrink: 0;
             overflow: hidden;
             background: var(--bg-card);
             border-radius: 4px;
             transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-4px);
+            width: 280px;
         }
 
         .gallery-item img {
@@ -270,31 +303,84 @@
             transition: transform 0.5s ease, opacity 0.3s;
         }
 
+        .gallery-item:hover {
+            transform: translateY(-4px);
+        }
+
         .gallery-item:hover img {
             transform: scale(1.02);
             opacity: 0.92;
         }
 
-        /* ===== ABOUT SECTION (Floating image on mobile) ===== */
+        /* Scroll Buttons */
+        .scroll-btn-left, .scroll-btn-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .scroll-btn-left:hover, .scroll-btn-right:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .scroll-btn-left svg, .scroll-btn-right svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-primary);
+        }
+
+        .scroll-btn-left {
+            left: 10px;
+        }
+
+        .scroll-btn-right {
+            right: 10px;
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .gallery-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        .gallery-container::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        .gallery-container::-webkit-scrollbar-thumb {
+            background: var(--text-secondary);
+            border-radius: 4px;
+        }
+
+        /* ===== ABOUT SECTION ===== */
         .about-section {
             display: grid;
             grid-template-columns: auto 1fr;
-            gap: 40px;
+            gap: 50px;
             align-items: start;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 80px 5%;
         }
 
+        /* Rectangular, larger about image */
         .about-image {
-            width: 180px;
-            height: 180px;
+            width: 260px;
+            height: auto;
             flex-shrink: 0;
         }
 
         .about-image img {
             width: 100%;
-            height: 100%;
+            height: auto;
             object-fit: cover;
             border-radius: 4px;
             border: 1px solid var(--border-subtle);
@@ -506,42 +592,39 @@
             
             .about-section {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 25px;
+                text-align: center;
             }
             .about-image {
-                float: left;
-                width: 130px;
-                height: 130px;
-                margin-right: 20px;
-                margin-bottom: 15px;
+                width: 220px;
+                margin: 0 auto;
             }
             .about-content .section-title { text-align: center; }
-            .about-text p { text-align: left; }
-            .social-buttons { justify-content: center; clear: both; padding-top: 10px; }
+            .social-buttons { justify-content: center; }
             
             .section { padding: 50px 4%; }
-            .gallery-grid { gap: 12px; }
+            .gallery-item { width: 260px; }
+            .gallery-track { gap: 15px; }
+            
             .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .contact-form .section-title { text-align: center; }
             .contact-form { margin: 0 auto; }
         }
 
         @media (max-width: 550px) {
-            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-item { width: 220px; }
             .social-btn { padding: 8px 18px; }
-            .social-btn span { fontSize: 12px; }
-            .about-image { width: 100px; height: 100px; margin-right: 15px; }
+            .social-btn span { font-size: 12px; }
+            .about-image { width: 180px; }
         }
     </style>
 </head>
 <body>
 
-<!-- FIXED NAVIGATION BAR -->
+<!-- FIXED NAVIGATION BAR (Centered Links) -->
 <nav class="navbar">
     <div class="nav-container">
-        <a href="#" class="logo">SalCaptures</a>
-        
-        <!-- Desktop Navigation -->
+        <!-- Desktop Centered Navigation -->
         <div class="nav-links">
             <a href="#">Home</a>
             <a href="#realEstateSection">Gallery</a>
@@ -549,7 +632,7 @@
             <a href="#contactSection">Contact</a>
         </div>
 
-        <!-- Mobile Hamburger (2 lines only) -->
+        <!-- Mobile Hamburger (Right side) -->
         <button class="mobile-menu-toggle" id="menuToggle">
             <svg viewBox="0 0 24 24" stroke="currentColor">
                 <line x1="4" y1="6" x2="20" y2="6" stroke-width="1.5"/>
@@ -568,7 +651,7 @@
     <a href="#contactSection" class="mobile-nav-link">Contact</a>
 </div>
 
-<!-- HERO SECTION -->
+<!-- HERO SECTION (Brighter) -->
 <section class="hero">
     <img class="hero-bg" src="images/sunrise manchester crane.jpg" alt="Manchester skyline" onerror="this.style.display='none'">
     <div class="hero-content">
@@ -577,28 +660,34 @@
     </div>
 </section>
 
-<!-- REAL ESTATE GALLERY (Now Grey Background) -->
+<!-- REAL ESTATE GALLERY (Horizontal Scroll) -->
 <section id="realEstateSection" class="section bg-grey">
     <h2 class="section-title">Real Estate</h2>
-    <div class="gallery-grid" id="realEstateGrid"></div>
+    <div class="gallery-container" id="realEstateContainer">
+        <div class="gallery-track" id="realEstateTrack"></div>
+    </div>
 </section>
 
-<!-- WEDDING GALLERY (Now Black Background) -->
+<!-- WEDDING GALLERY (Horizontal Scroll) -->
 <section id="weddingSection" class="section bg-black">
     <h2 class="section-title">Weddings</h2>
-    <div class="gallery-grid" id="weddingGrid"></div>
+    <div class="gallery-container" id="weddingContainer">
+        <div class="gallery-track" id="weddingTrack"></div>
+    </div>
 </section>
 
-<!-- URBAN & ARCHITECTURE GALLERY (Now Grey Background) -->
+<!-- URBAN & ARCHITECTURE GALLERY (Horizontal Scroll) -->
 <section id="urbanSection" class="section bg-grey">
     <h2 class="section-title">Urban & Architecture</h2>
-    <div class="gallery-grid" id="urbanGrid"></div>
+    <div class="gallery-container" id="urbanContainer">
+        <div class="gallery-track" id="urbanTrack"></div>
+    </div>
 </section>
 
-<!-- ABOUT SECTION -->
+<!-- ABOUT SECTION (Rectangular, larger image) -->
 <section id="aboutSection" class="about-section">
     <div class="about-image">
-        <img src="images/img2.jpg" alt="Salman Chohan" onerror="this.src='https://placehold.co/400x400/1A1A1A/F5F5F5?text=Salman'">
+        <img src="images/img2.jpg" alt="Salman Chohan" onerror="this.src='https://placehold.co/400x500/1A1A1A/F5F5F5?text=Salman'">
     </div>
     <div class="about-content">
         <h2 class="section-title">About</h2>
@@ -626,7 +715,7 @@
     </div>
 </section>
 
-<!-- CONTACT SECTION -->
+<!-- CONTACT SECTION (Updated Contact Image) -->
 <section id="contactSection" class="contact-section bg-black">
     <div class="contact-form">
         <h2 class="section-title">Contact</h2>
@@ -651,7 +740,8 @@
         </div>
     </div>
     <div class="contact-image">
-        <img src="images/IMG_7719-Edit.jpg" alt="Camera" onerror="this.src='https://placehold.co/450x300/1A1A1A/F5F5F5?text=Photography'">
+        <!-- More suitable photography image (e.g., camera or studio) -->
+        <img src="images/IMG_7719-Edit.jpg" alt="Photography Equipment" onerror="this.src='https://placehold.co/450x300/1A1A1A/F5F5F5?text=Photography+Studio'">
     </div>
 </section>
 
@@ -681,11 +771,11 @@
         ]
     };
 
-    // Render 2x2 Grid Gallery
-    function renderGridGallery(containerId, imageList) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        container.innerHTML = '';
+    // Create horizontal gallery with scroll buttons
+    function createHorizontalGallery(trackId, imageList) {
+        const track = document.getElementById(trackId);
+        if (!track) return;
+        track.innerHTML = '';
         
         imageList.forEach(filename => {
             const encoded = encodeURIComponent(filename);
@@ -701,8 +791,64 @@
             img.onclick = () => openLightbox(src);
             
             item.appendChild(img);
-            container.appendChild(item);
+            track.appendChild(item);
         });
+        
+        // Add scroll buttons to container
+        const container = track.parentElement;
+        addScrollButtons(container);
+    }
+    
+    function addScrollButtons(container) {
+        if (container.querySelector('.scroll-btn-left')) return;
+        
+        const btnLeft = document.createElement('div');
+        btnLeft.className = 'scroll-btn-left';
+        btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+        btnLeft.onclick = () => container.scrollBy({ left: -300, behavior: 'smooth' });
+        
+        const btnRight = document.createElement('div');
+        btnRight.className = 'scroll-btn-right';
+        btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+        btnRight.onclick = () => container.scrollBy({ left: 300, behavior: 'smooth' });
+        
+        container.appendChild(btnLeft);
+        container.appendChild(btnRight);
+    }
+    
+    // Drag to scroll functionality
+    function makeDraggable(container) {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        container.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.scroll-btn-left') || e.target.closest('.scroll-btn-right')) return;
+            isDown = true;
+            container.style.cursor = 'grabbing';
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.style.cursor = 'grab';
+        });
+        
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.style.cursor = 'grab';
+        });
+        
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            container.scrollLeft = scrollLeft - walk;
+        });
+        
+        container.style.cursor = 'grab';
     }
     
     // Lightbox System
@@ -768,8 +914,8 @@
         }
     });
     
-    // Smooth scroll for navigation links (Desktop)
-    document.querySelectorAll('.nav-links a, .logo').forEach(anchor => {
+    // Smooth scroll for desktop navigation
+    document.querySelectorAll('.nav-links a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (href === '#') {
@@ -785,7 +931,7 @@
         });
     });
 
-    // --- Mobile Menu Logic ---
+    // Mobile Menu Logic
     const menuToggle = document.getElementById('menuToggle');
     const mobileMenu = document.getElementById('mobileMenu');
     const menuOverlay = document.getElementById('menuOverlay');
@@ -827,10 +973,13 @@
         });
     });
     
-    // Initialize All Galleries
-    renderGridGallery('realEstateGrid', imagesByCategory.realEstate);
-    renderGridGallery('weddingGrid', imagesByCategory.wedding);
-    renderGridGallery('urbanGrid', imagesByCategory.urban);
+    // Initialize Galleries
+    createHorizontalGallery('realEstateTrack', imagesByCategory.realEstate);
+    createHorizontalGallery('weddingTrack', imagesByCategory.wedding);
+    createHorizontalGallery('urbanTrack', imagesByCategory.urban);
+    
+    // Make containers draggable
+    document.querySelectorAll('.gallery-container').forEach(makeDraggable);
 </script>
 </body>
 </html>
