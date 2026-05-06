@@ -268,7 +268,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 260px;
+    width: 300px;
     flex-shrink: 0;
 }
 

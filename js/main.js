@@ -61,7 +61,7 @@ function createBalancedMasonry(trackId, imageList) {
     imageList.forEach((filename, idx) => {
         getImageDimensions(filename, (dims) => {
             // Calculate height at fixed width of 260px
-            const scaledHeight = 260 * dims.aspectRatio;
+            const scaledHeight = 300 * dims.aspectRatio;
             imageData.push({ filename, height: scaledHeight, index: idx });
             loadedCount++;
             
