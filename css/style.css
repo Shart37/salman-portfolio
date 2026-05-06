@@ -240,7 +240,7 @@ body {
     text-transform: uppercase;
 }
 
-/* ===== PAIRED SLOT GALLERY - 2 IMAGES PER SLOT ===== */
+/* ===== 2-ROW HORIZONTAL MASONRY - MANY COLUMNS, NO GAPS ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
@@ -257,23 +257,19 @@ body {
 .gallery-track {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     gap: 20px;
     width: max-content;
     padding: 10px 2%;
-    align-items: flex-start;
 }
 
-/* Each slot can contain 1 or 2 images stacked vertically */
-.gallery-slot {
+/* Each column = one vertical stack (can have 1 or 2 images) */
+.gallery-column {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 260px;
     flex-shrink: 0;
-}
-
-.gallery-slot.single {
-    justify-content: center;
 }
 
 .gallery-item {
@@ -288,13 +284,12 @@ body {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .gallery-item:hover {
     transform: translateY(-3px);
 }
-
 
 .gallery-container::-webkit-scrollbar {
     height: 5px;
@@ -312,14 +307,15 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .gallery-slot { width: 220px; gap: 16px; }
+    .gallery-column { width: 220px; gap: 16px; }
     .gallery-track { gap: 16px; }
 }
 
 @media (max-width: 550px) {
-    .gallery-slot { width: 180px; gap: 12px; }
+    .gallery-column { width: 180px; gap: 12px; }
     .gallery-track { gap: 12px; }
 }
+
 /* Scroll buttons - FIXED to wrapper */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;

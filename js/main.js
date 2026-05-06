@@ -12,20 +12,22 @@ const imagesByCategory = {
     ]
 };
 
-// Store image dimensions after loading
-const imageDimensions = new Map();
+// Store image dimensions
+const imageCache = new Map();
 
-function loadImageDimensions(filename, callback) {
-    if (imageDimensions.has(filename)) {
-        callback(imageDimensions.get(filename));
+function getImageDimensions(filename, callback) {
+    if (imageCache.has(filename)) {
+        callback(imageCache.get(filename));
         return;
     }
     const img = new Image();
     img.onload = function() {
-        const aspectRatio = img.height / img.width;
-        const scaledHeight = 260 * aspectRatio;
-        const dims = { width: 260, height: scaledHeight, aspectRatio };
-        imageDimensions.set(filename, dims);
+        const dims = {
+            width: img.width,
+            height: img.height,
+            aspectRatio: img.height / img.width
+        };
+        imageCache.set(filename, dims);
         callback(dims);
     };
     img.src = `images/${encodeURIComponent(filename)}`;
@@ -45,56 +47,53 @@ function createGalleryItem(filename) {
     return item;
 }
 
-function createPairedGallery(trackId, imageList) {
+// 2-ROW BALANCED MASONRY - MANY COLUMNS, NO GAPS
+function createBalancedMasonry(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
     if (imageList.length === 0) return;
     
-    // Load all dimensions first
     let loadedCount = 0;
-    const dimensions = [];
+    const imageData = [];
     
     imageList.forEach((filename, idx) => {
-        loadImageDimensions(filename, (dims) => {
-            dimensions.push({ filename, height: dims.height, index: idx });
+        getImageDimensions(filename, (dims) => {
+            // Calculate height at fixed width of 260px
+            const scaledHeight = 260 * dims.aspectRatio;
+            imageData.push({ filename, height: scaledHeight, index: idx });
             loadedCount++;
             
             if (loadedCount === imageList.length) {
-                // Sort by original order
-                dimensions.sort((a, b) => a.index - b.index);
+                // Sort back to original order
+                imageData.sort((a, b) => a.index - b.index);
                 
-                // Create paired slots: try to pair a tall image with a short image
-                const slots = [];
+                // Create columns (each column is a pair of images stacked vertically)
+                const columns = [];
                 let i = 0;
                 
-                while (i < dimensions.length) {
-                    const current = dimensions[i];
-                    const next = dimensions[i + 1];
+                while (i < imageData.length) {
+                    const current = imageData[i];
+                    const next = imageData[i + 1];
                     
-                    // If there's a next image and pairing makes sense (tall + short)
-                    if (next && current.height + next.height < 600) {
-                        // Create a stacked pair
-                        const slot = document.createElement('div');
-                        slot.className = 'gallery-slot';
-                        
-                        const topItem = createGalleryItem(current.filename);
-                        const bottomItem = createGalleryItem(next.filename);
-                        
-                        slot.appendChild(topItem);
-                        slot.appendChild(bottomItem);
-                        track.appendChild(slot);
+                    // Create column wrapper
+                    const column = document.createElement('div');
+                    column.className = 'gallery-column';
+                    
+                    if (next && current.height + next.height < 700) {
+                        // Pair two images in same column
+                        column.appendChild(createGalleryItem(current.filename));
+                        column.appendChild(createGalleryItem(next.filename));
                         i += 2;
                     } else {
-                        // Single image slot
-                        const slot = document.createElement('div');
-                        slot.className = 'gallery-slot single';
-                        const item = createGalleryItem(current.filename);
-                        slot.appendChild(item);
-                        track.appendChild(slot);
+                        // Single image in column
+                        column.appendChild(createGalleryItem(current.filename));
                         i++;
                     }
+                    
+                    columns.push(column);
+                    track.appendChild(column);
                 }
                 
                 // Add scroll buttons
@@ -231,7 +230,7 @@ document.addEventListener('click', (event) => {
 });
 
 // Create galleries
-createPairedGallery('realEstateTrack', imagesByCategory.realEstate);
-createPairedGallery('weddingTrack', imagesByCategory.wedding);
-createPairedGallery('urbanTrack', imagesByCategory.urban);
+createBalancedMasonry('realEstateTrack', imagesByCategory.realEstate);
+createBalancedMasonry('weddingTrack', imagesByCategory.wedding);
+createBalancedMasonry('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
