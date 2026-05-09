@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://salcaptures.co.uk
+Sitemap: https://salcaptures.co.uk/sitemap.xml
