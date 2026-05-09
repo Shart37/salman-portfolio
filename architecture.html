@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <title>Architecture Photography Manchester | SalCaptures</title>
+    <meta name="description" content="Architectural and urban photography in Manchester. Showcasing buildings, structures, and cityscapes with a creative eye.">
+    <meta name="keywords" content="architecture photography Manchester, urban photography, building photography, cityscape photographer">
+    
+    <meta property="og:title" content="Architecture Photography Manchester | SalCaptures">
+    <meta property="og:description" content="Creative architectural and urban photography in Manchester.">
+    <meta property="og:url" content="https://salcaptures.co.uk/architecture.html">
+    
+    <link rel="canonical" href="https://salcaptures.co.uk/architecture.html">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="logo">SalCaptures</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/real-estate.html">Real Estate</a>
+            <a href="/wedding.html">Wedding</a>
+            <a href="/architecture.html">Architecture</a>
+            <a href="/about.html">About</a>
+            <a href="/contact.html">Contact</a>
+        </div>
+        <button class="mobile-menu-toggle" id="menuToggle">
+            <svg viewBox="0 0 24 24" stroke="currentColor">
+                <line x1="4" y1="6" x2="20" y2="6" stroke-width="1.5"/>
+                <line x1="4" y1="18" x2="20" y2="18" stroke-width="1.5"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/real-estate.html">Real Estate</a>
+    <a href="/wedding.html">Wedding</a>
+    <a href="/architecture.html">Architecture</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+</div>
+
+<section class="hero" style="height: 40vh; min-height: 300px;">
+    <img class="hero-bg" src="images/sunrise manchester crane.jpg" alt="Manchester skyline architecture photography" onerror="this.style.display='none'">
+    <div class="hero-content">
+        <h1>Architecture &amp; Urban</h1>
+        <div class="hero-tagline">Manchester Cityscapes &amp; Structures</div>
+    </div>
+</section>
+
+<section class="section bg-grey">
+    <div class="gallery-wrapper">
+        <div class="gallery-container">
+            <div class="gallery-track" id="urbanTrack"></div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section" style="padding-top: 40px;">
+    <div class="about-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2 class="section-title">Architecture &amp; Urban Photography</h2>
+        <div class="about-text">
+            <p>Manchester is a city of contrasts – historic red brick and gleaming glass towers. My <strong>architecture and urban photography</strong> celebrates the built environment, capturing the geometry, light, and character of buildings and cityscapes.</p>
+            <p>Whether you need images for <strong>commercial projects, developer portfolios, or creative editorial work</strong>, I deliver striking, high-resolution photos that showcase structures at their best.</p>
+            <p><strong>Services include:</strong> Interior & exterior architecture, construction progress, cityscape panoramas, and drone photography (licenced).</p>
+            <p><a href="/contact.html" class="submit-btn" style="display: inline-block; margin-top: 20px;">Discuss your project →</a></p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2025 Salman Chohan – SalCaptures | <strong>Architecture Photographer Manchester</strong> | <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none;">Privacy</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+    if (typeof imagesByCategory !== 'undefined') {
+        createBalancedMasonry('urbanTrack', imagesByCategory.urban);
+    }
+    setupHorizontalWheelScroll();
+</script>
+</body>
+</html>
