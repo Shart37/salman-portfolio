@@ -246,3 +246,15 @@ createBalancedMasonry('weddingTrack', imagesByCategory.wedding);
 createBalancedMasonry('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
 enableSmartScroll();
+
+// Randomize hero background position on page load
+function randomizeHeroPosition() {
+    const heroBg = document.querySelector('.hero-bg');
+    if (!heroBg) return;
+    
+    const randomVertical = Math.floor(Math.random() * (80 - 20 + 1) + 20);
+    const randomHorizontal = Math.floor(Math.random() * 100);
+    heroBg.style.objectPosition = `${randomHorizontal}% ${randomVertical}%`;
+}
+
+window.addEventListener('load', randomizeHeroPosition);
