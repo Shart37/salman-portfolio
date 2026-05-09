@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <title>Wedding Photography Manchester | SalCaptures</title>
+    <meta name="description" content="Natural, candid wedding photography in Manchester. Capturing your special day with emotion, authenticity, and style. Affordable packages available.">
+    <meta name="keywords" content="wedding photographer Manchester, affordable wedding photography, candid wedding photos, Manchester weddings">
+    
+    <meta property="og:title" content="Wedding Photography Manchester | SalCaptures">
+    <meta property="og:description" content="Natural, candid wedding photography. Let me capture your special day.">
+    <meta property="og:url" content="https://salcaptures.co.uk/wedding.html">
+    
+    <link rel="canonical" href="https://salcaptures.co.uk/wedding.html">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="logo">SalCaptures</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/real-estate.html">Real Estate</a>
+            <a href="/wedding.html">Wedding</a>
+            <a href="/architecture.html">Architecture</a>
+            <a href="/about.html">About</a>
+            <a href="/contact.html">Contact</a>
+        </div>
+        <button class="mobile-menu-toggle" id="menuToggle">
+            <svg viewBox="0 0 24 24" stroke="currentColor">
+                <line x1="4" y1="6" x2="20" y2="6" stroke-width="1.5"/>
+                <line x1="4" y1="18" x2="20" y2="18" stroke-width="1.5"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/real-estate.html">Real Estate</a>
+    <a href="/wedding.html">Wedding</a>
+    <a href="/architecture.html">Architecture</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+</div>
+
+<section class="hero" style="height: 40vh; min-height: 300px;">
+    <img class="hero-bg" src="images/img9.jpg" alt="Wedding photography couple Manchester" onerror="this.style.display='none'">
+    <div class="hero-content">
+        <h1>Wedding Photography</h1>
+        <div class="hero-tagline">Candid · Natural · Authentic</div>
+    </div>
+</section>
+
+<section class="section bg-black">
+    <div class="gallery-wrapper">
+        <div class="gallery-container">
+            <div class="gallery-track" id="weddingTrack"></div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section" style="padding-top: 40px;">
+    <div class="about-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2 class="section-title">Your Story, Beautifully Told</h2>
+        <div class="about-text">
+            <p>Your wedding day is one of the most important days of your life. My job is to capture it <strong>authentically and unobtrusively</strong> – the laughter, the tears, the tiny moments you'll want to remember forever.</p>
+            <p>Based in <strong>Manchester, covering the North West and beyond</strong>, I offer flexible wedding packages to suit your budget. From intimate elopements to full-day coverage, I'll be there to document your story.</p>
+            <p><strong>What to expect:</strong> A relaxed, friendly approach. No stiff poses – just real moments, beautifully captured.</p>
+            <p><a href="/contact.html" class="submit-btn" style="display: inline-block; margin-top: 20px;">Check availability →</a></p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2025 Salman Chohan – SalCaptures | <strong>Wedding Photographer Manchester</strong> | <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none;">Privacy</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+    if (typeof imagesByCategory !== 'undefined') {
+        createBalancedMasonry('weddingTrack', imagesByCategory.wedding);
+    }
+    setupHorizontalWheelScroll();
+</script>
+</body>
+</html>
