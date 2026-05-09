@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shart37.github.io/salman-portfolio/sitemap.xml
+Sitemap: https://salcaptures.co.uk
