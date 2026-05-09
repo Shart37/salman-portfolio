@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <title>Real Estate Photography Manchester | SalCaptures</title>
+    <meta name="description" content="Professional real estate photography in Manchester. Make your property stand out with high-quality, affordable photos that sell. Book your shoot today.">
+    <meta name="keywords" content="real estate photography Manchester, property photographer Manchester, estate agent photography, home photography UK">
+    
+    <meta property="og:title" content="Real Estate Photography Manchester | SalCaptures">
+    <meta property="og:description" content="Professional property photography in Manchester. High-quality, affordable, and fast turnaround.">
+    <meta property="og:url" content="https://salcaptures.co.uk/real-estate.html">
+    
+    <link rel="canonical" href="https://salcaptures.co.uk/real-estate.html">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="logo">SalCaptures</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/real-estate.html">Real Estate</a>
+            <a href="/wedding.html">Wedding</a>
+            <a href="/architecture.html">Architecture</a>
+            <a href="/about.html">About</a>
+            <a href="/contact.html">Contact</a>
+        </div>
+        <button class="mobile-menu-toggle" id="menuToggle">
+            <svg viewBox="0 0 24 24" stroke="currentColor">
+                <line x1="4" y1="6" x2="20" y2="6" stroke-width="1.5"/>
+                <line x1="4" y1="18" x2="20" y2="18" stroke-width="1.5"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/real-estate.html">Real Estate</a>
+    <a href="/wedding.html">Wedding</a>
+    <a href="/architecture.html">Architecture</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+</div>
+
+<section class="hero" style="height: 40vh; min-height: 300px;">
+    <img class="hero-bg" src="images/img10.jpg" alt="Luxury living room real estate photography Manchester" onerror="this.style.display='none'">
+    <div class="hero-content">
+        <h1>Real Estate Photography</h1>
+        <div class="hero-tagline">Manchester &amp; North West</div>
+    </div>
+</section>
+
+<section class="section bg-grey">
+    <div class="gallery-wrapper">
+        <div class="gallery-container">
+            <div class="gallery-track" id="realEstateTrack"></div>
+        </div>
+    </div>
+</section>
+
+<section class="about-section" style="padding-top: 40px;">
+    <div class="about-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2 class="section-title">Professional Real Estate Photography</h2>
+        <div class="about-text">
+            <p>I specialise in <strong>real estate photography across Manchester, Cheshire, and the North West</strong>. Whether you're an estate agent, landlord, or homeowner, I'll make your property look its absolute best.</p>
+            <p>My approach combines technical precision with an eye for light and space – highlighting every room's potential. From cozy apartments to luxury listings, I deliver <strong>high-quality, affordable photos</strong> that help properties sell faster.</p>
+            <p><strong>Services include:</strong> Interior & exterior shots, twilight photography, floor plans (on request), and fast 24-48 hour turnaround.</p>
+            <p><a href="/contact.html" class="submit-btn" style="display: inline-block; margin-top: 20px;">Get a free quote →</a></p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2025 Salman Chohan – SalCaptures | <strong>Real Estate Photographer Manchester</strong> | <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none;">Privacy</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+    if (typeof imagesByCategory !== 'undefined') {
+        createBalancedMasonry('realEstateTrack', imagesByCategory.realEstate);
+    }
+    setupHorizontalWheelScroll();
+</script>
+</body>
+</html>
