@@ -247,7 +247,7 @@ createBalancedMasonry('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
 enableSmartScroll();
 
-// Randomize hero background position on page load
+// Randomize hero on load
 function randomizeHeroPosition() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
@@ -258,3 +258,11 @@ function randomizeHeroPosition() {
 }
 
 window.addEventListener('load', randomizeHeroPosition);
+
+// Randomize again after any smooth scroll click
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && (link.getAttribute('href')?.startsWith('#') || link.getAttribute('href')?.includes('html#'))) {
+        setTimeout(randomizeHeroPosition, 300);
+    }
+});
