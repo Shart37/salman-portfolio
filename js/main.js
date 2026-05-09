@@ -131,10 +131,21 @@ function addScrollButtons(wrapper, container) {
 
 function setupHorizontalWheelScroll() {
     const containers = document.querySelectorAll('.gallery-container');
+    
     containers.forEach(container => {
         container.addEventListener('wheel', function(e) {
+            const tolerance = 5;
+            const atStart = container.scrollLeft <= tolerance;
+            const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - tolerance;
+            
+            // Let page scroll vertically when at boundaries
+            if ((atStart && e.deltaY < 0) || (atEnd && e.deltaY > 0)) {
+                return;
+            }
+            
+            // Otherwise scroll horizontally
             e.preventDefault();
-            container.scrollLeft += e.deltaY * 2;
+            container.scrollLeft += e.deltaY * 1.5;
         }, { passive: false });
     });
 }
@@ -234,3 +245,4 @@ createBalancedMasonry('realEstateTrack', imagesByCategory.realEstate);
 createBalancedMasonry('weddingTrack', imagesByCategory.wedding);
 createBalancedMasonry('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
+enableSmartScroll();
