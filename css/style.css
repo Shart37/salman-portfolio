@@ -334,7 +334,7 @@ body::before {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 300px;
+    width: 230px;
     flex-shrink: 0;
 }
 
@@ -373,12 +373,12 @@ body::before {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .gallery-column { width: 220px; gap: 16px; }
+    .gallery-column { width: 200px; gap: 16px; }
     .gallery-track { gap: 16px; }
 }
 
 @media (max-width: 550px) {
-    .gallery-column { width: 180px; gap: 12px; }
+    .gallery-column { width: 170px; gap: 12px; }
     .gallery-track { gap: 12px; }
 }
 
