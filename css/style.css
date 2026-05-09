@@ -601,9 +601,10 @@
     opacity: 0.6;
 }
 
-/* ===== WORKING TRANSPARENT BACKGROUND ===== */
+/* ===== SCROLLING BACKGROUND (moves with page) ===== */
 body {
-    background: url('../images/sunrise manchester crane.jpg') fixed center/cover no-repeat;
+    background: url('../images/crane sunrise.jpg') center/cover no-repeat;
+    background-attachment: scroll;  /* This makes it scroll with page */
     position: relative;
 }
 
@@ -614,7 +615,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);  /* Dark overlay */
+    background: rgba(0, 0, 0, 0.85);
     pointer-events: none;
     z-index: -1;
 }
