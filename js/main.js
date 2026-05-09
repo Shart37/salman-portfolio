@@ -247,22 +247,31 @@ createBalancedMasonry('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
 enableSmartScroll();
 
-// Randomize hero on load
+// Randomize hero background position
 function randomizeHeroPosition() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
     
-    const randomVertical = Math.floor(Math.random() * (80 - 20 + 1) + 20);
-    const randomHorizontal = Math.floor(Math.random() * 100);
-    heroBg.style.objectPosition = `${randomHorizontal}% ${randomVertical}%`;
+    // Random vertical position between 15% and 85%
+    const randomVertical = Math.floor(Math.random() * (85 - 15 + 1) + 15);
+    // Keep horizontal centered for consistency
+    heroBg.style.objectPosition = `center ${randomVertical}%`;
+    
+    console.log('Hero position randomized:', `center ${randomVertical}%`);
 }
 
+// Run on page load
 window.addEventListener('load', randomizeHeroPosition);
 
-// Randomize again after any smooth scroll click
-document.addEventListener('click', function(e) {
+// Run after any anchor link click
+document.body.addEventListener('click', function(e) {
     const link = e.target.closest('a');
-    if (link && (link.getAttribute('href')?.startsWith('#') || link.getAttribute('href')?.includes('html#'))) {
-        setTimeout(randomizeHeroPosition, 300);
+    if (link && link.hash && link.hash.startsWith('#')) {
+        setTimeout(randomizeHeroPosition, 500);
     }
+});
+
+// Run when URL hash changes (back/forward buttons)
+window.addEventListener('hashchange', function() {
+    setTimeout(randomizeHeroPosition, 500);
 });
