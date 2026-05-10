@@ -233,7 +233,7 @@ body {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* ===== 2-ROW CSS GRID GALLERY - AUTO ARRANGES IMAGES ===== */
+/* ===== 2-ROW FLEXBOX GALLERY - IMAGES FLOW LEFT TO RIGHT ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
@@ -251,14 +251,18 @@ body {
     width: 100%;
 }
 
-/* CSS Grid for 2 rows - flows horizontally */
 .gallery-track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, auto);
+    display: flex;
+    flex-direction: column;
     gap: 20px;
     width: max-content;
     padding: 10px 2%;
+}
+
+.gallery-row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .gallery-item {
@@ -267,6 +271,7 @@ body {
     background: transparent;
     border-radius: 6px;
     width: 260px;
+    flex-shrink: 0;
 }
 
 .gallery-item img {
@@ -328,11 +333,13 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .gallery-item { width: 220px; }
+    .gallery-row { gap: 16px; }
     .gallery-track { gap: 16px; }
 }
 
 @media (max-width: 550px) {
     .gallery-item { width: 180px; }
+    .gallery-row { gap: 12px; }
     .gallery-track { gap: 12px; }
 }
 
