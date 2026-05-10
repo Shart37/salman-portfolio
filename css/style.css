@@ -14,6 +14,7 @@
     --border-subtle: #2A2A2A;
 }
 
+/* ===== FONTS ===== */
 @font-face {
     font-family: 'Helvetica Neue';
     src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/b7693a83-b861-4aa6-85e0-9ecf676bc4d6.eot?#iefix') format('embedded-opentype'),
@@ -34,18 +35,13 @@
          url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/9a2e4855-380f-477f-950e-d98e8db54eac.woff') format('woff');
 }
 
-/* Section titles pop more with shadow */
-.section-title {
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
 /* ===== NAVIGATION ===== */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.92);
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
     z-index: 100;
     padding: 16px 5%;
@@ -155,7 +151,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ===== HERO SECTION - OPTIMIZED ===== */
+/* ===== HERO SECTION ===== */
 .hero {
     height: 65vh;
     min-height: 450px;
@@ -188,7 +184,7 @@
     height: 100%;
     transition: object-position 0.5s ease;
     object-fit: cover;
-    object-position: center 35%;  /* Adjust this to crop/frame the image */
+    object-position: center 35%;
     opacity: 0.65;
     z-index: 0;
 }
@@ -220,43 +216,23 @@
     text-shadow: 0 1px 5px rgba(0,0,0,0.3);
 }
 
-/* Responsive hero heights */
+/* Hero Responsive */
 @media (max-width: 992px) {
-    .hero {
-        height: 55vh;
-        min-height: 400px;
-    }
+    .hero { height: 55vh; min-height: 400px; }
 }
 
 @media (max-width: 768px) {
-    .hero {
-        height: 45vh;
-        min-height: 350px;
-        margin-top: 60px;
-    }
-    .hero-bg {
-        object-position: center 40%;
-    }
+    .hero { height: 45vh; min-height: 350px; margin-top: 60px; }
+    .hero-bg { object-position: center 40%; }
 }
 
 @media (max-width: 550px) {
-    .hero {
-        height: 40vh;
-        min-height: 300px;
-    }
+    .hero { height: 40vh; min-height: 300px; }
 }
 
 /* ===== SECTIONS ===== */
 .section {
     padding: 70px 5% 60px;
-}
-
-.bg-grey {
-    background: var(--bg-dark-grey);
-}
-
-.bg-black {
-    background: var(--bg-black);
 }
 
 .section-title {
@@ -268,12 +244,17 @@
     text-align: center;
     margin-bottom: 48px;
     text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* ===== 2-ROW HORIZONTAL MASONRY - MANY COLUMNS, NO GAPS ===== */
+/* ===== GALLERY (2-ROW MASONRY) ===== */
 .gallery-wrapper {
     position: relative;
     width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    padding: 20px 0;
+    margin: 10px 0;
 }
 
 .gallery-container {
@@ -293,7 +274,6 @@
     padding: 10px 2%;
 }
 
-/* Each column = one vertical stack (can have 1 or 2 images) */
 .gallery-column {
     display: flex;
     flex-direction: column;
@@ -321,32 +301,12 @@
     transform: translateY(-3px);
 }
 
-.gallery-container::-webkit-scrollbar {
-    height: 5px;
-}
+/* Gallery Scrollbar */
+.gallery-container::-webkit-scrollbar { height: 5px; }
+.gallery-container::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
+.gallery-container::-webkit-scrollbar-thumb { background: var(--text-secondary); border-radius: 3px; }
 
-.gallery-container::-webkit-scrollbar-track {
-    background: #1a1a1a;
-    border-radius: 3px;
-}
-
-.gallery-container::-webkit-scrollbar-thumb {
-    background: var(--text-secondary);
-    border-radius: 3px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .gallery-column { width: 200px; gap: 16px; }
-    .gallery-track { gap: 16px; }
-}
-
-@media (max-width: 550px) {
-    .gallery-column { width: 170px; gap: 12px; }
-    .gallery-track { gap: 12px; }
-}
-
-/* Scroll buttons - FIXED to wrapper */
+/* Gallery Scroll Buttons */
 .scroll-btn-left, .scroll-btn-right {
     position: absolute;
     top: 50%;
@@ -383,12 +343,18 @@
     fill: none;
 }
 
-.scroll-btn-left {
-    left: 15px;
+.scroll-btn-left { left: 15px; }
+.scroll-btn-right { right: 15px; }
+
+/* Gallery Responsive */
+@media (max-width: 768px) {
+    .gallery-column { width: 200px; gap: 16px; }
+    .gallery-track { gap: 16px; }
 }
 
-.scroll-btn-right {
-    right: 15px;
+@media (max-width: 550px) {
+    .gallery-column { width: 170px; gap: 12px; }
+    .gallery-track { gap: 12px; }
 }
 
 /* ===== ABOUT SECTION ===== */
@@ -428,10 +394,9 @@
     color: var(--text-secondary);
 }
 
-.about-text p {
-    margin-bottom: 16px;
-}
+.about-text p { margin-bottom: 16px; }
 
+/* Social Buttons */
 .social-buttons {
     display: flex;
     gap: 20px;
@@ -480,18 +445,10 @@
     padding: 80px 5%;
 }
 
-.contact-form {
-    max-width: 450px;
-}
+.contact-form { max-width: 450px; }
+.contact-form .section-title { text-align: left; margin-bottom: 35px; }
 
-.contact-form .section-title {
-    text-align: left;
-    margin-bottom: 35px;
-}
-
-.form-group {
-    margin-bottom: 28px;
-}
+.form-group { margin-bottom: 28px; }
 
 .form-group input,
 .form-group textarea {
@@ -507,9 +464,7 @@
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
-    border-bottom-color: var(--text-primary);
-}
+.form-group textarea:focus { border-bottom-color: var(--text-primary); }
 
 .form-group textarea {
     min-height: 90px;
@@ -560,7 +515,7 @@
 .footer {
     text-align: center;
     padding: 35px 20px;
-    background: var(--bg-black);
+    background: #000000;
     border-top: 1px solid var(--border-subtle);
     font-family: 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
     font-size: 10px;
@@ -601,10 +556,9 @@
     opacity: 0.6;
 }
 
-/* ===== SCROLLING BACKGROUND (moves with page) ===== */
+/* ===== SCROLLING BACKGROUND ===== */
 body {
-    background: url('../images/crane sunrise.jpg') center/cover no-repeat;
-    background-attachment: scroll;  /* This makes it scroll with page */
+    background: url('../images/crane sunrise.jpg') center/cover no-repeat scroll;
     position: relative;
 }
 
@@ -620,7 +574,7 @@ body::before {
     z-index: -1;
 }
 
-/* Make all sections transparent */
+/* Make all sections transparent so background shows through */
 .section, 
 .about-section, 
 .contact-section,
@@ -629,55 +583,22 @@ body::before {
     background: transparent !important;
 }
 
-/* Optional: Add subtle background to galleries */
-.gallery-wrapper {
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 20px;
-    padding: 20px 0;
-    margin: 10px 0;
-}
-
-/* Keep navbar and footer solid */
-.navbar {
-    background: rgba(0, 0, 0, 0.95) !important;
-    backdrop-filter: blur(10px);
-}
-
-.footer {
-    background: #000000 !important;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1200px) {
-    .gallery-item { width: 260px; }
-}
-
-@media (max-width: 992px) {
-    .gallery-item { width: 240px; }
-    .gallery-track { gap: 16px; }
-}
-
+/* ===== RESPONSIVE (overrides) ===== */
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu-toggle { display: block; }
     .navbar { padding: 12px 5%; }
-    .hero { margin-top: 60px; height: 40vh; min-height: 280px; }
     
     .about-section {
         grid-template-columns: 1fr;
         gap: 25px;
         text-align: center;
     }
-    .about-image {
-        width: 220px;
-        margin: 0 auto;
-    }
+    .about-image { width: 220px; margin: 0 auto; }
     .about-content .section-title { text-align: center; }
     .social-buttons { justify-content: center; }
     
     .section { padding: 50px 4%; }
-    .gallery-item { width: 220px; }
-    .gallery-track { gap: 16px; }
     
     .contact-section { grid-template-columns: 1fr; gap: 40px; text-align: center; }
     .contact-form .section-title { text-align: center; }
@@ -686,8 +607,6 @@ body::before {
 }
 
 @media (max-width: 550px) {
-    .gallery-item { width: 200px; }
-    .gallery-track { gap: 12px; }
     .social-btn span { font-size: 12px; }
     .about-image { width: 180px; }
     .contact-image { width: 180px; }
