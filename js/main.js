@@ -51,6 +51,10 @@ function getImageDimensions(filename, callback) {
         imageCache.set(filename, dims);
         callback(dims);
     };
+    img.onerror = function() {
+        // Fallback for missing images
+        callback({ width: 800, height: 600, aspectRatio: 0.75 });
+    };
     img.src = `images/${encodeURIComponent(filename)}`;
 }
 
@@ -63,13 +67,16 @@ function createGalleryItem(filename) {
     img.src = src;
     img.alt = filename.replace(/\.(webp|jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
     img.loading = 'lazy';
-    img.decoding = 'async';  // Speed improvement: loads asynchronously
+    img.decoding = 'async';
     img.onclick = () => openLightbox(src);
+    img.onload = function() {
+        img.classList.add('loaded');
+    };
     item.appendChild(img);
     return item;
 }
 
-// 2-ROW BALANCED MASONRY - MANY COLUMNS, NO GAPS
+// 2-ROW BALANCED MASONRY
 function createBalancedMasonry(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
@@ -82,7 +89,7 @@ function createBalancedMasonry(trackId, imageList) {
     
     imageList.forEach((filename, idx) => {
         getImageDimensions(filename, (dims) => {
-            const scaledHeight = 250 * dims.aspectRatio;
+            const scaledHeight = 260 * dims.aspectRatio;
             imageData.push({ filename, height: scaledHeight, index: idx });
             loadedCount++;
             
@@ -253,15 +260,13 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Randomize hero background position
+// Randomize hero background position (no console log)
 function randomizeHeroPosition() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
     
     const randomVertical = Math.floor(Math.random() * (85 - 15 + 1) + 15);
     heroBg.style.objectPosition = `center ${randomVertical}%`;
-    
-    console.log('Hero position randomized:', `center ${randomVertical}%`);
 }
 
 // Run on page load
