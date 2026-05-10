@@ -78,7 +78,7 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// 2-ROW BALANCED MASONRY
+// IMPROVED BALANCED MASONRY - Better grouping of tall + short images
 function createBalancedMasonry(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
@@ -92,7 +92,7 @@ function createBalancedMasonry(trackId, imageList) {
     imageList.forEach((filename, idx) => {
         getImageDimensions(filename, (dims) => {
             const scaledHeight = 260 * dims.aspectRatio;
-            imageData.push({ filename, height: scaledHeight, index: idx });
+            imageData.push({ filename, height: scaledHeight, index: idx, aspectRatio: dims.aspectRatio });
             loadedCount++;
             
             if (loadedCount === imageList.length) {
@@ -104,15 +104,39 @@ function createBalancedMasonry(trackId, imageList) {
                 while (i < imageData.length) {
                     const current = imageData[i];
                     const next = imageData[i + 1];
+                    const next2 = imageData[i + 2];
                     
                     const column = document.createElement('div');
                     column.className = 'gallery-column';
                     
-                    if (next && current.height + next.height < 900) {
+                    // Check for: 1 tall + 2 horizontal in same column
+                    const isTall = current.aspectRatio < 0.8;
+                    const isNextHorizontal = next && next.aspectRatio > 1.2;
+                    const isNext2Horizontal = next2 && next2.aspectRatio > 1.2;
+                    
+                    // Strategy 1: Tall + 2 horizontals stacked
+                    if (isTall && isNextHorizontal && isNext2Horizontal && 
+                        current.height + next.height + next2.height < 1000) {
+                        column.appendChild(createGalleryItem(current.filename));
+                        column.appendChild(createGalleryItem(next.filename));
+                        column.appendChild(createGalleryItem(next2.filename));
+                        i += 3;
+                    }
+                    // Strategy 2: Tall + 1 horizontal (good pair)
+                    else if (next && current.height + next.height < 850) {
                         column.appendChild(createGalleryItem(current.filename));
                         column.appendChild(createGalleryItem(next.filename));
                         i += 2;
-                    } else {
+                    }
+                    // Strategy 3: Two horizontals stacked
+                    else if (next && current.aspectRatio > 1.0 && next.aspectRatio > 1.0 &&
+                             current.height + next.height < 700) {
+                        column.appendChild(createGalleryItem(current.filename));
+                        column.appendChild(createGalleryItem(next.filename));
+                        i += 2;
+                    }
+                    // Strategy 4: Single image (tall or isolated)
+                    else {
                         column.appendChild(createGalleryItem(current.filename));
                         i++;
                     }
