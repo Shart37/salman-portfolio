@@ -82,7 +82,7 @@ function createBalancedMasonry(trackId, imageList) {
     
     imageList.forEach((filename, idx) => {
         getImageDimensions(filename, (dims) => {
-            const scaledHeight = 230 * dims.aspectRatio;
+            const scaledHeight = 250 * dims.aspectRatio;
             imageData.push({ filename, height: scaledHeight, index: idx });
             loadedCount++;
             
@@ -99,7 +99,7 @@ function createBalancedMasonry(trackId, imageList) {
                     const column = document.createElement('div');
                     column.className = 'gallery-column';
                     
-                    if (next && current.height + next.height < 700) {
+                    if (next && current.height + next.height < 900) {
                         column.appendChild(createGalleryItem(current.filename));
                         column.appendChild(createGalleryItem(next.filename));
                         i += 2;
