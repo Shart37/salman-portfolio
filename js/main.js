@@ -1,4 +1,4 @@
-// IMAGE CATEGORIES - UPDATED WITH WEBP FILENAMES
+// IMAGE CATEGORIES - UPDATE WITH YOUR ACTUAL WEBP FILENAMES
 const imagesByCategory = {
     realEstate: [
         "manchester-alexander-house-dining-area.webp",
@@ -33,31 +33,6 @@ const imagesByCategory = {
     ]
 };
 
-// Store image dimensions
-const imageCache = new Map();
-
-function getImageDimensions(filename, callback) {
-    if (imageCache.has(filename)) {
-        callback(imageCache.get(filename));
-        return;
-    }
-    const img = new Image();
-    img.onload = function() {
-        const dims = {
-            width: img.width,
-            height: img.height,
-            aspectRatio: img.height / img.width
-        };
-        imageCache.set(filename, dims);
-        callback(dims);
-    };
-    img.onerror = function() {
-        // Fallback for missing images
-        callback({ width: 800, height: 600, aspectRatio: 0.75 });
-    };
-    img.src = `images/${encodeURIComponent(filename)}`;
-}
-
 function createGalleryItem(filename) {
     const encoded = encodeURIComponent(filename);
     const src = `images/${encoded}`;
@@ -67,43 +42,38 @@ function createGalleryItem(filename) {
     img.src = src;
     img.alt = filename.replace(/\.(webp|jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
     img.loading = 'lazy';
-    img.decoding = 'async';
     img.onclick = () => openLightbox(src);
-    
-    // Force image to be visible immediately
-    img.style.opacity = '1';
-    
-    // Remove the loaded class mechanism entirely
     item.appendChild(img);
     return item;
 }
 
-// PAIRED 2-ROW GALLERY - Tries to balance heights
-function create2RowGallery(trackId, imageList) {
+// SIMPLE 2-ROW GALLERY - Images flow left to right, top row then bottom row
+function createSimple2RowGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
+    // Calculate how many images go in each row
+    const totalImages = imageList.length;
+    const halfCount = Math.ceil(totalImages / 2);
+    
+    // Split images into top and bottom rows
+    const topRowImages = imageList.slice(0, halfCount);
+    const bottomRowImages = imageList.slice(halfCount);
+    
+    // Create top row
     const topRow = document.createElement('div');
     topRow.className = 'gallery-row';
+    topRowImages.forEach(filename => {
+        topRow.appendChild(createGalleryItem(filename));
+    });
+    
+    // Create bottom row
     const bottomRow = document.createElement('div');
     bottomRow.className = 'gallery-row';
-    
-    // Simple pairing: first image top, second bottom, continue
-    for (let i = 0; i < imageList.length; i += 2) {
-        topRow.appendChild(createGalleryItem(imageList[i]));
-        if (i + 1 < imageList.length) {
-            bottomRow.appendChild(createGalleryItem(imageList[i + 1]));
-        }
-    }
-    
-    track.appendChild(topRow);
-    track.appendChild(bottomRow);
-    
-    const container = track.parentElement;
-    const wrapper = container.closest('.gallery-wrapper');
-    if (wrapper) addScrollButtons(wrapper, container);
-}
+    bottomRowImages.forEach(filename => {
+        bottomRow.appendChild(createGalleryItem(filename));
+    });
     
     track.appendChild(topRow);
     track.appendChild(bottomRow);
@@ -140,7 +110,6 @@ function addScrollButtons(wrapper, container) {
 
 function setupHorizontalWheelScroll() {
     const containers = document.querySelectorAll('.gallery-container');
-    
     containers.forEach(container => {
         container.addEventListener('wheel', function(e) {
             const tolerance = 5;
@@ -247,33 +216,26 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Randomize hero background position (no console log)
+// Randomize hero background
 function randomizeHeroPosition() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
-    
     const randomVertical = Math.floor(Math.random() * (85 - 15 + 1) + 15);
     heroBg.style.objectPosition = `center ${randomVertical}%`;
 }
-
-// Run on page load
 window.addEventListener('load', randomizeHeroPosition);
-
-// Run after any anchor link click
 document.body.addEventListener('click', function(e) {
     const link = e.target.closest('a');
     if (link && link.hash && link.hash.startsWith('#')) {
         setTimeout(randomizeHeroPosition, 500);
     }
 });
-
-// Run when URL hash changes
 window.addEventListener('hashchange', function() {
     setTimeout(randomizeHeroPosition, 500);
 });
 
-// gallery creation
-create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
-create2RowGallery('weddingTrack', imagesByCategory.wedding);
-create2RowGallery('urbanTrack', imagesByCategory.urban);
+// CREATE GALLERIES
+createSimple2RowGallery('realEstateTrack', imagesByCategory.realEstate);
+createSimple2RowGallery('weddingTrack', imagesByCategory.wedding);
+createSimple2RowGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
