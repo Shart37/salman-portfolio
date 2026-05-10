@@ -69,9 +69,11 @@ function createGalleryItem(filename) {
     img.loading = 'lazy';
     img.decoding = 'async';
     img.onclick = () => openLightbox(src);
-    img.onload = function() {
-        img.classList.add('loaded');
-    };
+    
+    // Force image to be visible immediately
+    img.style.opacity = '1';
+    
+    // Remove the loaded class mechanism entirely
     item.appendChild(img);
     return item;
 }
