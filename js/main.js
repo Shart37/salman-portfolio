@@ -78,27 +78,32 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// SIMPLE 2-ROW GALLERY - Images alternate between top and bottom row
+// PAIRED 2-ROW GALLERY - Tries to balance heights
 function create2RowGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Create top and bottom rows
     const topRow = document.createElement('div');
     topRow.className = 'gallery-row';
     const bottomRow = document.createElement('div');
     bottomRow.className = 'gallery-row';
     
-    // Alternate images between top and bottom rows
-    imageList.forEach((filename, index) => {
-        const item = createGalleryItem(filename);
-        if (index % 2 === 0) {
-            topRow.appendChild(item);
-        } else {
-            bottomRow.appendChild(item);
+    // Simple pairing: first image top, second bottom, continue
+    for (let i = 0; i < imageList.length; i += 2) {
+        topRow.appendChild(createGalleryItem(imageList[i]));
+        if (i + 1 < imageList.length) {
+            bottomRow.appendChild(createGalleryItem(imageList[i + 1]));
         }
-    });
+    }
+    
+    track.appendChild(topRow);
+    track.appendChild(bottomRow);
+    
+    const container = track.parentElement;
+    const wrapper = container.closest('.gallery-wrapper');
+    if (wrapper) addScrollButtons(wrapper, container);
+}
     
     track.appendChild(topRow);
     track.appendChild(bottomRow);
