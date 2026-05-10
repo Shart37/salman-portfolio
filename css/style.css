@@ -14,25 +14,9 @@
     --border-subtle: #2A2A2A;
 }
 
-/* ===== FONTS ===== */
-@font-face {
-    font-family: 'Helvetica Neue';
-    src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/b7693a83-b861-4aa6-85e0-9ecf676bc4d6.eot?#iefix') format('embedded-opentype'),
-         url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/bcf54343-d033-41ee-bbd7-2b77df3fe7ba.woff') format('woff');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'Helvetica Neue';
-    font-weight: bold;
-    src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/07fe0fec-b63f-4963-8ee1-535528b67fdb.eot?#iefix') format('embedded-opentype'),
-         url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/60be5c39-863e-40cb-9434-6ebafb62ab2b.woff') format('woff');
-}
-
-@font-face {
-    font-family: 'Helvetica Neue Light';
-    src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/88fcd49a-13c7-4d0c-86b1-ad1e258bd75d.eot?#iefix') format('embedded-opentype'),
-         url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/9a2e4855-380f-477f-950e-d98e8db54eac.woff') format('woff');
+/* ===== FONTS - Using Google Fonts (Inter) ===== */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* ===== NAVIGATION ===== */
@@ -58,8 +42,8 @@
 }
 
 .logo {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: bold;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.1em;
     color: var(--text-primary);
@@ -85,7 +69,8 @@
 }
 
 .nav-links a {
-    font-family: 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+    font-weight: 400;
     font-size: 0.85rem;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
@@ -140,7 +125,8 @@
 
 .mobile-menu a {
     display: block;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 600;
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     color: var(--text-primary);
@@ -196,8 +182,8 @@
 }
 
 .hero h1 {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: bold;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
     font-size: clamp(36px, 8vw, 80px);
     letter-spacing: 0.08em;
     color: var(--text-primary);
@@ -207,8 +193,8 @@
 }
 
 .hero-tagline {
-    font-family: 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
-    font-weight: 200;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+    font-weight: 400;
     font-size: clamp(12px, 3vw, 18px);
     letter-spacing: 0.3em;
     color: var(--text-primary);
@@ -236,8 +222,8 @@
 }
 
 .section-title {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: bold;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
     font-size: clamp(22px, 4.5vw, 38px);
     letter-spacing: 0.15em;
     color: var(--text-primary);
@@ -280,7 +266,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 230px;
+    width: 260px;
     flex-shrink: 0;
 }
 
@@ -355,12 +341,12 @@
 
 /* Gallery Responsive */
 @media (max-width: 768px) {
-    .gallery-column { width: 200px; gap: 16px; }
+    .gallery-column { width: 220px; gap: 16px; }
     .gallery-track { gap: 16px; }
 }
 
 @media (max-width: 550px) {
-    .gallery-column { width: 170px; gap: 12px; }
+    .gallery-column { width: 180px; gap: 12px; }
     .gallery-track { gap: 12px; }
 }
 
@@ -395,7 +381,7 @@
 }
 
 .about-text {
-    font-family: 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
     font-size: 15px;
     line-height: 1.65;
     color: var(--text-secondary);
@@ -435,9 +421,9 @@
 }
 
 .social-btn span {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 500;
+    font-size: 14px;
     color: var(--text-primary);
 }
 
@@ -465,7 +451,7 @@
     border: none;
     border-bottom: 1px solid var(--border-subtle);
     color: var(--text-primary);
-    font-family: 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
     font-size: 14px;
     outline: none;
 }
@@ -483,7 +469,8 @@
     border: 1px solid var(--text-primary);
     color: var(--text-primary);
     padding: 10px 32px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 600;
     font-size: 12px;
     letter-spacing: 0.15em;
     cursor: pointer;
@@ -524,7 +511,8 @@
     padding: 35px 20px;
     background: #000000;
     border-top: 1px solid var(--border-subtle);
-    font-family: 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+    font-weight: 400;
     font-size: 10px;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
