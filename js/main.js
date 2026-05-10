@@ -132,7 +132,7 @@ function setupHorizontalWheelScroll() {
             }
             
             e.preventDefault();
-            container.scrollLeft += e.deltaY * 1.5;
+            container.scrollLeft += e.deltaY * 4.5;
         }, { passive: false });
     });
 }
