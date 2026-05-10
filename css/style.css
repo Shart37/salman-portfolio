@@ -558,7 +558,7 @@
 
 /* ===== SCROLLING BACKGROUND (moves with page) ===== */
 body {
-    background: url('../images/sunrise manchester crane.jpg') center/cover no-repeat;
+    background: url('../images/bikes at sunset enhanced.jpg') center/cover no-repeat;
     background-attachment: scroll;  /* This makes it scroll with page */
     position: relative;
 }
