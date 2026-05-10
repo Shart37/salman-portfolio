@@ -1,4 +1,4 @@
-// IMAGE CATEGORIES - UPDATE WITH YOUR ACTUAL WEBP FILENAMES
+// IMAGE CATEGORIES
 const imagesByCategory = {
     realEstate: [
         "manchester-alexander-house-dining-area.webp",
@@ -33,11 +33,41 @@ const imagesByCategory = {
     ]
 };
 
-function createGalleryItem(filename) {
+// Store image dimensions
+const imageCache = new Map();
+
+function getImageDimensions(filename, callback) {
+    if (imageCache.has(filename)) {
+        callback(imageCache.get(filename));
+        return;
+    }
+    const img = new Image();
+    img.onload = function() {
+        const aspectRatio = img.width / img.height;
+        imageCache.set(filename, { width: img.width, height: img.height, aspectRatio });
+        callback({ width: img.width, height: img.height, aspectRatio });
+    };
+    img.onerror = function() {
+        callback({ width: 800, height: 600, aspectRatio: 1.33 });
+    };
+    img.src = `images/${encodeURIComponent(filename)}`;
+}
+
+function createGalleryItem(filename, aspectRatio) {
     const encoded = encodeURIComponent(filename);
     const src = `images/${encoded}`;
     const item = document.createElement('div');
     item.className = 'gallery-item';
+    
+    // Add orientation class for CSS styling
+    if (aspectRatio < 0.8) {
+        item.classList.add('portrait');
+    } else if (aspectRatio > 1.2) {
+        item.classList.add('landscape');
+    } else {
+        item.classList.add('square');
+    }
+    
     const img = document.createElement('img');
     img.src = src;
     img.alt = filename.replace(/\.(webp|jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
@@ -47,41 +77,29 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// SIMPLE 2-ROW GALLERY - Images flow left to right, top row then bottom row
-function createSimple2RowGallery(trackId, imageList) {
+// SMART GALLERY - Fixed height container, auto-sizing images
+function createSmartGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Calculate how many images go in each row
-    const totalImages = imageList.length;
-    const halfCount = Math.ceil(totalImages / 2);
+    let loadedCount = 0;
+    const itemsToLoad = imageList.length;
     
-    // Split images into top and bottom rows
-    const topRowImages = imageList.slice(0, halfCount);
-    const bottomRowImages = imageList.slice(halfCount);
-    
-    // Create top row
-    const topRow = document.createElement('div');
-    topRow.className = 'gallery-row';
-    topRowImages.forEach(filename => {
-        topRow.appendChild(createGalleryItem(filename));
+    imageList.forEach((filename, index) => {
+        getImageDimensions(filename, (dims) => {
+            const item = createGalleryItem(filename, dims.aspectRatio);
+            track.appendChild(item);
+            loadedCount++;
+            
+            // Add scroll buttons when all images are loaded
+            if (loadedCount === itemsToLoad) {
+                const container = track.parentElement;
+                const wrapper = container.closest('.gallery-wrapper');
+                if (wrapper) addScrollButtons(wrapper, container);
+            }
+        });
     });
-    
-    // Create bottom row
-    const bottomRow = document.createElement('div');
-    bottomRow.className = 'gallery-row';
-    bottomRowImages.forEach(filename => {
-        bottomRow.appendChild(createGalleryItem(filename));
-    });
-    
-    track.appendChild(topRow);
-    track.appendChild(bottomRow);
-    
-    // Add scroll buttons
-    const container = track.parentElement;
-    const wrapper = container.closest('.gallery-wrapper');
-    if (wrapper) addScrollButtons(wrapper, container);
 }
 
 function addScrollButtons(wrapper, container) {
@@ -235,7 +253,7 @@ window.addEventListener('hashchange', function() {
 });
 
 // CREATE GALLERIES
-createSimple2RowGallery('realEstateTrack', imagesByCategory.realEstate);
-createSimple2RowGallery('weddingTrack', imagesByCategory.wedding);
-createSimple2RowGallery('urbanTrack', imagesByCategory.urban);
+createSmartGallery('realEstateTrack', imagesByCategory.realEstate);
+createSmartGallery('weddingTrack', imagesByCategory.wedding);
+createSmartGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
