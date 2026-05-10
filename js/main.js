@@ -77,28 +77,72 @@ function createGalleryItem(filename, aspectRatio) {
     return item;
 }
 
-// SMART GALLERY - Fixed height container, auto-sizing images
-function createSmartGallery(trackId, imageList) {
+// MASONRY GALLERY - JavaScript fallback for all browsers
+function createMasonryGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    let loadedCount = 0;
-    const itemsToLoad = imageList.length;
+    // Number of columns based on screen width
+    let columnCount = 3;
+    if (window.innerWidth <= 768) columnCount = 2;
+    if (window.innerWidth <= 550) columnCount = 2;
     
-    imageList.forEach((filename, index) => {
-        getImageDimensions(filename, (dims) => {
-            const item = createGalleryItem(filename, dims.aspectRatio);
-            track.appendChild(item);
-            loadedCount++;
+    // Create columns
+    const columns = [];
+    for (let i = 0; i < columnCount; i++) {
+        const column = document.createElement('div');
+        column.style.display = 'flex';
+        column.style.flexDirection = 'column';
+        column.style.gap = '16px';
+        column.style.width = '280px';
+        column.style.flexShrink = '0';
+        columns.push(column);
+        track.appendChild(column);
+    }
+    
+    // Load images and add to shortest column
+    let loadedCount = 0;
+    const imageElements = [];
+    
+    imageList.forEach((filename, idx) => {
+        const img = new Image();
+        img.onload = function() {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.style.width = '100%';
             
-            // Add scroll buttons when all images are loaded
-            if (loadedCount === itemsToLoad) {
+            const imgElement = document.createElement('img');
+            imgElement.src = `images/${encodeURIComponent(filename)}`;
+            imgElement.alt = filename.replace(/\.(webp|jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
+            imgElement.loading = 'lazy';
+            imgElement.onclick = () => openLightbox(imgElement.src);
+            
+            item.appendChild(imgElement);
+            imageElements.push({ item, height: img.height });
+            
+            loadedCount++;
+            if (loadedCount === imageList.length) {
+                // Distribute to shortest column
+                const columnHeights = new Array(columnCount).fill(0);
+                imageElements.forEach(({ item }) => {
+                    let shortestIndex = 0;
+                    for (let i = 1; i < columnCount; i++) {
+                        if (columnHeights[i] < columnHeights[shortestIndex]) {
+                            shortestIndex = i;
+                        }
+                    }
+                    columns[shortestIndex].appendChild(item);
+                    columnHeights[shortestIndex] += item.offsetHeight;
+                });
+                
+                // Add scroll buttons
                 const container = track.parentElement;
                 const wrapper = container.closest('.gallery-wrapper');
                 if (wrapper) addScrollButtons(wrapper, container);
             }
-        });
+        };
+        img.src = `images/${encodeURIComponent(filename)}`;
     });
 }
 
@@ -111,16 +155,12 @@ function addScrollButtons(wrapper, container) {
     const btnLeft = document.createElement('div');
     btnLeft.className = 'scroll-btn-left';
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnLeft.onclick = () => {
-        container.scrollBy({ left: -800, behavior: 'smooth' });
-    };
+    btnLeft.onclick = () => container.scrollBy({ left: -400, behavior: 'smooth' });
     
     const btnRight = document.createElement('div');
     btnRight.className = 'scroll-btn-right';
     btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnRight.onclick = () => {
-        container.scrollBy({ left: 800, behavior: 'smooth' });
-    };
+    btnRight.onclick = () => container.scrollBy({ left: 400, behavior: 'smooth' });
     
     wrapper.appendChild(btnLeft);
     wrapper.appendChild(btnRight);
@@ -253,7 +293,7 @@ window.addEventListener('hashchange', function() {
 });
 
 // CREATE GALLERIES
-createSmartGallery('realEstateTrack', imagesByCategory.realEstate);
-createSmartGallery('weddingTrack', imagesByCategory.wedding);
-createSmartGallery('urbanTrack', imagesByCategory.urban);
+createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+createMasonryGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
