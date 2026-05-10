@@ -263,6 +263,8 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     width: 100%;
+    content-visibility: auto;
+    contain-intrinsic-size: 500px;
 }
 
 .gallery-track {
@@ -294,7 +296,12 @@
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.gallery-item img.loaded {
+    opacity: 1;
 }
 
 .gallery-item:hover {
@@ -556,10 +563,9 @@
     opacity: 0.6;
 }
 
-/* ===== SCROLLING BACKGROUND (moves with page) ===== */
+/* ===== SCROLLING BACKGROUND ===== */
 body {
-    background: url('../images/bikes at sunset enhanced.jpg') center/cover no-repeat;
-    background-attachment: scroll;  /* This makes it scroll with page */
+    background: url('../images/bikes-at-sunset-enhanced.webp') center/cover no-repeat scroll;
     position: relative;
 }
 
@@ -575,7 +581,7 @@ body::before {
     z-index: -1;
 }
 
-/* Make all sections transparent so background shows through */
+/* Make all sections transparent */
 .section, 
 .about-section, 
 .contact-section,
@@ -584,7 +590,7 @@ body::before {
     background: transparent !important;
 }
 
-/* ===== RESPONSIVE (overrides) ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .mobile-menu-toggle { display: block; }
