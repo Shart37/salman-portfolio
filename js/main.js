@@ -1,14 +1,35 @@
-// IMAGE CATEGORIES
+// IMAGE CATEGORIES - UPDATED WITH WEBP FILENAMES
 const imagesByCategory = {
-    realEstate: ["img10.jpg", "img1.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img8.jpg", "img11.jpg"],
-    wedding: ["img9.jpg"],
+    realEstate: [
+        "manchester-alexander-house-dining-area.webp",
+        "manchester-regent-plaza-master-bedroom.webp",
+        "liverpool-apartment-living-room-with-view-into-kitchen.webp",
+        "salford-southwood-house-living-room-zoomed.webp",
+        "manchester-x1-the-landmark-living-room.webp",
+        "manchester-x1-the-landmark-kitchen-with-view.webp",
+        "liverpool-apartment-living-room.webp"
+    ],
+    wedding: [
+        "liverpool-arab-wedding-tea-pour.webp"
+    ],
     urban: [
-        "londong roof aj.jpg", "sunrise manchester crane.jpg",
-        "UOM.jpg", "crane sunrise.jpg", "climbing the light tower.jpg", "joe on slanted roof.jpg",
-        "you know where this is manchester.jpg", "missed my bus manchester.jpg",
-        "bikes at sunset enhanced.jpg", "snow tram.jpg", "view of shoes on roof.jpg", "snow tram 2.jpg", "roof near piccadily.jpg",
-        "stewart crane sunrise.jpg", "car driveshaft skoda fabia mk 2 1.4 tdi.jpg",
-        "img2.jpg", "img6.jpg", "img7.jpg"
+        "manchester-view-from-a-rooftop.webp",
+        "londong-roof-aj.webp",
+        "sunrise-manchester-crane.webp",
+        "manchester-from-uom-sackvile-building.webp",
+        "crane-sunrise.webp",
+        "climbing-the-light-tower.webp",
+        "joe-on-slanted-roof.webp",
+        "you-know-where-this-is-manchester.webp",
+        "missed-my-bus-manchester.webp",
+        "bikes-at-sunset-enhanced.webp",
+        "snow-tram.webp",
+        "snow-tram-2.webp",
+        "roof-near-piccadily.webp",
+        "stewart-crane-sunrise.webp",
+        "car-driveshaft-skoda-fabia-mk-2-1-4-tdi.webp",
+        "sunrise-manchester-shot-from-crane.webp",
+        "elizabeth-tower-manchester-in-construction-long-exposure-light-trails.webp"
     ]
 };
 
@@ -40,8 +61,9 @@ function createGalleryItem(filename) {
     item.className = 'gallery-item';
     const img = document.createElement('img');
     img.src = src;
-    img.alt = filename.replace(/\.(jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
+    img.alt = filename.replace(/\.(webp|jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
     img.loading = 'lazy';
+    img.decoding = 'async';  // Speed improvement: loads asynchronously
     img.onclick = () => openLightbox(src);
     item.appendChild(img);
     return item;
@@ -60,16 +82,13 @@ function createBalancedMasonry(trackId, imageList) {
     
     imageList.forEach((filename, idx) => {
         getImageDimensions(filename, (dims) => {
-            // Calculate height at fixed width of 260px
-            const scaledHeight = 300 * dims.aspectRatio;
+            const scaledHeight = 230 * dims.aspectRatio;
             imageData.push({ filename, height: scaledHeight, index: idx });
             loadedCount++;
             
             if (loadedCount === imageList.length) {
-                // Sort back to original order
                 imageData.sort((a, b) => a.index - b.index);
                 
-                // Create columns (each column is a pair of images stacked vertically)
                 const columns = [];
                 let i = 0;
                 
@@ -77,17 +96,14 @@ function createBalancedMasonry(trackId, imageList) {
                     const current = imageData[i];
                     const next = imageData[i + 1];
                     
-                    // Create column wrapper
                     const column = document.createElement('div');
                     column.className = 'gallery-column';
                     
                     if (next && current.height + next.height < 700) {
-                        // Pair two images in same column
                         column.appendChild(createGalleryItem(current.filename));
                         column.appendChild(createGalleryItem(next.filename));
                         i += 2;
                     } else {
-                        // Single image in column
                         column.appendChild(createGalleryItem(current.filename));
                         i++;
                     }
@@ -96,7 +112,6 @@ function createBalancedMasonry(trackId, imageList) {
                     track.appendChild(column);
                 }
                 
-                // Add scroll buttons
                 const container = track.parentElement;
                 const wrapper = container.closest('.gallery-wrapper');
                 if (wrapper) addScrollButtons(wrapper, container);
@@ -138,12 +153,10 @@ function setupHorizontalWheelScroll() {
             const atStart = container.scrollLeft <= tolerance;
             const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - tolerance;
             
-            // Let page scroll vertically when at boundaries
             if ((atStart && e.deltaY < 0) || (atEnd && e.deltaY > 0)) {
                 return;
             }
             
-            // Otherwise scroll horizontally
             e.preventDefault();
             container.scrollLeft += e.deltaY * 1.5;
         }, { passive: false });
@@ -240,21 +253,12 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Create galleries
-createBalancedMasonry('realEstateTrack', imagesByCategory.realEstate);
-createBalancedMasonry('weddingTrack', imagesByCategory.wedding);
-createBalancedMasonry('urbanTrack', imagesByCategory.urban);
-setupHorizontalWheelScroll();
-enableSmartScroll();
-
 // Randomize hero background position
 function randomizeHeroPosition() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
     
-    // Random vertical position between 15% and 85%
     const randomVertical = Math.floor(Math.random() * (85 - 15 + 1) + 15);
-    // Keep horizontal centered for consistency
     heroBg.style.objectPosition = `center ${randomVertical}%`;
     
     console.log('Hero position randomized:', `center ${randomVertical}%`);
@@ -271,7 +275,13 @@ document.body.addEventListener('click', function(e) {
     }
 });
 
-// Run when URL hash changes (back/forward buttons)
+// Run when URL hash changes
 window.addEventListener('hashchange', function() {
     setTimeout(randomizeHeroPosition, 500);
 });
+
+// Create galleries
+createBalancedMasonry('realEstateTrack', imagesByCategory.realEstate);
+createBalancedMasonry('weddingTrack', imagesByCategory.wedding);
+createBalancedMasonry('urbanTrack', imagesByCategory.urban);
+setupHorizontalWheelScroll();
