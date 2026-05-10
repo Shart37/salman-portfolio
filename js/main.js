@@ -77,16 +77,28 @@ function createGalleryItem(filename, aspectRatio) {
     return item;
 }
 
-// MASONRY GALLERY - JavaScript fallback for all browsers
+// DYNAMIC MASONRY GALLERY - Auto adjusts columns based on screen width
 function createMasonryGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Number of columns based on screen width
-    let columnCount = 3;
-    if (window.innerWidth <= 768) columnCount = 2;
+    // Get container width
+    const container = track.parentElement;
+    const containerWidth = container.clientWidth - 32; // Subtract padding
+    
+    // Calculate number of columns based on 280px min width
+    const minColumnWidth = 260;
+    let columnCount = Math.floor(containerWidth / minColumnWidth);
+    
+    // Limit columns based on screen size
     if (window.innerWidth <= 550) columnCount = 2;
+    if (window.innerWidth <= 400) columnCount = 1;
+    if (columnCount < 1) columnCount = 1;
+    if (columnCount > 5) columnCount = 5; // Max 5 columns
+    
+    // Calculate actual column width
+    const columnWidth = (containerWidth - (columnCount - 1) * 16) / columnCount;
     
     // Create columns
     const columns = [];
@@ -95,7 +107,7 @@ function createMasonryGallery(trackId, imageList) {
         column.style.display = 'flex';
         column.style.flexDirection = 'column';
         column.style.gap = '16px';
-        column.style.width = '280px';
+        column.style.width = `${columnWidth}px`;
         column.style.flexShrink = '0';
         columns.push(column);
         track.appendChild(column);
@@ -104,6 +116,8 @@ function createMasonryGallery(trackId, imageList) {
     // Load images and add to shortest column
     let loadedCount = 0;
     const imageElements = [];
+    
+    if (imageList.length === 0) return;
     
     imageList.forEach((filename, idx) => {
         const img = new Image();
@@ -118,14 +132,18 @@ function createMasonryGallery(trackId, imageList) {
             imgElement.loading = 'lazy';
             imgElement.onclick = () => openLightbox(imgElement.src);
             
+            // Calculate scaled height based on actual column width
+            const scale = columnWidth / img.width;
+            const scaledHeight = img.height * scale;
+            
             item.appendChild(imgElement);
-            imageElements.push({ item, height: img.height });
+            imageElements.push({ item, height: scaledHeight });
             
             loadedCount++;
             if (loadedCount === imageList.length) {
                 // Distribute to shortest column
                 const columnHeights = new Array(columnCount).fill(0);
-                imageElements.forEach(({ item }) => {
+                imageElements.forEach(({ item, height }) => {
                     let shortestIndex = 0;
                     for (let i = 1; i < columnCount; i++) {
                         if (columnHeights[i] < columnHeights[shortestIndex]) {
@@ -133,7 +151,7 @@ function createMasonryGallery(trackId, imageList) {
                         }
                     }
                     columns[shortestIndex].appendChild(item);
-                    columnHeights[shortestIndex] += item.offsetHeight;
+                    columnHeights[shortestIndex] += height + 16; // Add gap
                 });
                 
                 // Add scroll buttons
@@ -165,6 +183,18 @@ function addScrollButtons(wrapper, container) {
     wrapper.appendChild(btnLeft);
     wrapper.appendChild(btnRight);
 }
+
+// Rebuild gallery on window resize
+let resizeTimeout;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+        createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
+        createMasonryGallery('weddingTrack', imagesByCategory.wedding);
+        createMasonryGallery('urbanTrack', imagesByCategory.urban);
+        setupHorizontalWheelScroll();
+    }, 250);
+});
 
 function setupHorizontalWheelScroll() {
     const containers = document.querySelectorAll('.gallery-container');
