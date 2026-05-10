@@ -78,15 +78,30 @@ function createGalleryItem(filename) {
     return item;
 }
 
-// SIMPLE CSS GRID GALLERY - Let CSS handle the layout
-function createGridGallery(trackId, imageList) {
+// SIMPLE 2-ROW GALLERY - Images alternate between top and bottom row
+function create2RowGallery(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    imageList.forEach(filename => {
-        track.appendChild(createGalleryItem(filename));
+    // Create top and bottom rows
+    const topRow = document.createElement('div');
+    topRow.className = 'gallery-row';
+    const bottomRow = document.createElement('div');
+    bottomRow.className = 'gallery-row';
+    
+    // Alternate images between top and bottom rows
+    imageList.forEach((filename, index) => {
+        const item = createGalleryItem(filename);
+        if (index % 2 === 0) {
+            topRow.appendChild(item);
+        } else {
+            bottomRow.appendChild(item);
+        }
     });
+    
+    track.appendChild(topRow);
+    track.appendChild(bottomRow);
     
     // Add scroll buttons
     const container = track.parentElement;
@@ -252,8 +267,8 @@ window.addEventListener('hashchange', function() {
     setTimeout(randomizeHeroPosition, 500);
 });
 
-// Replace your existing createBalancedMasonry calls with:
-createGridGallery('realEstateTrack', imagesByCategory.realEstate);
-createGridGallery('weddingTrack', imagesByCategory.wedding);
-createGridGallery('urbanTrack', imagesByCategory.urban);
+// gallery creation
+create2RowGallery('realEstateTrack', imagesByCategory.realEstate);
+create2RowGallery('weddingTrack', imagesByCategory.wedding);
+create2RowGallery('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
