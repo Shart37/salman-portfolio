@@ -40,7 +40,11 @@ body {
     position: relative;
 }
 
+/* Logo styling with icon */
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
@@ -48,18 +52,23 @@ body {
     color: var(--text-primary);
     text-decoration: none;
     text-transform: uppercase;
-    display: block;
     transition: all 0.3s ease;
 }
 
-.logo.camera-mode {
-    font-size: 0;
+.logo svg {
+    transition: transform 0.3s ease;
 }
 
-.logo.camera-mode::before {
-    content: '📷';
-    font-size: 1.3rem;
-    display: inline-block;
+.logo:hover svg {
+    transform: scale(1.1);
+}
+
+.logo.camera-mode span {
+    display: none;
+}
+
+.logo.camera-mode svg {
+    margin: 0 auto;
 }
 
 .nav-links {
