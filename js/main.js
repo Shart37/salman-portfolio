@@ -1,4 +1,4 @@
-// IMAGE CATEGORIES
+// IMAGE CATEGORIES - UPDATE THESE WITH YOUR ACTUAL WEBP FILENAMES
 const imagesByCategory = {
     realEstate: [
         "manchester-alexander-house-dining-area.webp",
@@ -43,31 +43,25 @@ function getImageDimensions(filename, callback) {
     }
     const img = new Image();
     img.onload = function() {
-        const aspectRatio = img.width / img.height;
-        imageCache.set(filename, { width: img.width, height: img.height, aspectRatio });
-        callback({ width: img.width, height: img.height, aspectRatio });
+        const dims = {
+            width: img.width,
+            height: img.height,
+            aspectRatio: img.height / img.width
+        };
+        imageCache.set(filename, dims);
+        callback(dims);
     };
     img.onerror = function() {
-        callback({ width: 800, height: 600, aspectRatio: 1.33 });
+        callback({ width: 800, height: 600, aspectRatio: 0.75 });
     };
     img.src = `images/${encodeURIComponent(filename)}`;
 }
 
-function createGalleryItem(filename, aspectRatio) {
+function createGalleryItem(filename) {
     const encoded = encodeURIComponent(filename);
     const src = `images/${encoded}`;
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    
-    // Add orientation class for CSS styling
-    if (aspectRatio < 0.8) {
-        item.classList.add('portrait');
-    } else if (aspectRatio > 1.2) {
-        item.classList.add('landscape');
-    } else {
-        item.classList.add('square');
-    }
-    
     const img = document.createElement('img');
     img.src = src;
     img.alt = filename.replace(/\.(webp|jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
@@ -77,92 +71,58 @@ function createGalleryItem(filename, aspectRatio) {
     return item;
 }
 
-// DYNAMIC MASONRY GALLERY - Auto adjusts columns based on screen width
-function createMasonryGallery(trackId, imageList) {
+// YOUR WORKING GALLERY SETUP - 2-ROW BALANCED MASONRY
+function createBalancedMasonry(trackId, imageList) {
     const track = document.getElementById(trackId);
     if (!track) return;
     track.innerHTML = '';
     
-    // Get container width
-    const container = track.parentElement;
-    const containerWidth = container.clientWidth - 32; // Subtract padding
-    
-    // Calculate number of columns based on 280px min width
-    const minColumnWidth = 260;
-    let columnCount = Math.floor(containerWidth / minColumnWidth);
-    
-    // Limit columns based on screen size
-    if (window.innerWidth <= 550) columnCount = 2;
-    if (window.innerWidth <= 400) columnCount = 1;
-    if (columnCount < 1) columnCount = 1;
-    if (columnCount > 5) columnCount = 5; // Max 5 columns
-    
-    // Calculate actual column width
-    const columnWidth = (containerWidth - (columnCount - 1) * 16) / columnCount;
-    
-    // Create columns
-    const columns = [];
-    for (let i = 0; i < columnCount; i++) {
-        const column = document.createElement('div');
-        column.style.display = 'flex';
-        column.style.flexDirection = 'column';
-        column.style.gap = '16px';
-        column.style.width = `${columnWidth}px`;
-        column.style.flexShrink = '0';
-        columns.push(column);
-        track.appendChild(column);
-    }
-    
-    // Load images and add to shortest column
-    let loadedCount = 0;
-    const imageElements = [];
-    
     if (imageList.length === 0) return;
     
+    let loadedCount = 0;
+    const imageData = [];
+    
     imageList.forEach((filename, idx) => {
-        const img = new Image();
-        img.onload = function() {
-            const item = document.createElement('div');
-            item.className = 'gallery-item';
-            item.style.width = '100%';
-            
-            const imgElement = document.createElement('img');
-            imgElement.src = `images/${encodeURIComponent(filename)}`;
-            imgElement.alt = filename.replace(/\.(webp|jpg|jpeg|png)$/i, '').replace(/[-_]/g, ' ');
-            imgElement.loading = 'lazy';
-            imgElement.onclick = () => openLightbox(imgElement.src);
-            
-            // Calculate scaled height based on actual column width
-            const scale = columnWidth / img.width;
-            const scaledHeight = img.height * scale;
-            
-            item.appendChild(imgElement);
-            imageElements.push({ item, height: scaledHeight });
-            
+        getImageDimensions(filename, (dims) => {
+            const scaledHeight = 260 * dims.aspectRatio;
+            imageData.push({ filename, height: scaledHeight, index: idx });
             loadedCount++;
+            
             if (loadedCount === imageList.length) {
-                // Distribute to shortest column
-                const columnHeights = new Array(columnCount).fill(0);
-                imageElements.forEach(({ item, height }) => {
-                    let shortestIndex = 0;
-                    for (let i = 1; i < columnCount; i++) {
-                        if (columnHeights[i] < columnHeights[shortestIndex]) {
-                            shortestIndex = i;
-                        }
-                    }
-                    columns[shortestIndex].appendChild(item);
-                    columnHeights[shortestIndex] += height + 16; // Add gap
-                });
+                imageData.sort((a, b) => a.index - b.index);
                 
-                // Add scroll buttons
+                const columns = [];
+                let i = 0;
+                
+                while (i < imageData.length) {
+                    const current = imageData[i];
+                    const next = imageData[i + 1];
+                    
+                    const column = document.createElement('div');
+                    column.className = 'gallery-column';
+                    
+                    if (next && current.height + next.height < 700) {
+                        column.appendChild(createGalleryItem(current.filename));
+                        column.appendChild(createGalleryItem(next.filename));
+                        i += 2;
+                    } else {
+                        column.appendChild(createGalleryItem(current.filename));
+                        i++;
+                    }
+                    
+                    columns.push(column);
+                    track.appendChild(column);
+                }
+                
                 const container = track.parentElement;
                 const wrapper = container.closest('.gallery-wrapper');
                 if (wrapper) addScrollButtons(wrapper, container);
             }
-        };
-        img.src = `images/${encodeURIComponent(filename)}`;
+        });
     });
 }
+
+
 
 function addScrollButtons(wrapper, container) {
     const existingLeft = wrapper.querySelector('.scroll-btn-left');
@@ -173,43 +133,72 @@ function addScrollButtons(wrapper, container) {
     const btnLeft = document.createElement('div');
     btnLeft.className = 'scroll-btn-left';
     btnLeft.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnLeft.onclick = () => container.scrollBy({ left: -400, behavior: 'smooth' });
+    btnLeft.onclick = () => {
+        // Scroll by 80% of container width
+        const scrollAmount = container.clientWidth * 0.8;
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    };
     
     const btnRight = document.createElement('div');
     btnRight.className = 'scroll-btn-right';
     btnRight.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-    btnRight.onclick = () => container.scrollBy({ left: 400, behavior: 'smooth' });
+    btnRight.onclick = () => {
+        // Scroll by 80% of container width
+        const scrollAmount = container.clientWidth * 0.8;
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    };
     
     wrapper.appendChild(btnLeft);
     wrapper.appendChild(btnRight);
 }
 
-// Rebuild gallery on window resize
-let resizeTimeout;
-window.addEventListener('resize', function() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(function() {
-        createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
-        createMasonryGallery('weddingTrack', imagesByCategory.wedding);
-        createMasonryGallery('urbanTrack', imagesByCategory.urban);
-        setupHorizontalWheelScroll();
-    }, 250);
-});
-
 function setupHorizontalWheelScroll() {
     const containers = document.querySelectorAll('.gallery-container');
+    
     containers.forEach(container => {
+        let pendingScroll = 0;
+        let animating = false;
+        
+        function processScroll() {
+            if (pendingScroll !== 0) {
+                container.scrollLeft += pendingScroll;
+                pendingScroll = 0;
+            }
+            animating = false;
+        }
+        
+        function scheduleScroll(amount) {
+            pendingScroll += amount;
+            
+            // Clamp pending scroll
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            const newScroll = container.scrollLeft + pendingScroll;
+            
+            if (newScroll < 0) {
+                pendingScroll = -container.scrollLeft;
+            } else if (newScroll > maxScroll) {
+                pendingScroll = maxScroll - container.scrollLeft;
+            }
+            
+            if (!animating) {
+                animating = true;
+                requestAnimationFrame(processScroll);
+            }
+        }
+        
         container.addEventListener('wheel', function(e) {
-            const tolerance = 5;
-            const atStart = container.scrollLeft <= tolerance;
-            const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - tolerance;
+            const atStart = container.scrollLeft <= 2;
+            const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 2;
             
             if ((atStart && e.deltaY < 0) || (atEnd && e.deltaY > 0)) {
                 return;
             }
             
             e.preventDefault();
-            container.scrollLeft += e.deltaY * 4.5;
+            
+            // Accumulate scroll amount (multiplier 4.5)
+            scheduleScroll(e.deltaY * 4.5);
+            
         }, { passive: false });
     });
 }
@@ -294,23 +283,50 @@ window.addEventListener('scroll', () => {
     else logo.classList.remove('camera-mode');
 });
 
-// Mobile menu
+// Mobile Toggle - Replace Logo with Horizontal Nav Links in Navbar
 const menuToggle = document.getElementById('menuToggle');
-const mobileMenu = document.getElementById('mobileMenu');
-menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
-document.addEventListener('click', (event) => {
-    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
-        mobileMenu.classList.remove('active');
-    }
-});
+const navContainer = document.querySelector('.nav-container');
 
-// Randomize hero background
+if (menuToggle && navContainer) {
+    menuToggle.addEventListener('click', function() {
+        navContainer.classList.toggle('show-nav');
+        
+        // Change hamburger to X when nav is shown
+        const svg = menuToggle.querySelector('svg');
+        if (navContainer.classList.contains('show-nav')) {
+            svg.innerHTML = `
+                <line x1="18" y1="6" x2="6" y2="18" stroke-width="1.5"/>
+                <line x1="6" y1="6" x2="18" y2="18" stroke-width="1.5"/>
+            `;
+        } else {
+            svg.innerHTML = `
+                <line x1="4" y1="6" x2="20" y2="6" stroke-width="1.5"/>
+                <line x1="4" y1="18" x2="20" y2="18" stroke-width="1.5"/>
+            `;
+        }
+    });
+    
+    // Close when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navContainer.classList.remove('show-nav');
+            const svg = menuToggle.querySelector('svg');
+            svg.innerHTML = `
+                <line x1="4" y1="6" x2="20" y2="6" stroke-width="1.5"/>
+                <line x1="4" y1="18" x2="20" y2="18" stroke-width="1.5"/>
+            `;
+        });
+    });
+}
+
+// Randomize hero background position
 function randomizeHeroPosition() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
     const randomVertical = Math.floor(Math.random() * (85 - 15 + 1) + 15);
     heroBg.style.objectPosition = `center ${randomVertical}%`;
 }
+
 window.addEventListener('load', randomizeHeroPosition);
 document.body.addEventListener('click', function(e) {
     const link = e.target.closest('a');
@@ -322,8 +338,8 @@ window.addEventListener('hashchange', function() {
     setTimeout(randomizeHeroPosition, 500);
 });
 
-// CREATE GALLERIES
-createMasonryGallery('realEstateTrack', imagesByCategory.realEstate);
-createMasonryGallery('weddingTrack', imagesByCategory.wedding);
-createMasonryGallery('urbanTrack', imagesByCategory.urban);
+// Create galleries
+createBalancedMasonry('realEstateTrack', imagesByCategory.realEstate);
+createBalancedMasonry('weddingTrack', imagesByCategory.wedding);
+createBalancedMasonry('urbanTrack', imagesByCategory.urban);
 setupHorizontalWheelScroll();
