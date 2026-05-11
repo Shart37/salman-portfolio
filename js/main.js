@@ -35,6 +35,9 @@ const imagesByCategory = {
 // Store image dimensions
 const imageCache = new Map();
 
+const urbanSectionElement = document.getElementById('urbanSection');
+
+
 function getImageDimensions(filename, callback) {
     if (imageCache.has(filename)) {
         callback(imageCache.get(filename));
@@ -345,7 +348,6 @@ window.addEventListener('hashchange', function() {
     setTimeout(randomizeHeroPosition, 500);
 });
 
-const urbanSectionElement = document.getElementById('urbanSection');
 let snapCooldown = false;
 
 if (urbanSectionElement) {
