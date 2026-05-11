@@ -73,6 +73,12 @@ function createGalleryItem(filename) {
     return item;
 }
 
+/**
+ * Creates a balanced masonry gallery layout by distributing images into columns with a height limit.
+ * @param {string} trackId - The ID of the container element where the gallery will be rendered.
+ * @param {string[]} imageList - Array of image filenames to display in the gallery.
+ * @param {number} [heightLimit=700] - The maximum height (in pixels) for each column.
+ */
 function createBalancedMasonry(trackId, imageList, heightLimit = 700) {
     const track = document.getElementById(trackId);
     if (!track) return;
