@@ -35,9 +35,6 @@ const imagesByCategory = {
 // Store image dimensions
 const imageCache = new Map();
 
-const urbanSectionElement = document.getElementById('urbanSection');
-
-
 function getImageDimensions(filename, callback) {
     if (imageCache.has(filename)) {
         callback(imageCache.get(filename));
@@ -354,6 +351,7 @@ window.addEventListener('hashchange', function() {
     setTimeout(randomizeHeroPosition, 500);
 });
 
+const urbanSectionElement = document.getElementById('urbanSection');
 let snapCooldown = false;
 
 if (urbanSectionElement) {
@@ -364,39 +362,17 @@ if (urbanSectionElement) {
         const isFullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
         const isScrollingDown = e.deltaY > 0;
         const isScrollingUp = e.deltaY < 0;
-        const mouseY = e.clientY;
         
         // For scrolling down: snap if section extends below view
         if (isScrollingDown && !isFullyVisible && rect.bottom > window.innerHeight) {
             e.preventDefault();
             snapCooldown = true;
-            
-            // Calculate scroll position to center mouse position
-            const targetScrollY = window.scrollY + (mouseY - window.innerHeight / 2);
-            
-            window.scrollTo({
-                top: targetScrollY,
-                behavior: 'smooth'
-            });
-            
+            this.scrollIntoView({ behavior: 'smooth', block: 'start' });
             setTimeout(() => { snapCooldown = false; }, 500);
         }
         
-        // For scrolling up: allow normal scrolling
-        if (isScrollingUp && !isFullyVisible && rect.top < 0) {
-            e.preventDefault();
-            snapCooldown = true;
-            
-            // Calculate scroll position to center mouse position
-            const targetScrollY = window.scrollY + (mouseY - window.innerHeight / 2);
-            
-            window.scrollTo({
-                top: targetScrollY,
-                behavior: 'smooth'
-            });
-            
-            setTimeout(() => { snapCooldown = false; }, 500);
-        }
+        // For scrolling up: allow normal scrolling, no prevention
+        // This lets users scroll up freely
         
     }, { passive: false });
 }
